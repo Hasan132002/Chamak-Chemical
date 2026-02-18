@@ -1,0 +1,34 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        Schema::table('product_pricing', function (Blueprint $table) {
+            $table->decimal('wholesale_price', 10, 2)->nullable()->after('retail_price');
+        });
+
+        Schema::table('products', function (Blueprint $table) {
+            if (!Schema::hasColumn('products', 'moq')) {
+                $table->integer('moq')->default(1)->after('stock_quantity');
+            }
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::table('product_pricing', function (Blueprint $table) {
+            $table->dropColumn('wholesale_price');
+        });
+
+        Schema::table('products', function (Blueprint $table) {
+            if (Schema::hasColumn('products', 'moq')) {
+                $table->dropColumn('moq');
+            }
+        });
+    }
+};
