@@ -75,8 +75,8 @@
                     </button>
                 </div>
 
-                <!-- Navigation -->
-                <nav class="space-y-2 flex-1">
+                <!-- Navigation (scrollable) -->
+                <nav class="space-y-2 flex-1 min-h-0 overflow-y-auto">
                     <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-3 px-4 py-3 rounded-lg text-white {{ request()->routeIs('admin.dashboard') ? 'bg-white/20' : 'hover:bg-white/10' }} transition">
                         <i class="fas fa-home w-5"></i>
                         <span>Dashboard</span>
@@ -145,6 +145,10 @@
                         <i class="fas fa-cog w-5"></i>
                         <span>Settings</span>
                     </a>
+                    <a href="{{ route('admin.password.edit') }}" class="flex items-center gap-3 px-4 py-3 rounded-lg text-white {{ request()->routeIs('admin.password.*') ? 'bg-white/20' : 'hover:bg-white/10' }} transition">
+                        <i class="fas fa-key w-5"></i>
+                        <span>Change Password</span>
+                    </a>
                 </nav>
 
                 <!-- View Website & Logout -->
@@ -196,7 +200,7 @@
                         </a>
 
                         <!-- User -->
-                        <div class="flex items-center gap-2 sm:gap-3">
+                        <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-2 sm:gap-3 hover:opacity-80 transition">
                             <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center text-white font-bold text-sm sm:text-base" style="background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);">
                                 {{ substr(auth()->user()->name, 0, 1) }}
                             </div>
@@ -204,7 +208,7 @@
                                 <p class="text-sm font-semibold text-gray-900">{{ auth()->user()->name }}</p>
                                 <p class="text-xs text-gray-500">{{ auth()->user()->getRoleNames()->first() ?? 'Admin' }}</p>
                             </div>
-                        </div>
+                        </a>
                     </div>
                 </div>
             </header>

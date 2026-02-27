@@ -44,7 +44,6 @@
             transform: translateY(-5px);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
         }
-        /* Mobile menu overlay */
         .mobile-menu-overlay {
             transition: opacity 0.3s ease;
         }
@@ -83,6 +82,13 @@
         $footerBlog = \App\Models\SiteSetting::get('footer_show_blog', true);
         $footerAbout = \App\Models\SiteSetting::get('footer_show_about', true);
         $footerContact = \App\Models\SiteSetting::get('footer_show_contact', true);
+        $megaCategories = \App\Models\Category::where('is_active', true)
+            ->with(['translations', 'products' => function($q) {
+                $q->where('is_active', true)->with(['translations', 'pricing'])->take(4);
+            }])
+            ->orderBy('sort_order')
+            ->take(6)
+            ->get();
     @endphp
     <!-- Top Announcement Bar - Marquee -->
     <div class="gradient-secondary text-black py-2 overflow-hidden">
@@ -104,8 +110,20 @@
         .marquee-wrap:hover .marquee-track { animation-play-state: paused; }
     </style>
 
+    <!-- Header + Mega Menu Wrapper (shared Alpine state) -->
+    <div x-data="{
+            mobileMenuOpen: false,
+            megaOpen: false,
+            headerH: 0,
+            megaTimer: null,
+            openMega() { clearTimeout(this.megaTimer); this.megaOpen = true; },
+            closeMega() { this.megaTimer = setTimeout(() => { this.megaOpen = false; }, 250); }
+         }"
+         x-init="$nextTick(() => headerH = $refs.mainHeader.offsetHeight)"
+         @resize.window="headerH = $refs.mainHeader.offsetHeight">
+
     <!-- Header -->
-    <header class="bg-white shadow-lg sticky top-0 z-50 border-b-4 border-primary-500 relative" x-data="{ mobileMenuOpen: false, megaOpen: false }">
+    <header x-ref="mainHeader" class="bg-white shadow-lg sticky top-0 z-50 border-b-4 border-primary-500">
         <div class="container mx-auto px-4">
             <!-- Top Bar - Hidden on mobile -->
             <div class="hidden md:block border-b border-gray-100 py-3">
@@ -121,6 +139,23 @@
                         </a>
                     </div>
                     <div class="flex items-center space-x-4">
+                        <!-- Social Icons -->
+                        <div class="flex items-center space-x-2 mr-2 border-r border-gray-200 pr-4">
+                            @if($facebookUrl)
+                            <a href="{{ $facebookUrl }}" target="_blank" class="w-8 h-8 bg-blue-600 hover:bg-blue-700 text-white rounded-full flex items-center justify-center transition text-xs">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            @endif
+                            @if($instagramUrl)
+                            <a href="{{ $instagramUrl }}" target="_blank" class="w-8 h-8 bg-gradient-to-br from-purple-500 via-pink-500 to-orange-400 hover:opacity-80 text-white rounded-full flex items-center justify-center transition text-xs">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            @endif
+                            <a href="https://wa.me/{{ $whatsappClean }}" target="_blank" class="w-8 h-8 bg-green-500 hover:bg-green-600 text-white rounded-full flex items-center justify-center transition text-xs">
+                                <i class="fab fa-whatsapp"></i>
+                            </a>
+                        </div>
+
                         <!-- Language Switcher -->
                         <a href="{{ route('locale.switch', 'en') }}" class="px-3 py-1 rounded-full transition {{ app()->getLocale() === 'en' ? 'bg-primary-500 text-white' : 'text-gray-600 hover:bg-gray-100' }}">
                             <i class="fas fa-globe mr-1"></i> English
@@ -133,7 +168,7 @@
             </div>
 
             <!-- Main Navigation -->
-            <nav class="py-3 md:py-5">
+            <nav class="py-3 md:py-4">
                 <div class="flex justify-between items-center">
                     <!-- Logo -->
                     <a href="{{ route('home') }}" class="flex items-center space-x-2 sm:space-x-3 group">
@@ -151,61 +186,48 @@
                     </a>
 
                     <!-- Desktop Navigation Links -->
-                    @php
-                        $megaCategories = \App\Models\Category::where('is_active', true)
-                            ->with(['translations', 'products' => function($q) {
-                                $q->where('is_active', true)->with(['translations', 'pricing'])->take(4);
-                            }])
-                            ->orderBy('sort_order')
-                            ->take(6)
-                            ->get();
-                    @endphp
-                    <div class="hidden lg:flex items-center space-x-8">
+                    <div class="hidden lg:flex items-center space-x-6">
                         @if($menuHome)
-                        <a href="{{ route('home') }}" class="text-gray-700 hover:text-primary-500 font-semibold transition relative group">
-                            {{ __('Home') }}
+                        <a href="{{ route('home') }}" class="text-gray-700 hover:text-primary-500 font-semibold transition relative group flex items-center gap-1.5">
+                            <i class="fas fa-home text-xs"></i>{{ __('Home') }}
                             <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-500 group-hover:w-full transition-all duration-300"></span>
                         </a>
                         @endif
 
                         @if($menuProducts)
-                        <!-- Products Mega Menu Trigger -->
-                        <div @mouseenter="megaOpen = true">
-                            <a href="{{ route('products.index') }}" class="text-gray-700 hover:text-primary-500 font-semibold transition relative group flex items-center gap-1">
-                                {{ __('Products') }}
-                                <i class="fas fa-chevron-down text-xs transition-transform duration-200" :class="megaOpen ? 'rotate-180' : ''"></i>
-                                <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-500 group-hover:w-full transition-all duration-300"></span>
-                            </a>
-                        </div>
+                        <a href="{{ route('products.index') }}" class="text-gray-700 hover:text-primary-500 font-semibold transition relative group flex items-center gap-1.5">
+                            <i class="fas fa-box text-xs"></i>{{ __('Products') }}
+                            <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-500 group-hover:w-full transition-all duration-300"></span>
+                        </a>
                         @endif
 
                         @if($menuCategories)
-                        <a href="{{ route('categories.index') }}" class="text-gray-700 hover:text-primary-500 font-semibold transition relative group">
-                            {{ __('Categories') }}
+                        <a href="{{ route('categories.index') }}" class="text-gray-700 hover:text-primary-500 font-semibold transition relative group flex items-center gap-1.5">
+                            <i class="fas fa-th-large text-xs"></i>{{ __('Categories') }}
                             <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-500 group-hover:w-full transition-all duration-300"></span>
                         </a>
                         @endif
                         @if($menuDeals)
-                        <a href="{{ route('deals.index') }}" class="text-gray-700 hover:text-primary-500 font-semibold transition relative group">
-                            {{ __('Deals') }}
+                        <a href="{{ route('deals.index') }}" class="text-gray-700 hover:text-red-500 font-semibold transition relative group flex items-center gap-1.5">
+                            <i class="fas fa-fire text-xs text-red-400"></i>{{ __('Deals') }}
                             <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-red-500 group-hover:w-full transition-all duration-300"></span>
                         </a>
                         @endif
                         @if($menuWholesale)
-                        <a href="{{ route('wholesale.info') }}" class="text-gray-700 hover:text-primary-500 font-semibold transition relative group">
-                            {{ __('Wholesale') }}
+                        <a href="{{ route('wholesale.info') }}" class="text-gray-700 hover:text-primary-500 font-semibold transition relative group flex items-center gap-1.5">
+                            <i class="fas fa-handshake text-xs"></i>{{ __('Wholesale') }}
                             <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-500 group-hover:w-full transition-all duration-300"></span>
                         </a>
                         @endif
                         @if($menuBlog)
-                        <a href="{{ route('blog.index') }}" class="text-gray-700 hover:text-primary-500 font-semibold transition relative group">
-                            {{ __('Blog') }}
+                        <a href="{{ route('blog.index') }}" class="text-gray-700 hover:text-primary-500 font-semibold transition relative group flex items-center gap-1.5">
+                            <i class="fas fa-blog text-xs"></i>{{ __('Blog') }}
                             <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-500 group-hover:w-full transition-all duration-300"></span>
                         </a>
                         @endif
                         @if($menuContact)
-                        <a href="{{ route('contact') }}" class="text-gray-700 hover:text-primary-500 font-semibold transition relative group">
-                            {{ __('Contact') }}
+                        <a href="{{ route('contact') }}" class="text-gray-700 hover:text-primary-500 font-semibold transition relative group flex items-center gap-1.5">
+                            <i class="fas fa-envelope text-xs"></i>{{ __('Contact') }}
                             <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-500 group-hover:w-full transition-all duration-300"></span>
                         </a>
                         @endif
@@ -215,10 +237,17 @@
                     <div class="flex items-center space-x-2 sm:space-x-4">
                         <livewire:cart-icon />
                         @auth
-                            <a href="{{ route('account.dashboard') }}" class="flex items-center space-x-2 px-3 sm:px-4 py-2 bg-gray-100 rounded-full hover:bg-primary-500 hover:text-white transition">
-                                <i class="fas fa-user"></i>
-                                <span class="hidden md:inline">{{ auth()->user()->name }}</span>
-                            </a>
+                            @if(auth()->user()->hasAnyRole(['super_admin', 'manager', 'sales_staff', 'inventory_staff']))
+                                <a href="{{ route('admin.dashboard') }}" class="flex items-center space-x-2 px-3 sm:px-4 py-2 bg-gray-100 rounded-full hover:bg-primary-500 hover:text-white transition">
+                                    <i class="fas fa-user-shield"></i>
+                                    <span class="hidden md:inline">{{ auth()->user()->name }}</span>
+                                </a>
+                            @else
+                                <a href="{{ route('account.dashboard') }}" class="flex items-center space-x-2 px-3 sm:px-4 py-2 bg-gray-100 rounded-full hover:bg-primary-500 hover:text-white transition">
+                                    <i class="fas fa-user"></i>
+                                    <span class="hidden md:inline">{{ auth()->user()->name }}</span>
+                                </a>
+                            @endif
                         @else
                             @if(\App\Models\SiteSetting::get('public_login_enabled', false))
                                 <a href="{{ route('login') }}" class="hidden sm:inline-flex px-6 py-2 bg-primary-500 text-white rounded-full font-semibold hover:bg-primary-600 transition shadow-md hover:shadow-lg">
@@ -244,76 +273,7 @@
             </nav>
         </div>
 
-        <!-- Mega Menu Backdrop -->
-        <div x-show="megaOpen" x-cloak @click="megaOpen = false"
-             class="hidden lg:block fixed inset-0 bg-black/20"
-             style="z-index: 9998; top: 0;"
-             x-transition:enter="transition ease-out duration-200"
-             x-transition:enter-start="opacity-0"
-             x-transition:enter-end="opacity-100"
-             x-transition:leave="transition ease-in duration-150"
-             x-transition:leave-start="opacity-100"
-             x-transition:leave-end="opacity-0"></div>
-
-        <!-- Desktop Mega Menu Dropdown (Full Width) -->
-        <div x-show="megaOpen" x-cloak
-             @mouseenter="megaOpen = true"
-             @mouseleave="megaOpen = false"
-             x-transition:enter="transition ease-out duration-200"
-             x-transition:enter-start="opacity-0 -translate-y-1"
-             x-transition:enter-end="opacity-100 translate-y-0"
-             x-transition:leave="transition ease-in duration-150"
-             x-transition:leave-start="opacity-100 translate-y-0"
-             x-transition:leave-end="opacity-0 -translate-y-1"
-             class="hidden lg:block absolute left-0 right-0 top-full bg-white shadow-2xl border-t border-gray-100"
-             style="z-index: 9999;">
-            <div class="container mx-auto px-4 py-6">
-                <!-- Categories Grid -->
-                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6">
-                    @foreach($megaCategories as $megaCat)
-                        <div>
-                            <a href="{{ route('categories.show', $megaCat->slug) }}" class="flex items-center gap-2 mb-3 group/cat">
-                                @if($megaCat->icon)
-                                    <div class="w-9 h-9 bg-primary-50 rounded-lg flex items-center justify-center text-primary-500 group-hover/cat:bg-primary-500 group-hover/cat:text-white transition">
-                                        <i class="{{ $megaCat->icon }} text-sm"></i>
-                                    </div>
-                                @endif
-                                <span class="font-bold text-gray-900 group-hover/cat:text-primary-500 transition text-sm">
-                                    {{ $megaCat->translate(app()->getLocale())->name }}
-                                </span>
-                            </a>
-                            <ul class="space-y-2">
-                                @foreach($megaCat->products as $megaProduct)
-                                    <li>
-                                        <a href="{{ route('products.show', $megaProduct->slug) }}" class="text-gray-500 hover:text-primary-500 text-xs transition flex items-center gap-1.5">
-                                            <span class="w-1 h-1 bg-gray-300 rounded-full flex-shrink-0"></span>
-                                            {{ Str::limit($megaProduct->translate(app()->getLocale())->name, 30) }}
-                                            @if($megaProduct->pricing && $megaProduct->pricing->isSaleActive())
-                                                <span class="bg-red-100 text-red-600 px-1.5 py-0.5 rounded text-[10px] font-bold flex-shrink-0">SALE</span>
-                                            @endif
-                                        </a>
-                                    </li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endforeach
-                </div>
-
-                <!-- Bottom Bar -->
-                <div class="mt-5 pt-4 border-t border-gray-100 flex items-center justify-between">
-                    <a href="{{ route('products.index') }}" class="text-primary-500 hover:text-primary-600 font-semibold text-sm flex items-center gap-2 transition">
-                        <i class="fas fa-th-large"></i>{{ __('View All Products') }}
-                        <i class="fas fa-arrow-right text-xs"></i>
-                    </a>
-                    <a href="{{ route('categories.index') }}" class="text-gray-500 hover:text-primary-500 font-semibold text-sm flex items-center gap-2 transition">
-                        <i class="fas fa-list"></i>{{ __('All Categories') }}
-                        <i class="fas fa-arrow-right text-xs"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Mobile Menu Panel -->
+        <!-- Mobile Menu Panel (stays inside header for sticky context) -->
         <div x-show="mobileMenuOpen" x-cloak
              x-transition:enter="transition ease-out duration-200"
              x-transition:enter-start="opacity-0 -translate-y-2"
@@ -323,7 +283,6 @@
              x-transition:leave-end="opacity-0 -translate-y-2"
              class="lg:hidden bg-white border-t border-gray-100 shadow-lg max-h-[80vh] overflow-y-auto">
             <div class="container mx-auto px-4 py-4">
-                <!-- Mobile Nav Links -->
                 <div class="space-y-1">
                     @if($menuHome)
                     <a href="{{ route('home') }}" class="block px-4 py-3 rounded-lg text-gray-700 hover:bg-primary-50 hover:text-primary-500 font-semibold transition">
@@ -332,7 +291,6 @@
                     @endif
 
                     @if($menuProducts)
-                    <!-- Mobile Products with Expandable Categories -->
                     <div x-data="{ productsOpen: false }">
                         <div class="flex items-center">
                             <a href="{{ route('products.index') }}" class="flex-1 block px-4 py-3 rounded-lg text-gray-700 hover:bg-primary-50 hover:text-primary-500 font-semibold transition">
@@ -344,16 +302,18 @@
                         </div>
                         <div x-show="productsOpen" x-cloak
                              x-transition:enter="transition ease-out duration-200"
-                             x-transition:enter-start="opacity-0 max-h-0"
-                             x-transition:enter-end="opacity-100 max-h-96"
+                             x-transition:enter-start="opacity-0"
+                             x-transition:enter-end="opacity-100"
                              x-transition:leave="transition ease-in duration-150"
                              x-transition:leave-start="opacity-100"
                              x-transition:leave-end="opacity-0"
-                             class="ml-8 space-y-1 pb-2 overflow-hidden">
+                             class="ml-8 space-y-1 pb-2">
                             @foreach($megaCategories as $mobileCat)
                                 <a href="{{ route('categories.show', $mobileCat->slug) }}" class="flex items-center gap-2 px-3 py-2.5 rounded-lg text-gray-600 hover:bg-primary-50 hover:text-primary-500 text-sm transition">
                                     @if($mobileCat->icon)
                                         <i class="{{ $mobileCat->icon }} text-primary-400 text-xs w-4"></i>
+                                    @else
+                                        <i class="fas fa-folder text-primary-400 text-xs w-4"></i>
                                     @endif
                                     {{ $mobileCat->translate(app()->getLocale())->name }}
                                 </a>
@@ -392,14 +352,13 @@
                     @endif
                 </div>
 
-                <!-- Mobile Contact & Language -->
                 <div class="mt-4 pt-4 border-t border-gray-100">
                     <div class="flex items-center space-x-4 mb-3 px-4">
                         <a href="tel:{{ preg_replace('/[^0-9+]/', '', $sitePhone) }}" class="text-gray-600 hover:text-primary-500 transition flex items-center text-sm">
                             <i class="fas fa-phone-alt mr-2"></i>{{ $sitePhone }}
                         </a>
                     </div>
-                    <div class="flex items-center space-x-3 px-4">
+                    <div class="flex items-center space-x-3 px-4 mb-3">
                         <a href="{{ route('locale.switch', 'en') }}" class="px-3 py-1 rounded-full text-sm transition {{ app()->getLocale() === 'en' ? 'bg-primary-500 text-white' : 'text-gray-600 bg-gray-100' }}">
                             English
                         </a>
@@ -407,10 +366,94 @@
                             اردو
                         </a>
                     </div>
+                    <!-- Social Icons (Mobile) -->
+                    <div class="flex items-center space-x-3 px-4">
+                        @if($facebookUrl)
+                        <a href="{{ $facebookUrl }}" target="_blank" class="w-9 h-9 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        @endif
+                        @if($instagramUrl)
+                        <a href="{{ $instagramUrl }}" target="_blank" class="w-9 h-9 bg-gradient-to-br from-purple-500 via-pink-500 to-orange-400 text-white rounded-full flex items-center justify-center text-sm">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        @endif
+                        <a href="https://wa.me/{{ $whatsappClean }}" target="_blank" class="w-9 h-9 bg-green-500 text-white rounded-full flex items-center justify-center text-sm">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
     </header>
+
+    {{-- Mega Menu commented out for now
+    <!-- Mega Menu Backdrop -->
+    <div x-show="megaOpen" x-cloak @click="megaOpen = false"
+         class="hidden lg:block fixed inset-0 bg-black/20"
+         style="z-index: 9998;"
+         x-transition:enter="transition ease-out duration-200"
+         x-transition:enter-start="opacity-0"
+         x-transition:enter-end="opacity-100"
+         x-transition:leave="transition ease-in duration-150"
+         x-transition:leave-start="opacity-100"
+         x-transition:leave-end="opacity-0"></div>
+
+    <!-- Desktop Mega Menu Panel -->
+    <div x-show="megaOpen" x-cloak
+         @mouseenter="openMega()"
+         @mouseleave="closeMega()"
+         x-transition:enter="transition ease-out duration-200"
+         x-transition:enter-start="opacity-0 -translate-y-1"
+         x-transition:enter-end="opacity-100 translate-y-0"
+         x-transition:leave="transition ease-in duration-150"
+         x-transition:leave-start="opacity-100 translate-y-0"
+         x-transition:leave-end="opacity-0 -translate-y-1"
+         class="hidden lg:block fixed left-0 right-0 bg-white shadow-2xl border-t border-gray-100 max-h-[70vh] overflow-y-auto"
+         :style="'z-index: 9999; top: ' + headerH + 'px;'">
+        <div class="container mx-auto px-4 py-6">
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6">
+                @foreach($megaCategories as $megaCat)
+                    <div>
+                        <a href="{{ route('categories.show', $megaCat->slug) }}" class="flex items-center gap-2 mb-3 group/cat">
+                            <div class="w-9 h-9 bg-primary-50 rounded-lg flex items-center justify-center text-primary-500 group-hover/cat:bg-primary-500 group-hover/cat:text-white transition">
+                                <i class="{{ $megaCat->icon ?: 'fas fa-folder' }} text-sm"></i>
+                            </div>
+                            <span class="font-bold text-gray-900 group-hover/cat:text-primary-500 transition text-sm">
+                                {{ $megaCat->translate(app()->getLocale())->name }}
+                            </span>
+                        </a>
+                        <ul class="space-y-2">
+                            @foreach($megaCat->products as $megaProduct)
+                                <li>
+                                    <a href="{{ route('products.show', $megaProduct->slug) }}" class="text-gray-500 hover:text-primary-500 text-xs transition flex items-center gap-1.5">
+                                        <span class="w-1 h-1 bg-gray-300 rounded-full flex-shrink-0"></span>
+                                        {{ Str::limit($megaProduct->translate(app()->getLocale())->name, 30) }}
+                                        @if($megaProduct->pricing && $megaProduct->pricing->isSaleActive())
+                                            <span class="bg-red-100 text-red-600 px-1.5 py-0.5 rounded text-[10px] font-bold flex-shrink-0">SALE</span>
+                                        @endif
+                                    </a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endforeach
+            </div>
+            <div class="mt-5 pt-4 border-t border-gray-100 flex items-center justify-between">
+                <a href="{{ route('products.index') }}" class="text-primary-500 hover:text-primary-600 font-semibold text-sm flex items-center gap-2 transition">
+                    <i class="fas fa-th-large"></i>{{ __('View All Products') }}
+                    <i class="fas fa-arrow-right text-xs"></i>
+                </a>
+                <a href="{{ route('categories.index') }}" class="text-gray-500 hover:text-primary-500 font-semibold text-sm flex items-center gap-2 transition">
+                    <i class="fas fa-list"></i>{{ __('All Categories') }}
+                    <i class="fas fa-arrow-right text-xs"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    --}}
+
+    </div><!-- End Header + Mega Menu Wrapper -->
 
     <!-- Main Content -->
     <main>
@@ -531,7 +574,7 @@
         </div>
     </footer>
 
-    <!-- WhatsApp Float Button - Modern Design -->
+    <!-- WhatsApp Float Button -->
     <a href="https://wa.me/{{ $whatsappClean }}" target="_blank"
        class="fixed bottom-6 right-6 bg-gradient-to-r from-green-400 to-green-600 text-white w-16 h-16 rounded-full shadow-2xl hover:scale-110 transition flex items-center justify-center z-50 animate__animated animate__pulse animate__infinite">
         <i class="fab fa-whatsapp text-3xl"></i>

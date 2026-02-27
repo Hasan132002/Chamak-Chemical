@@ -20,6 +20,25 @@
         </a>
     </div>
 
+    <!-- Search Bar -->
+    <div class="mb-4 sm:mb-6">
+        <form action="{{ route('admin.products.index') }}" method="GET" class="flex gap-2">
+            <div class="relative flex-1">
+                <input type="text" name="search" value="{{ request('search') }}" placeholder="Search by product name or SKU..."
+                       class="w-full px-4 py-3 pl-11 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-purple-500 transition">
+                <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+            </div>
+            <button type="submit" class="px-6 py-3 bg-purple-500 hover:bg-purple-600 text-white font-semibold rounded-xl transition">
+                <i class="fas fa-search mr-1"></i><span class="hidden sm:inline">Search</span>
+            </button>
+            @if(request('search'))
+                <a href="{{ route('admin.products.index') }}" class="px-4 py-3 bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold rounded-xl transition flex items-center">
+                    <i class="fas fa-times"></i>
+                </a>
+            @endif
+        </form>
+    </div>
+
     <!-- Products Table -->
     <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
         <div class="overflow-x-auto">

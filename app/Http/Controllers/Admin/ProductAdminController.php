@@ -12,11 +12,20 @@ use Illuminate\Support\Str;
 
 class ProductAdminController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::with(['category', 'translations', 'pricing'])
-            ->latest()
-            ->paginate(20);
+        $query = Product::with(['category', 'translations', 'pricing']);
+
+        if ($search = $request->input('search')) {
+            $query->where(function ($q) use ($search) {
+                $q->where('sku', 'like', "%{$search}%")
+                  ->orWhereHas('translations', function ($tq) use ($search) {
+                      $tq->where('name', 'like', "%{$search}%");
+                  });
+            });
+        }
+
+        $products = $query->latest()->paginate(20)->withQueryString();
 
         return view('admin.products.index', compact('products'));
     }

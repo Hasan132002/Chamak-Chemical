@@ -116,6 +116,21 @@ Route::middleware('auth')->group(function () {
         return view('admin.profile');
     })->name('admin.profile');
 
+    // Password Change
+    Route::get('/password', function () {
+        return view('admin.password.edit');
+    })->name('admin.password.edit');
+    Route::put('/password', function (\Illuminate\Http\Request $request) {
+        $request->validate([
+            'current_password' => ['required', 'current_password'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ]);
+        $request->user()->update([
+            'password' => \Illuminate\Support\Facades\Hash::make($request->password),
+        ]);
+        return redirect()->route('admin.password.edit')->with('success', 'Password updated successfully!');
+    })->name('admin.password.update');
+
     // Blog Management
     Route::prefix('blog')->name('admin.blog.')->group(function () {
         Route::get('/', [BlogAdminController::class, 'index'])->name('index');
