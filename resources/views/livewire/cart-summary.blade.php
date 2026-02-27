@@ -8,6 +8,16 @@
             <span class="text-gray-600">{{ __('Subtotal') }}</span>
             <span class="font-bold text-lg">PKR {{ number_format($subtotal, 0) }}</span>
         </div>
+
+        @if($discount > 0)
+        <div class="flex justify-between items-center pb-3 border-b text-green-600">
+            <span class="flex items-center gap-1">
+                <i class="fas fa-tag"></i>{{ __('Discount') }}
+            </span>
+            <span class="font-bold text-lg">- PKR {{ number_format($discount, 0) }}</span>
+        </div>
+        @endif
+
         <div class="flex justify-between items-center pb-3 border-b">
             <span class="text-gray-600">{{ __('Shipping') }}</span>
             <span class="font-bold text-lg">PKR {{ number_format($shipping, 0) }}</span>
@@ -20,11 +30,35 @@
 
     <!-- Coupon -->
     <div class="mb-6">
-        <input type="text" placeholder="{{ __('Coupon Code') }}"
-               class="w-full px-4 py-3 border-2 border-gray-300 rounded-xl mb-2 focus:outline-none focus:border-primary-500">
-        <button class="w-full bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold py-3 rounded-xl transition">
-            <i class="fas fa-tag mr-2"></i>{{ __('Apply Coupon') }}
-        </button>
+        @if($appliedCoupon)
+            <div class="flex items-center justify-between bg-green-50 border border-green-200 rounded-xl px-4 py-3 mb-2">
+                <div class="flex items-center gap-2">
+                    <i class="fas fa-check-circle text-green-500"></i>
+                    <span class="font-semibold text-green-700 text-sm">{{ $appliedCoupon['code'] }}</span>
+                </div>
+                <button wire:click="removeCoupon" class="text-red-500 hover:text-red-700 text-sm font-semibold">
+                    <i class="fas fa-times mr-1"></i>{{ __('Remove') }}
+                </button>
+            </div>
+        @else
+            <div class="flex gap-2">
+                <input type="text" wire:model="couponCode" wire:keydown.enter="applyCoupon"
+                       placeholder="{{ __('Coupon Code') }}"
+                       class="flex-1 px-4 py-3 border-2 border-gray-300 rounded-xl focus:outline-none focus:border-primary-500 uppercase">
+                <button wire:click="applyCoupon" wire:loading.attr="disabled"
+                        class="px-4 py-3 bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold rounded-xl transition">
+                    <span wire:loading.remove wire:target="applyCoupon"><i class="fas fa-tag mr-1"></i>{{ __('Apply') }}</span>
+                    <span wire:loading wire:target="applyCoupon"><i class="fas fa-spinner fa-spin"></i></span>
+                </button>
+            </div>
+        @endif
+
+        @if($couponMessage)
+            <p class="text-sm mt-2 {{ $couponError ? 'text-red-500' : 'text-green-600' }}">
+                <i class="fas {{ $couponError ? 'fa-exclamation-circle' : 'fa-check-circle' }} mr-1"></i>
+                {{ $couponMessage }}
+            </p>
+        @endif
     </div>
 
     <a href="{{ route('checkout.index') }}"

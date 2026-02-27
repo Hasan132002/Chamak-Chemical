@@ -214,6 +214,100 @@
             <p class="text-xs text-gray-500 mt-2">When disabled, the Login/Signup buttons will be hidden and /login, /register routes will show 404. Admin can still login via <strong>/admin/login</strong></p>
         </div>
 
+        <!-- Navigation Menu Visibility -->
+        <div class="mb-8">
+            <h3 class="text-xl font-bold text-gray-900 mb-6 flex items-center">
+                <i class="fas fa-bars text-indigo-500 mr-3"></i>
+                Navigation Menu Pages
+            </h3>
+            <p class="text-xs text-gray-500 mb-4">Select which pages to show in the top navigation menu</p>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <label class="flex items-center cursor-pointer p-3 bg-gray-50 rounded-lg hover:bg-indigo-50 transition">
+                    <input type="checkbox" name="menu_show_home" value="1" {{ old('menu_show_home', $settings['menu_show_home'] ?? true) ? 'checked' : '' }}
+                        class="w-5 h-5 text-indigo-600 border-gray-300 rounded focus:ring-2 focus:ring-indigo-500">
+                    <span class="ml-3 text-sm font-semibold text-gray-700"><i class="fas fa-home text-indigo-400 mr-1"></i>Home</span>
+                </label>
+                <label class="flex items-center cursor-pointer p-3 bg-gray-50 rounded-lg hover:bg-indigo-50 transition">
+                    <input type="checkbox" name="menu_show_products" value="1" {{ old('menu_show_products', $settings['menu_show_products'] ?? true) ? 'checked' : '' }}
+                        class="w-5 h-5 text-indigo-600 border-gray-300 rounded focus:ring-2 focus:ring-indigo-500">
+                    <span class="ml-3 text-sm font-semibold text-gray-700"><i class="fas fa-box text-indigo-400 mr-1"></i>Products</span>
+                </label>
+                <label class="flex items-center cursor-pointer p-3 bg-gray-50 rounded-lg hover:bg-indigo-50 transition">
+                    <input type="checkbox" name="menu_show_categories" value="1" {{ old('menu_show_categories', $settings['menu_show_categories'] ?? true) ? 'checked' : '' }}
+                        class="w-5 h-5 text-indigo-600 border-gray-300 rounded focus:ring-2 focus:ring-indigo-500">
+                    <span class="ml-3 text-sm font-semibold text-gray-700"><i class="fas fa-th-large text-indigo-400 mr-1"></i>Categories</span>
+                </label>
+                <label class="flex items-center cursor-pointer p-3 bg-gray-50 rounded-lg hover:bg-indigo-50 transition">
+                    <input type="checkbox" name="menu_show_deals" value="1" {{ old('menu_show_deals', $settings['menu_show_deals'] ?? true) ? 'checked' : '' }}
+                        class="w-5 h-5 text-indigo-600 border-gray-300 rounded focus:ring-2 focus:ring-indigo-500">
+                    <span class="ml-3 text-sm font-semibold text-gray-700"><i class="fas fa-fire text-red-400 mr-1"></i>Deals</span>
+                </label>
+                <label class="flex items-center cursor-pointer p-3 bg-gray-50 rounded-lg hover:bg-indigo-50 transition">
+                    <input type="checkbox" name="menu_show_wholesale" value="1" {{ old('menu_show_wholesale', $settings['menu_show_wholesale'] ?? true) ? 'checked' : '' }}
+                        class="w-5 h-5 text-indigo-600 border-gray-300 rounded focus:ring-2 focus:ring-indigo-500">
+                    <span class="ml-3 text-sm font-semibold text-gray-700"><i class="fas fa-handshake text-indigo-400 mr-1"></i>Wholesale</span>
+                </label>
+                <label class="flex items-center cursor-pointer p-3 bg-gray-50 rounded-lg hover:bg-indigo-50 transition">
+                    <input type="checkbox" name="menu_show_blog" value="1" {{ old('menu_show_blog', $settings['menu_show_blog'] ?? true) ? 'checked' : '' }}
+                        class="w-5 h-5 text-indigo-600 border-gray-300 rounded focus:ring-2 focus:ring-indigo-500">
+                    <span class="ml-3 text-sm font-semibold text-gray-700"><i class="fas fa-blog text-indigo-400 mr-1"></i>Blog</span>
+                </label>
+                <label class="flex items-center cursor-pointer p-3 bg-gray-50 rounded-lg hover:bg-indigo-50 transition">
+                    <input type="checkbox" name="menu_show_contact" value="1" {{ old('menu_show_contact', $settings['menu_show_contact'] ?? true) ? 'checked' : '' }}
+                        class="w-5 h-5 text-indigo-600 border-gray-300 rounded focus:ring-2 focus:ring-indigo-500">
+                    <span class="ml-3 text-sm font-semibold text-gray-700"><i class="fas fa-envelope text-indigo-400 mr-1"></i>Contact</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Footer Links Visibility -->
+        <div class="mb-8">
+            <h3 class="text-xl font-bold text-gray-900 mb-6 flex items-center">
+                <i class="fas fa-shoe-prints text-teal-500 mr-3"></i>
+                Footer Quick Links
+            </h3>
+            <p class="text-xs text-gray-500 mb-4">Select which pages to show in the footer quick links section</p>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <label class="flex items-center cursor-pointer p-3 bg-gray-50 rounded-lg hover:bg-teal-50 transition">
+                    <input type="checkbox" name="footer_show_products" value="1" {{ old('footer_show_products', $settings['footer_show_products'] ?? true) ? 'checked' : '' }}
+                        class="w-5 h-5 text-teal-600 border-gray-300 rounded focus:ring-2 focus:ring-teal-500">
+                    <span class="ml-3 text-sm font-semibold text-gray-700"><i class="fas fa-box text-teal-400 mr-1"></i>Products</span>
+                </label>
+                <label class="flex items-center cursor-pointer p-3 bg-gray-50 rounded-lg hover:bg-teal-50 transition">
+                    <input type="checkbox" name="footer_show_categories" value="1" {{ old('footer_show_categories', $settings['footer_show_categories'] ?? true) ? 'checked' : '' }}
+                        class="w-5 h-5 text-teal-600 border-gray-300 rounded focus:ring-2 focus:ring-teal-500">
+                    <span class="ml-3 text-sm font-semibold text-gray-700"><i class="fas fa-th-large text-teal-400 mr-1"></i>Categories</span>
+                </label>
+                <label class="flex items-center cursor-pointer p-3 bg-gray-50 rounded-lg hover:bg-teal-50 transition">
+                    <input type="checkbox" name="footer_show_deals" value="1" {{ old('footer_show_deals', $settings['footer_show_deals'] ?? true) ? 'checked' : '' }}
+                        class="w-5 h-5 text-teal-600 border-gray-300 rounded focus:ring-2 focus:ring-teal-500">
+                    <span class="ml-3 text-sm font-semibold text-gray-700"><i class="fas fa-fire text-red-400 mr-1"></i>Deals</span>
+                </label>
+                <label class="flex items-center cursor-pointer p-3 bg-gray-50 rounded-lg hover:bg-teal-50 transition">
+                    <input type="checkbox" name="footer_show_wholesale" value="1" {{ old('footer_show_wholesale', $settings['footer_show_wholesale'] ?? true) ? 'checked' : '' }}
+                        class="w-5 h-5 text-teal-600 border-gray-300 rounded focus:ring-2 focus:ring-teal-500">
+                    <span class="ml-3 text-sm font-semibold text-gray-700"><i class="fas fa-handshake text-teal-400 mr-1"></i>Wholesale</span>
+                </label>
+                <label class="flex items-center cursor-pointer p-3 bg-gray-50 rounded-lg hover:bg-teal-50 transition">
+                    <input type="checkbox" name="footer_show_blog" value="1" {{ old('footer_show_blog', $settings['footer_show_blog'] ?? true) ? 'checked' : '' }}
+                        class="w-5 h-5 text-teal-600 border-gray-300 rounded focus:ring-2 focus:ring-teal-500">
+                    <span class="ml-3 text-sm font-semibold text-gray-700"><i class="fas fa-blog text-teal-400 mr-1"></i>Blog</span>
+                </label>
+                <label class="flex items-center cursor-pointer p-3 bg-gray-50 rounded-lg hover:bg-teal-50 transition">
+                    <input type="checkbox" name="footer_show_about" value="1" {{ old('footer_show_about', $settings['footer_show_about'] ?? true) ? 'checked' : '' }}
+                        class="w-5 h-5 text-teal-600 border-gray-300 rounded focus:ring-2 focus:ring-teal-500">
+                    <span class="ml-3 text-sm font-semibold text-gray-700"><i class="fas fa-info-circle text-teal-400 mr-1"></i>About Us</span>
+                </label>
+                <label class="flex items-center cursor-pointer p-3 bg-gray-50 rounded-lg hover:bg-teal-50 transition">
+                    <input type="checkbox" name="footer_show_contact" value="1" {{ old('footer_show_contact', $settings['footer_show_contact'] ?? true) ? 'checked' : '' }}
+                        class="w-5 h-5 text-teal-600 border-gray-300 rounded focus:ring-2 focus:ring-teal-500">
+                    <span class="ml-3 text-sm font-semibold text-gray-700"><i class="fas fa-envelope text-teal-400 mr-1"></i>Contact</span>
+                </label>
+            </div>
+        </div>
+
         <!-- Submit -->
         <div>
             <button type="submit" class="px-6 sm:px-8 py-3 sm:py-4 rounded-xl text-white font-bold text-sm sm:text-lg shadow-lg hover-lift" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">

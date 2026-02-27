@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\DealAdminController;
 use App\Http\Controllers\Admin\BannerAdminController;
 use App\Http\Controllers\Admin\SettingsAdminController;
 use App\Http\Controllers\Admin\ContactLeadAdminController;
+use App\Http\Controllers\Admin\BlogAdminController;
 use Illuminate\Support\Facades\Route;
 
 // Admin Login (No Auth Required) - always accessible regardless of public_login_enabled setting
@@ -116,9 +117,14 @@ Route::middleware('auth')->group(function () {
     })->name('admin.profile');
 
     // Blog Management
-    Route::get('/blog', function () {
-        return view('admin.blog.index');
-    })->name('admin.blog.index');
+    Route::prefix('blog')->name('admin.blog.')->group(function () {
+        Route::get('/', [BlogAdminController::class, 'index'])->name('index');
+        Route::get('/create', [BlogAdminController::class, 'create'])->name('create');
+        Route::post('/', [BlogAdminController::class, 'store'])->name('store');
+        Route::get('/{post}/edit', [BlogAdminController::class, 'edit'])->name('edit');
+        Route::put('/{post}', [BlogAdminController::class, 'update'])->name('update');
+        Route::delete('/{post}', [BlogAdminController::class, 'destroy'])->name('destroy');
+    });
 
     // Coupons
     Route::get('/coupons', function () {

@@ -26,6 +26,21 @@ class SettingsAdminController extends Controller
             'facebook_url' => SiteSetting::get('facebook_url', ''),
             'instagram_url' => SiteSetting::get('instagram_url', ''),
             'twitter_url' => SiteSetting::get('twitter_url', ''),
+            // Menu & Footer Page Visibility
+            'menu_show_home' => SiteSetting::get('menu_show_home', true),
+            'menu_show_products' => SiteSetting::get('menu_show_products', true),
+            'menu_show_categories' => SiteSetting::get('menu_show_categories', true),
+            'menu_show_deals' => SiteSetting::get('menu_show_deals', true),
+            'menu_show_wholesale' => SiteSetting::get('menu_show_wholesale', true),
+            'menu_show_blog' => SiteSetting::get('menu_show_blog', true),
+            'menu_show_contact' => SiteSetting::get('menu_show_contact', true),
+            'footer_show_products' => SiteSetting::get('footer_show_products', true),
+            'footer_show_categories' => SiteSetting::get('footer_show_categories', true),
+            'footer_show_deals' => SiteSetting::get('footer_show_deals', true),
+            'footer_show_wholesale' => SiteSetting::get('footer_show_wholesale', true),
+            'footer_show_blog' => SiteSetting::get('footer_show_blog', true),
+            'footer_show_about' => SiteSetting::get('footer_show_about', true),
+            'footer_show_contact' => SiteSetting::get('footer_show_contact', true),
         ];
 
         return view('admin.settings.edit', compact('settings'));
@@ -63,6 +78,22 @@ class SettingsAdminController extends Controller
         SiteSetting::set('facebook_url', $validated['facebook_url'] ?? '', 'social');
         SiteSetting::set('instagram_url', $validated['instagram_url'] ?? '', 'social');
         SiteSetting::set('twitter_url', $validated['twitter_url'] ?? '', 'social');
+
+        // Menu & Footer Page Visibility
+        SiteSetting::set('menu_show_home', $request->has('menu_show_home'), 'menu');
+        SiteSetting::set('menu_show_products', $request->has('menu_show_products'), 'menu');
+        SiteSetting::set('menu_show_categories', $request->has('menu_show_categories'), 'menu');
+        SiteSetting::set('menu_show_deals', $request->has('menu_show_deals'), 'menu');
+        SiteSetting::set('menu_show_wholesale', $request->has('menu_show_wholesale'), 'menu');
+        SiteSetting::set('menu_show_blog', $request->has('menu_show_blog'), 'menu');
+        SiteSetting::set('menu_show_contact', $request->has('menu_show_contact'), 'menu');
+        SiteSetting::set('footer_show_products', $request->has('footer_show_products'), 'footer');
+        SiteSetting::set('footer_show_categories', $request->has('footer_show_categories'), 'footer');
+        SiteSetting::set('footer_show_deals', $request->has('footer_show_deals'), 'footer');
+        SiteSetting::set('footer_show_wholesale', $request->has('footer_show_wholesale'), 'footer');
+        SiteSetting::set('footer_show_blog', $request->has('footer_show_blog'), 'footer');
+        SiteSetting::set('footer_show_about', $request->has('footer_show_about'), 'footer');
+        SiteSetting::set('footer_show_contact', $request->has('footer_show_contact'), 'footer');
 
         // Handle logo upload
         if ($request->hasFile('site_logo')) {

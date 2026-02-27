@@ -139,11 +139,27 @@
                         </div>
 
                         <!-- Totals -->
+                        @php
+                            $checkoutSubtotal = $cart->items->sum(function ($item) {
+                                return $item->quantity * $item->product->pricing->getCurrentPrice();
+                            });
+                        @endphp
                         <div class="border-t pt-4 space-y-2">
                             <div class="flex justify-between">
                                 <span class="text-gray-600">{{ __('Subtotal') }}</span>
-                                <span class="font-semibold">PKR {{ number_format($cart->getTotal(), 0) }}</span>
+                                <span class="font-semibold">PKR {{ number_format($checkoutSubtotal, 0) }}</span>
                             </div>
+                            @if(isset($discountAmount) && $discountAmount > 0)
+                            <div class="flex justify-between text-green-600">
+                                <span class="flex items-center gap-1">
+                                    <i class="fas fa-tag text-xs"></i>{{ __('Discount') }}
+                                    @if(isset($coupon))
+                                        <span class="text-xs bg-green-100 px-2 py-0.5 rounded-full">{{ $coupon->code }}</span>
+                                    @endif
+                                </span>
+                                <span class="font-semibold">- PKR {{ number_format($discountAmount, 0) }}</span>
+                            </div>
+                            @endif
                             <div class="flex justify-between">
                                 <span class="text-gray-600">{{ __('Shipping') }}</span>
                                 <span class="font-semibold">PKR 200</span>
@@ -151,7 +167,7 @@
                             <div class="border-t pt-2">
                                 <div class="flex justify-between text-lg font-bold">
                                     <span>{{ __('Total') }}</span>
-                                    <span class="text-primary-500">PKR {{ number_format($cart->getTotal() + 200, 0) }}</span>
+                                    <span class="text-primary-500">PKR {{ number_format($checkoutSubtotal + 200 - ($discountAmount ?? 0), 0) }}</span>
                                 </div>
                             </div>
                         </div>

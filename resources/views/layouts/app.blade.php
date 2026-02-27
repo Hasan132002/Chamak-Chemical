@@ -68,6 +68,21 @@
         $facebookUrl = \App\Models\SiteSetting::get('facebook_url', '');
         $instagramUrl = \App\Models\SiteSetting::get('instagram_url', '');
         $twitterUrl = \App\Models\SiteSetting::get('twitter_url', '');
+        // Menu & Footer visibility
+        $menuHome = \App\Models\SiteSetting::get('menu_show_home', true);
+        $menuProducts = \App\Models\SiteSetting::get('menu_show_products', true);
+        $menuCategories = \App\Models\SiteSetting::get('menu_show_categories', true);
+        $menuDeals = \App\Models\SiteSetting::get('menu_show_deals', true);
+        $menuWholesale = \App\Models\SiteSetting::get('menu_show_wholesale', true);
+        $menuBlog = \App\Models\SiteSetting::get('menu_show_blog', true);
+        $menuContact = \App\Models\SiteSetting::get('menu_show_contact', true);
+        $footerProducts = \App\Models\SiteSetting::get('footer_show_products', true);
+        $footerCategories = \App\Models\SiteSetting::get('footer_show_categories', true);
+        $footerDeals = \App\Models\SiteSetting::get('footer_show_deals', true);
+        $footerWholesale = \App\Models\SiteSetting::get('footer_show_wholesale', true);
+        $footerBlog = \App\Models\SiteSetting::get('footer_show_blog', true);
+        $footerAbout = \App\Models\SiteSetting::get('footer_show_about', true);
+        $footerContact = \App\Models\SiteSetting::get('footer_show_contact', true);
     @endphp
     <!-- Top Announcement Bar - Marquee -->
     <div class="gradient-secondary text-black py-2 overflow-hidden">
@@ -146,11 +161,14 @@
                             ->get();
                     @endphp
                     <div class="hidden lg:flex items-center space-x-8">
+                        @if($menuHome)
                         <a href="{{ route('home') }}" class="text-gray-700 hover:text-primary-500 font-semibold transition relative group">
                             {{ __('Home') }}
                             <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-500 group-hover:w-full transition-all duration-300"></span>
                         </a>
+                        @endif
 
+                        @if($menuProducts)
                         <!-- Products Mega Menu Trigger -->
                         <div @mouseenter="megaOpen = true">
                             <a href="{{ route('products.index') }}" class="text-gray-700 hover:text-primary-500 font-semibold transition relative group flex items-center gap-1">
@@ -159,27 +177,38 @@
                                 <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-500 group-hover:w-full transition-all duration-300"></span>
                             </a>
                         </div>
+                        @endif
 
+                        @if($menuCategories)
                         <a href="{{ route('categories.index') }}" class="text-gray-700 hover:text-primary-500 font-semibold transition relative group">
                             {{ __('Categories') }}
                             <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-500 group-hover:w-full transition-all duration-300"></span>
                         </a>
+                        @endif
+                        @if($menuDeals)
                         <a href="{{ route('deals.index') }}" class="text-gray-700 hover:text-primary-500 font-semibold transition relative group">
                             {{ __('Deals') }}
                             <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-red-500 group-hover:w-full transition-all duration-300"></span>
                         </a>
+                        @endif
+                        @if($menuWholesale)
                         <a href="{{ route('wholesale.info') }}" class="text-gray-700 hover:text-primary-500 font-semibold transition relative group">
                             {{ __('Wholesale') }}
                             <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-500 group-hover:w-full transition-all duration-300"></span>
                         </a>
+                        @endif
+                        @if($menuBlog)
                         <a href="{{ route('blog.index') }}" class="text-gray-700 hover:text-primary-500 font-semibold transition relative group">
                             {{ __('Blog') }}
                             <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-500 group-hover:w-full transition-all duration-300"></span>
                         </a>
+                        @endif
+                        @if($menuContact)
                         <a href="{{ route('contact') }}" class="text-gray-700 hover:text-primary-500 font-semibold transition relative group">
                             {{ __('Contact') }}
                             <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-500 group-hover:w-full transition-all duration-300"></span>
                         </a>
+                        @endif
                     </div>
 
                     <!-- Cart, Auth & Hamburger -->
@@ -296,10 +325,13 @@
             <div class="container mx-auto px-4 py-4">
                 <!-- Mobile Nav Links -->
                 <div class="space-y-1">
+                    @if($menuHome)
                     <a href="{{ route('home') }}" class="block px-4 py-3 rounded-lg text-gray-700 hover:bg-primary-50 hover:text-primary-500 font-semibold transition">
                         <i class="fas fa-home mr-3 w-5"></i>{{ __('Home') }}
                     </a>
+                    @endif
 
+                    @if($menuProducts)
                     <!-- Mobile Products with Expandable Categories -->
                     <div x-data="{ productsOpen: false }">
                         <div class="flex items-center">
@@ -331,22 +363,33 @@
                             </a>
                         </div>
                     </div>
+                    @endif
 
+                    @if($menuCategories)
                     <a href="{{ route('categories.index') }}" class="block px-4 py-3 rounded-lg text-gray-700 hover:bg-primary-50 hover:text-primary-500 font-semibold transition">
                         <i class="fas fa-th-large mr-3 w-5"></i>{{ __('Categories') }}
                     </a>
+                    @endif
+                    @if($menuDeals)
                     <a href="{{ route('deals.index') }}" class="block px-4 py-3 rounded-lg text-gray-700 hover:bg-red-50 hover:text-red-500 font-semibold transition">
                         <i class="fas fa-fire mr-3 w-5"></i>{{ __('Deals') }}
                     </a>
+                    @endif
+                    @if($menuWholesale)
                     <a href="{{ route('wholesale.info') }}" class="block px-4 py-3 rounded-lg text-gray-700 hover:bg-primary-50 hover:text-primary-500 font-semibold transition">
                         <i class="fas fa-handshake mr-3 w-5"></i>{{ __('Wholesale') }}
                     </a>
+                    @endif
+                    @if($menuBlog)
                     <a href="{{ route('blog.index') }}" class="block px-4 py-3 rounded-lg text-gray-700 hover:bg-primary-50 hover:text-primary-500 font-semibold transition">
                         <i class="fas fa-blog mr-3 w-5"></i>{{ __('Blog') }}
                     </a>
+                    @endif
+                    @if($menuContact)
                     <a href="{{ route('contact') }}" class="block px-4 py-3 rounded-lg text-gray-700 hover:bg-primary-50 hover:text-primary-500 font-semibold transition">
                         <i class="fas fa-envelope mr-3 w-5"></i>{{ __('Contact') }}
                     </a>
+                    @endif
                 </div>
 
                 <!-- Mobile Contact & Language -->
@@ -416,13 +459,27 @@
                         {{ __('Quick Links') }}
                     </h4>
                     <ul class="space-y-3">
+                        @if($footerProducts)
                         <li><a href="{{ route('products.index') }}" class="text-gray-400 hover:text-white hover:translate-x-2 inline-block transition"><i class="fas fa-chevron-right mr-2 text-xs"></i>{{ __('Products') }}</a></li>
+                        @endif
+                        @if($footerCategories)
                         <li><a href="{{ route('categories.index') }}" class="text-gray-400 hover:text-white hover:translate-x-2 inline-block transition"><i class="fas fa-chevron-right mr-2 text-xs"></i>{{ __('Categories') }}</a></li>
+                        @endif
+                        @if($footerDeals)
                         <li><a href="{{ route('deals.index') }}" class="text-gray-400 hover:text-white hover:translate-x-2 inline-block transition"><i class="fas fa-chevron-right mr-2 text-xs"></i>{{ __('Deals') }}</a></li>
+                        @endif
+                        @if($footerWholesale)
                         <li><a href="{{ route('wholesale.info') }}" class="text-gray-400 hover:text-white hover:translate-x-2 inline-block transition"><i class="fas fa-chevron-right mr-2 text-xs"></i>{{ __('Wholesale') }}</a></li>
+                        @endif
+                        @if($footerBlog)
                         <li><a href="{{ route('blog.index') }}" class="text-gray-400 hover:text-white hover:translate-x-2 inline-block transition"><i class="fas fa-chevron-right mr-2 text-xs"></i>{{ __('Blog') }}</a></li>
+                        @endif
+                        @if($footerAbout)
                         <li><a href="{{ route('about') }}" class="text-gray-400 hover:text-white hover:translate-x-2 inline-block transition"><i class="fas fa-chevron-right mr-2 text-xs"></i>{{ __('About Us') }}</a></li>
+                        @endif
+                        @if($footerContact)
                         <li><a href="{{ route('contact') }}" class="text-gray-400 hover:text-white hover:translate-x-2 inline-block transition"><i class="fas fa-chevron-right mr-2 text-xs"></i>{{ __('Contact') }}</a></li>
+                        @endif
                     </ul>
                 </div>
 
@@ -432,9 +489,9 @@
                         <i class="fas fa-th-large mr-2 text-secondary-500"></i>
                         {{ __('Categories') }}
                     </h4>
-                    @php $footerCategories = \App\Models\Category::where('is_active', true)->orderBy('sort_order')->take(6)->get(); @endphp
+                    @php $footerCatItems = \App\Models\Category::where('is_active', true)->orderBy('sort_order')->take(6)->get(); @endphp
                     <ul class="space-y-3">
-                        @foreach($footerCategories as $footerCat)
+                        @foreach($footerCatItems as $footerCat)
                             <li><a href="{{ route('categories.show', $footerCat->slug) }}" class="text-gray-400 hover:text-white hover:translate-x-2 inline-block transition"><i class="fas fa-chevron-right mr-2 text-xs"></i>{{ $footerCat->translate(app()->getLocale())->name }}</a></li>
                         @endforeach
                     </ul>

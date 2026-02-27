@@ -53,12 +53,20 @@ Route::get('/deals', [DealController::class, 'index'])->name('deals.index');
 Route::get('/track-order', [AppHttpControllersOrderTrackingController::class, 'index'])->name('orders.track');
 Route::post('/track-order', [AppHttpControllersOrderTrackingController::class, 'track'])->name('orders.track.search');
 Route::get('/blog', function () {
-    $posts = \App\Models\BlogPost::with('translations', 'author')
+    $posts = \App\Models\BlogPost::with('translations', 'author', 'categories.translations')
         ->published()
         ->latest('published_at')
         ->paginate(12);
     return view('blog.index', compact('posts'));
 })->name('blog.index');
+Route::get('/blog/{slug}', function ($slug) {
+    $post = \App\Models\BlogPost::where('slug', $slug)
+        ->with('translations', 'author', 'categories.translations')
+        ->published()
+        ->firstOrFail();
+    $post->increment('view_count');
+    return view('blog.show', compact('post'));
+})->name('blog.show');
 Route::get('/contact', function () { return view('contact'); })->name('contact');
 Route::post('/contact', [\App\Http\Controllers\ContactController::class, 'store'])->name('contact.store');
 Route::get('/about', function () { return view('about'); })->name('about');

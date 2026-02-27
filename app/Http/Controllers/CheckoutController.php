@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
+use App\Models\Coupon;
+use App\Models\CouponUsage;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\OrderStatusHistory;
@@ -30,7 +32,22 @@ class CheckoutController extends Controller
             return redirect()->route('cart.index')->with('error', __('Your cart is empty'));
         }
 
-        return view('checkout.index', compact('cart'));
+        // Get applied coupon from session
+        $appliedCoupon = session('applied_coupon');
+        $coupon = null;
+        $discountAmount = 0;
+
+        if ($appliedCoupon) {
+            $coupon = Coupon::find($appliedCoupon['id']);
+            if ($coupon && $coupon->isValid()) {
+                $subtotal = $cart->items->sum(function ($item) {
+                    return $item->quantity * $item->product->pricing->getCurrentPrice();
+                });
+                $discountAmount = $coupon->calculateDiscount($subtotal);
+            }
+        }
+
+        return view('checkout.index', compact('cart', 'coupon', 'discountAmount'));
     }
 
     public function process(Request $request)
@@ -79,15 +96,30 @@ class CheckoutController extends Controller
         DB::beginTransaction();
         try {
             // Calculate totals
-            $subtotal = $cart->getTotal();
-            $shippingAmount = 200; // Fixed for now
+            $subtotal = $cart->items->sum(function ($item) {
+                return $item->quantity * $item->product->pricing->getCurrentPrice();
+            });
+            $shippingAmount = 200;
             $taxAmount = 0;
             $discountAmount = 0;
+            $couponId = null;
+
+            // Apply coupon from session
+            $appliedCoupon = session('applied_coupon');
+            if ($appliedCoupon) {
+                $coupon = Coupon::find($appliedCoupon['id']);
+                if ($coupon && $coupon->isValid()) {
+                    $discountAmount = $coupon->calculateDiscount($subtotal);
+                    $couponId = $coupon->id;
+                }
+            }
+
             $totalAmount = $subtotal + $shippingAmount + $taxAmount - $discountAmount;
 
             // Create order
             $order = Order::create([
                 'user_id' => $userId,
+                'coupon_id' => $couponId,
                 'order_type' => 'retail',
                 'status' => 'pending',
                 'payment_method' => $validated['payment_method'],
@@ -133,6 +165,17 @@ class CheckoutController extends Controller
                 $item->product->decrement('stock_quantity', $item->quantity);
             }
 
+            // Update coupon usage
+            if ($couponId) {
+                Coupon::where('id', $couponId)->increment('used_count');
+                CouponUsage::create([
+                    'coupon_id' => $couponId,
+                    'user_id' => $userId,
+                    'order_id' => $order->id,
+                    'discount_amount' => $discountAmount,
+                ]);
+            }
+
             // Create status history
             OrderStatusHistory::create([
                 'order_id' => $order->id,
@@ -141,9 +184,10 @@ class CheckoutController extends Controller
                 'changed_by' => $userId,
             ]);
 
-            // Clear cart
+            // Clear cart and coupon session
             $cart->items()->delete();
             $cart->delete();
+            session()->forget('applied_coupon');
 
             DB::commit();
 

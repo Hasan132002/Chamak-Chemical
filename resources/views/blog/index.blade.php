@@ -54,7 +54,7 @@
 
                             <!-- Title -->
                             <h2 class="text-xl font-bold text-gray-900 mb-3 hover:text-primary-600 transition line-clamp-2">
-                                <a href="#">{{ $translation->title ?? 'Untitled' }}</a>
+                                <a href="{{ route('blog.show', $post->slug) }}">{{ $translation->title ?? 'Untitled' }}</a>
                             </h2>
 
                             <!-- Excerpt -->
@@ -75,7 +75,7 @@
                             </div>
 
                             <!-- Read More -->
-                            <a href="#" class="mt-4 inline-block text-primary-600 hover:text-primary-700 font-semibold text-sm">
+                            <a href="{{ route('blog.show', $post->slug) }}" class="mt-4 inline-block text-primary-600 hover:text-primary-700 font-semibold text-sm">
                                 {{ __('Read More') }} <i class="fas fa-arrow-right ml-1"></i>
                             </a>
                         </div>
