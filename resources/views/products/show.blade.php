@@ -22,14 +22,69 @@
 
     <div class="container mx-auto px-4 py-8">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            <!-- Product Images -->
-            <div>
-                <div class="bg-white rounded-lg shadow-md overflow-hidden mb-4">
+            <!-- Product Images - Auto Slider -->
+            <div x-data="{
+                currentSlide: 0,
+                images: [
                     @if($product->featured_image)
-                        <img src="{{ asset('storage/' . $product->featured_image) }}"
-                             alt="{{ $product->translate(app()->getLocale())->name }}"
-                             class="w-full h-auto">
-                    @else
+                        '{{ asset('storage/' . $product->featured_image) }}',
+                    @endif
+                    @if($product->gallery_images && count($product->gallery_images) > 0)
+                        @foreach($product->gallery_images as $image)
+                            '{{ asset('storage/' . $image) }}',
+                        @endforeach
+                    @endif
+                ],
+                autoplayInterval: null,
+                startAutoplay() {
+                    this.autoplayInterval = setInterval(() => { this.next() }, 3000);
+                },
+                stopAutoplay() {
+                    clearInterval(this.autoplayInterval);
+                },
+                next() {
+                    this.currentSlide = (this.currentSlide + 1) % this.images.length;
+                },
+                prev() {
+                    this.currentSlide = (this.currentSlide - 1 + this.images.length) % this.images.length;
+                },
+                goTo(index) {
+                    this.currentSlide = index;
+                    this.stopAutoplay();
+                    this.startAutoplay();
+                }
+            }" x-init="if(images.length > 1) startAutoplay()" @mouseenter="stopAutoplay()" @mouseleave="if(images.length > 1) startAutoplay()">
+                <div class="bg-white rounded-2xl shadow-md overflow-hidden mb-4 relative group">
+                    <template x-if="images.length > 0">
+                        <div class="relative">
+                            <img :src="images[currentSlide]"
+                                 alt="{{ $product->translate(app()->getLocale())->name }}"
+                                 class="w-full h-[400px] sm:h-[500px] object-contain bg-gray-50 transition-opacity duration-500">
+
+                            <!-- Prev/Next Buttons -->
+                            <template x-if="images.length > 1">
+                                <div>
+                                    <button @click="prev(); stopAutoplay(); startAutoplay();"
+                                            class="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/80 hover:bg-white rounded-full shadow-lg flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                        <i class="fas fa-chevron-left text-gray-700"></i>
+                                    </button>
+                                    <button @click="next(); stopAutoplay(); startAutoplay();"
+                                            class="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/80 hover:bg-white rounded-full shadow-lg flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                        <i class="fas fa-chevron-right text-gray-700"></i>
+                                    </button>
+                                </div>
+                            </template>
+
+                            <!-- Slide Counter -->
+                            <template x-if="images.length > 1">
+                                <div class="absolute bottom-3 right-3 bg-black/50 text-white text-xs px-3 py-1 rounded-full">
+                                    <span x-text="(currentSlide + 1) + ' / ' + images.length"></span>
+                                </div>
+                            </template>
+                        </div>
+                    </template>
+
+                    <template x-if="images.length === 0">
                         @php
                             $gradients = [
                                 'from-blue-500 via-indigo-600 to-purple-700',
@@ -43,16 +98,19 @@
                         <div class="w-full h-96 bg-gradient-to-br {{ $gradient }} flex items-center justify-center">
                             <i class="fas fa-flask text-white text-9xl opacity-30"></i>
                         </div>
-                    @endif
+                    </template>
                 </div>
 
-                @if($product->gallery_images && count($product->gallery_images) > 0)
-                    <div class="grid grid-cols-4 gap-2">
-                        @foreach($product->gallery_images as $image)
-                            <img src="{{ asset('storage/' . $image) }}" alt="Gallery image" class="w-full h-24 object-cover rounded-lg cursor-pointer hover:opacity-75">
-                        @endforeach
+                <!-- Thumbnails -->
+                <template x-if="images.length > 1">
+                    <div class="grid gap-2" :style="'grid-template-columns: repeat(' + Math.min(images.length, 5) + ', 1fr)'">
+                        <template x-for="(img, index) in images" :key="index">
+                            <img :src="img" @click="goTo(index)"
+                                 :class="currentSlide === index ? 'ring-2 ring-primary-500 opacity-100' : 'opacity-60 hover:opacity-100'"
+                                 class="w-full h-20 sm:h-24 object-cover rounded-lg cursor-pointer transition-all">
+                        </template>
                     </div>
-                @endif
+                </template>
             </div>
 
             <!-- Product Details -->
