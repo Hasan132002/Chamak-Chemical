@@ -21,7 +21,7 @@
 
             <div class="bg-white rounded-2xl shadow-2xl p-10">
                 <div class="text-center mb-8">
-                    <div class="w-20 h-20 bg-gradient-primary rounded-full flex items-center justify-center mx-auto mb-4">
+                    <div class="w-20 h-20 gradient-primary rounded-full flex items-center justify-center mx-auto mb-4">
                         <i class="fas fa-search text-white text-3xl"></i>
                     </div>
                     <h2 class="text-3xl font-bold mb-2">{{ __('Find Your Order') }}</h2>

@@ -21,7 +21,7 @@
 
                 <div class="space-y-6">
                     <div class="flex items-start gap-4">
-                        <div class="w-14 h-14 bg-gradient-primary rounded-xl flex items-center justify-center flex-shrink-0">
+                        <div class="w-14 h-14 gradient-primary rounded-xl flex items-center justify-center flex-shrink-0">
                             <i class="fas fa-phone-alt text-white text-xl"></i>
                         </div>
                         <div>
@@ -31,7 +31,7 @@
                     </div>
 
                     <div class="flex items-start gap-4">
-                        <div class="w-14 h-14 bg-gradient-secondary rounded-xl flex items-center justify-center flex-shrink-0">
+                        <div class="w-14 h-14 gradient-secondary rounded-xl flex items-center justify-center flex-shrink-0">
                             <i class="fas fa-envelope text-white text-xl"></i>
                         </div>
                         <div>

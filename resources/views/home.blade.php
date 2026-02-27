@@ -106,7 +106,7 @@
                         <i class="fas fa-shopping-bag mr-2"></i>{{ __('Shop Now') }}
                         <i class="fas fa-arrow-right ml-2"></i>
                     </a>
-                    <a href="{{ route('wholesale.register') }}" class="px-8 py-4 bg-gradient-secondary text-white font-bold rounded-xl transition shadow-2xl hover-lift text-lg">
+                    <a href="{{ route('wholesale.register') }}" class="px-8 py-4 gradient-secondary text-white font-bold rounded-xl transition shadow-2xl hover-lift text-lg">
                         <i class="fas fa-handshake mr-2"></i>{{ __('Wholesale Inquiry') }}
                     </a>
                 </div>
@@ -230,7 +230,7 @@
                             <div class="relative overflow-hidden">
                                 @if($product->pricing->isSaleActive())
                                     <div class="absolute top-3 right-3 z-10">
-                                        <span class="bg-gradient-secondary text-white px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-bold shadow-lg animate-pulse">
+                                        <span class="gradient-secondary text-white px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-bold shadow-lg animate-pulse">
                                             {{ number_format((($product->pricing->retail_price - $product->pricing->sale_price) / $product->pricing->retail_price) * 100, 0) }}% {{ __('OFF') }}
                                         </span>
                                     </div>
@@ -272,7 +272,7 @@
                                             <div class="text-primary-500 font-bold text-xl">PKR {{ number_format($product->pricing->retail_price, 0) }}</div>
                                         @endif
                                     </div>
-                                    <a href="{{ route('products.show', $product->slug) }}" class="bg-gradient-primary text-white px-5 py-2.5 rounded-lg font-semibold hover:shadow-lg transition group">
+                                    <a href="{{ route('products.show', $product->slug) }}" class="gradient-primary text-white px-5 py-2.5 rounded-lg font-semibold hover:shadow-lg transition group">
                                         <i class="fas fa-eye mr-2"></i>{{ __('View') }}
                                     </a>
                                 </div>
@@ -319,14 +319,14 @@
             </div>
             <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-8">
                 <div class="bg-white rounded-2xl p-4 sm:p-8 text-center hover-lift shadow-lg group">
-                    <div class="w-14 h-14 sm:w-20 sm:h-20 bg-gradient-primary rounded-xl sm:rounded-2xl flex items-center justify-center mx-auto mb-3 sm:mb-6 group-hover:scale-110 group-hover:rotate-6 transition-all shadow-xl">
+                    <div class="w-14 h-14 sm:w-20 sm:h-20 gradient-primary rounded-xl sm:rounded-2xl flex items-center justify-center mx-auto mb-3 sm:mb-6 group-hover:scale-110 group-hover:rotate-6 transition-all shadow-xl">
                         <i class="fas fa-certificate text-xl sm:text-3xl text-white"></i>
                     </div>
                     <h3 class="font-bold text-sm sm:text-xl mb-1 sm:mb-3 text-gray-900">{{ __('Quality Products') }}</h3>
                     <p class="text-gray-600 leading-relaxed text-xs sm:text-base hidden sm:block">{{ __('Lab-tested and certified chemicals meeting international standards') }}</p>
                 </div>
                 <div class="bg-white rounded-2xl p-4 sm:p-8 text-center hover-lift shadow-lg group">
-                    <div class="w-14 h-14 sm:w-20 sm:h-20 bg-gradient-secondary rounded-xl sm:rounded-2xl flex items-center justify-center mx-auto mb-3 sm:mb-6 group-hover:scale-110 group-hover:rotate-6 transition-all shadow-xl">
+                    <div class="w-14 h-14 sm:w-20 sm:h-20 gradient-secondary rounded-xl sm:rounded-2xl flex items-center justify-center mx-auto mb-3 sm:mb-6 group-hover:scale-110 group-hover:rotate-6 transition-all shadow-xl">
                         <i class="fas fa-shipping-fast text-xl sm:text-3xl text-white"></i>
                     </div>
                     <h3 class="font-bold text-sm sm:text-xl mb-1 sm:mb-3 text-gray-900">{{ __('Fast Delivery') }}</h3>

@@ -15,7 +15,7 @@
             <!-- Sidebar -->
             <div class="bg-white rounded-2xl shadow-lg p-6">
                 <div class="text-center mb-6">
-                    <div class="w-24 h-24 bg-gradient-primary rounded-full flex items-center justify-center mx-auto mb-4">
+                    <div class="w-24 h-24 gradient-primary rounded-full flex items-center justify-center mx-auto mb-4">
                         <i class="fas fa-user text-white text-4xl"></i>
                     </div>
                     <h3 class="font-bold text-xl">{{ auth()->user()->name }}</h3>

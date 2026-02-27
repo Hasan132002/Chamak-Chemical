@@ -59,7 +59,7 @@
 </head>
 <body class="antialiased bg-gray-50">
     <!-- Top Announcement Bar - Marquee -->
-    <div class="bg-gradient-secondary text-white py-2 overflow-hidden">
+    <div class="gradient-secondary text-black py-2 overflow-hidden">
         <div class="marquee-wrap">
             <div class="marquee-track">
                 @php $bannerText = \App\Models\SiteSetting::get('delivery_banner_text', __('Special Offer: Free Shipping on Orders Above PKR 5,000!')); @endphp
@@ -111,7 +111,7 @@
                 <div class="flex justify-between items-center">
                     <!-- Logo -->
                     <a href="{{ route('home') }}" class="flex items-center space-x-2 sm:space-x-3 group">
-                        <div class="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-primary rounded-xl flex items-center justify-center text-white text-xl sm:text-2xl font-bold shadow-lg group-hover:scale-110 transition">
+                        <div class="w-10 h-10 sm:w-12 sm:h-12 gradient-primary rounded-xl flex items-center justify-center text-white text-xl sm:text-2xl font-bold shadow-lg group-hover:scale-110 transition">
                             <i class="fas fa-flask"></i>
                         </div>
                         <div>
@@ -250,7 +250,7 @@
                 <!-- About -->
                 <div class="space-y-4">
                     <div class="flex items-center space-x-3 mb-4">
-                        <div class="w-10 h-10 bg-gradient-primary rounded-lg flex items-center justify-center">
+                        <div class="w-10 h-10 gradient-primary rounded-lg flex items-center justify-center">
                             <i class="fas fa-flask text-white text-xl"></i>
                         </div>
                         <h3 class="text-2xl font-bold">Chamak</h3>
@@ -311,7 +311,7 @@
                         @csrf
                         <input type="email" name="email" placeholder="{{ __('Your email') }}" required
                                class="flex-1 px-4 py-3 rounded-l-lg bg-white/10 border border-white/20 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-secondary-500">
-                        <button type="submit" class="bg-gradient-secondary hover:opacity-90 px-6 py-3 rounded-r-lg font-semibold transition">
+                        <button type="submit" class="gradient-secondary hover:opacity-90 px-6 py-3 rounded-r-lg font-semibold transition">
                             <i class="fas fa-paper-plane"></i>
                         </button>
                     </form>

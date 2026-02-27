@@ -14,7 +14,7 @@
         <div class="max-w-4xl mx-auto">
             <div class="bg-white rounded-2xl shadow-lg p-6 sm:p-12">
                 <div class="text-center mb-12">
-                    <div class="w-24 h-24 bg-gradient-primary rounded-full flex items-center justify-center mx-auto mb-6">
+                    <div class="w-24 h-24 gradient-primary rounded-full flex items-center justify-center mx-auto mb-6">
                         <i class="fas fa-flask text-5xl text-white"></i>
                     </div>
                     <h2 class="text-2xl sm:text-4xl font-bold mb-4">Chamak Chemicals</h2>

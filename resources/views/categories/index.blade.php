@@ -16,7 +16,7 @@
                 <a href="{{ route('categories.show', $category->slug) }}" class="group">
                     <div class="bg-white rounded-2xl shadow-lg p-6 sm:p-10 hover-lift border-2 border-transparent hover:border-primary-500 transition-all">
                         <div class="text-center">
-                            <div class="w-24 h-24 bg-gradient-primary rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 group-hover:rotate-6 transition-all">
+                            <div class="w-24 h-24 gradient-primary rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 group-hover:rotate-6 transition-all">
                                 <i class="fas fa-flask text-5xl text-white"></i>
                             </div>
                             <h3 class="text-2xl font-bold text-gray-900 mb-3 group-hover:text-primary-500 transition">
