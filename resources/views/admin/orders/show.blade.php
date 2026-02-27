@@ -148,8 +148,14 @@
                         </select>
                     </div>
 
-                    <button type="submit" class="w-full px-4 py-3 rounded-xl text-white font-bold shadow-lg hover-lift" style="background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);">
-                        <i class="fas fa-sync mr-2"></i>Update Status
+                    <div class="mb-4">
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Notes (Optional)</label>
+                        <textarea name="notes" rows="2" placeholder="Add a note about this status change..."
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"></textarea>
+                    </div>
+
+                    <button type="submit" class="w-full px-4 py-3 rounded-xl text-white font-bold shadow-lg hover-lift text-sm sm:text-base" style="background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);">
+                        <i class="fas fa-sync mr-2"></i>Update & Notify Customer
                     </button>
                 </form>
             </div>
@@ -207,22 +213,65 @@
             </div>
 
             <!-- Quick Actions -->
-            <div class="bg-white rounded-2xl shadow-lg p-6">
-                <h3 class="text-xl font-bold text-gray-900 mb-6 flex items-center">
+            <div class="bg-white rounded-2xl shadow-lg p-4 sm:p-6">
+                <h3 class="text-lg sm:text-xl font-bold text-gray-900 mb-4 sm:mb-6 flex items-center">
                     <i class="fas fa-bolt text-yellow-500 mr-3"></i>
                     Quick Actions
                 </h3>
 
                 <div class="space-y-3">
+                    @php
+                        $customerPhone = is_array($order->shipping_address) ? ($order->shipping_address['phone'] ?? '') : '';
+                        $customerPhone = preg_replace('/[^0-9]/', '', $customerPhone);
+                        if (!str_starts_with($customerPhone, '92') && str_starts_with($customerPhone, '0')) {
+                            $customerPhone = '92' . substr($customerPhone, 1);
+                        }
+                        $orderMsg = urlencode("Hi! Regarding your order #{$order->order_number} (PKR " . number_format($order->total_amount, 0) . ") - ");
+                    @endphp
+                    <a href="https://wa.me/{{ $customerPhone }}?text={{ $orderMsg }}" target="_blank"
+                       class="block w-full px-4 py-3 bg-green-500 hover:bg-green-600 text-white font-semibold rounded-lg transition text-center">
+                        <i class="fab fa-whatsapp mr-2"></i>Message Customer
+                    </a>
                     <button onclick="window.print()" class="w-full px-4 py-3 bg-purple-500 hover:bg-purple-600 text-white font-semibold rounded-lg transition">
                         <i class="fas fa-print mr-2"></i>Print Invoice
                     </button>
-                    <button class="w-full px-4 py-3 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-lg transition">
-                        <i class="fas fa-envelope mr-2"></i>Email Customer
-                    </button>
                 </div>
             </div>
+
+            <!-- WhatsApp Message Log -->
+            @if($order->whatsappMessages && $order->whatsappMessages->count() > 0)
+            <div class="bg-white rounded-2xl shadow-lg p-4 sm:p-6">
+                <h3 class="text-lg sm:text-xl font-bold text-gray-900 mb-4 sm:mb-6 flex items-center">
+                    <i class="fab fa-whatsapp text-green-500 mr-3"></i>
+                    WhatsApp Log
+                </h3>
+
+                <div class="space-y-3 max-h-64 overflow-y-auto">
+                    @foreach($order->whatsappMessages->sortByDesc('created_at') as $msg)
+                        <div class="bg-gray-50 rounded-lg p-3 border-l-4 {{ $msg->status === 'sent' ? 'border-green-500' : 'border-red-500' }}">
+                            <div class="flex items-center justify-between mb-1">
+                                <span class="text-xs font-bold {{ $msg->status === 'sent' ? 'text-green-600' : 'text-red-600' }}">
+                                    <i class="fas {{ $msg->status === 'sent' ? 'fa-check-circle' : 'fa-times-circle' }} mr-1"></i>
+                                    {{ ucfirst(str_replace('_', ' ', $msg->message_type)) }}
+                                </span>
+                                <span class="text-xs text-gray-500">{{ $msg->created_at->format('d M, h:i A') }}</span>
+                            </div>
+                            <p class="text-xs text-gray-600 line-clamp-2">{{ \Illuminate\Support\Str::limit($msg->message_text, 100) }}</p>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+            @endif
         </div>
     </div>
 </div>
+
+<style>
+    .line-clamp-2 {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+</style>
 @endsection

@@ -7,15 +7,15 @@
 @section('content')
 <div class="animate-slide-in">
     <!-- Header with Add Button -->
-    <div class="flex items-center justify-between mb-6">
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-4 sm:mb-6 gap-3">
         <div>
-            <h2 class="text-2xl font-bold text-gray-900 flex items-center">
-                <i class="fas fa-box text-purple-500 mr-3"></i>
+            <h2 class="text-xl sm:text-2xl font-bold text-gray-900 flex items-center">
+                <i class="fas fa-box text-purple-500 mr-2 sm:mr-3"></i>
                 All Products
             </h2>
-            <p class="text-sm text-gray-600 mt-1">Total: {{ $products->total() }} products</p>
+            <p class="text-xs sm:text-sm text-gray-600 mt-1">Total: {{ $products->total() }} products</p>
         </div>
-        <a href="{{ route('admin.products.create') }}" class="px-6 py-3 rounded-xl text-white font-semibold shadow-lg hover-lift" style="background: linear-gradient(135deg, #a855f7 0%, #9333ea 100%);">
+        <a href="{{ route('admin.products.create') }}" class="px-4 sm:px-6 py-2 sm:py-3 rounded-xl text-white font-semibold shadow-lg hover-lift text-sm sm:text-base text-center" style="background: linear-gradient(135deg, #a855f7 0%, #9333ea 100%);">
             <i class="fas fa-plus mr-2"></i>Add New Product
         </a>
     </div>

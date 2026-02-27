@@ -33,6 +33,27 @@
                     <p class="text-xs text-gray-500 mt-1">Slug cannot be changed</p>
                 </div>
 
+                <!-- Icon Selection -->
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                        Category Icon
+                    </label>
+                    <select name="icon" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500">
+                        <option value="fa-flask" {{ old('icon', $category->icon) == 'fa-flask' ? 'selected' : '' }}>🧪 Flask (General Chemical)</option>
+                        <option value="fa-spray-can" {{ old('icon', $category->icon) == 'fa-spray-can' ? 'selected' : '' }}>🧴 Spray Can (Cleaners)</option>
+                        <option value="fa-soap" {{ old('icon', $category->icon) == 'fa-soap' ? 'selected' : '' }}>🧼 Soap (Washing)</option>
+                        <option value="fa-sink" {{ old('icon', $category->icon) == 'fa-sink' ? 'selected' : '' }}>🚿 Sink (Dish Wash)</option>
+                        <option value="fa-tint" {{ old('icon', $category->icon) == 'fa-tint' ? 'selected' : '' }}>💧 Droplet (Liquids)</option>
+                        <option value="fa-wind" {{ old('icon', $category->icon) == 'fa-wind' ? 'selected' : '' }}>💨 Wind (Air Freshener)</option>
+                        <option value="fa-hospital" {{ old('icon', $category->icon) == 'fa-hospital' ? 'selected' : '' }}>🏥 Hospital (Medical)</option>
+                        <option value="fa-toilet" {{ old('icon', $category->icon) == 'fa-toilet' ? 'selected' : '' }}>🚽 Toilet (HCL/Harpic)</option>
+                        <option value="fa-broom" {{ old('icon', $category->icon) == 'fa-broom' ? 'selected' : '' }}>🧹 Broom (Floor Cleaner)</option>
+                        <option value="fa-glass" {{ old('icon', $category->icon) == 'fa-glass' ? 'selected' : '' }}>🥃 Glass (Glass Cleaner)</option>
+                        <option value="fa-shirt" {{ old('icon', $category->icon) == 'fa-shirt' ? 'selected' : '' }}>👕 Shirt (Fabric Care)</option>
+                        <option value="fa-pump-soap" {{ old('icon', $category->icon) == 'fa-pump-soap' ? 'selected' : '' }}>🧴 Pump Soap (Hand Wash)</option>
+                    </select>
+                </div>
+
                 <!-- Sort Order -->
                 <div>
                     <label class="block text-sm font-semibold text-gray-700 mb-2">

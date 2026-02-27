@@ -74,9 +74,9 @@
 
             <!-- Products Grid -->
             <div class="flex-1">
-                <div class="flex justify-between items-center mb-6">
-                    <h1 class="text-3xl font-bold">{{ __('Products') }}</h1>
-                    <span class="text-gray-600">{{ $products->total() }} {{ __('products found') }}</span>
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 sm:mb-6 gap-2">
+                    <h1 class="text-2xl sm:text-3xl font-bold">{{ __('Products') }}</h1>
+                    <span class="text-gray-600 text-sm sm:text-base">{{ $products->total() }} {{ __('products found') }}</span>
                 </div>
 
                 @if($products->count() > 0)
@@ -85,8 +85,8 @@
                             <div class="product-card">
                                 <div class="relative">
                                     @if($product->pricing->isSaleActive())
-                                        <span class="absolute top-2 right-2 bg-secondary-500 text-white px-3 py-1 rounded-full text-sm font-bold z-10">
-                                            {{ __('Sale') }}
+                                        <span class="absolute top-2 right-2 bg-secondary-500 text-white px-3 py-1 rounded-full text-xs sm:text-sm font-bold z-10">
+                                            {{ number_format((($product->pricing->retail_price - $product->pricing->sale_price) / $product->pricing->retail_price) * 100, 0) }}% {{ __('OFF') }}
                                         </span>
                                     @endif
                                     @if($product->isOutOfStock())
@@ -136,7 +136,10 @@
                                     <div class="flex justify-between items-center">
                                         <div>
                                             @if($product->pricing->isSaleActive())
-                                                <span class="text-gray-400 line-through text-sm block">PKR {{ number_format($product->pricing->retail_price, 0) }}</span>
+                                                <div class="flex items-center gap-2 mb-1">
+                                                    <span class="text-gray-400 line-through text-sm">PKR {{ number_format($product->pricing->retail_price, 0) }}</span>
+                                                    <span class="bg-red-100 text-red-600 px-2 py-0.5 rounded text-xs font-bold">-{{ number_format((($product->pricing->retail_price - $product->pricing->sale_price) / $product->pricing->retail_price) * 100, 0) }}%</span>
+                                                </div>
                                                 <span class="text-primary-500 font-bold text-lg">PKR {{ number_format($product->pricing->sale_price, 0) }}</span>
                                             @else
                                                 <span class="text-primary-500 font-bold text-lg">PKR {{ number_format($product->pricing->retail_price, 0) }}</span>

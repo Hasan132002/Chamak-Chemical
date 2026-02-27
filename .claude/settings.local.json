@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run build)",
+      "Bash(php artisan migrate)",
+      "Bash(php artisan route:list --name=admin.deals)",
+      "Bash(php artisan route:list --name=admin.banners)",
+      "Bash(php artisan route:list --name=admin.settings)",
+      "Bash(php artisan route:list --name=deals)",
+      "Bash(php artisan route:clear)"
+    ]
+  }
+}

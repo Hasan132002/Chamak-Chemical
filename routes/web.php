@@ -6,6 +6,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\DealerController;
+use App\Http\Controllers\DealController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -43,12 +44,21 @@ Route::get('/wholesale/register', [DealerController::class, 'register'])->name('
 Route::post('/wholesale/register', [DealerController::class, 'storeRegistration'])->name('wholesale.register.store');
 Route::get('/dealer/dashboard', [DealerController::class, 'dashboard'])->name('dealer.dashboard');
 
+// Deals
+Route::get('/deals', [DealController::class, 'index'])->name('deals.index');
+
 // Other pages
 
 // Order Tracking
 Route::get('/track-order', [AppHttpControllersOrderTrackingController::class, 'index'])->name('orders.track');
 Route::post('/track-order', [AppHttpControllersOrderTrackingController::class, 'track'])->name('orders.track.search');
-Route::get('/blog', function () { return view('blog.index'); })->name('blog.index');
+Route::get('/blog', function () {
+    $posts = \App\Models\BlogPost::with('translations', 'author')
+        ->published()
+        ->latest('published_at')
+        ->paginate(12);
+    return view('blog.index', compact('posts'));
+})->name('blog.index');
 Route::get('/contact', function () { return view('contact'); })->name('contact');
 Route::get('/about', function () { return view('about'); })->name('about');
 Route::get('/account', function () { return view('account.dashboard'); })->name('account.dashboard')->middleware('auth');

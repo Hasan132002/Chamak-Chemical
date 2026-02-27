@@ -6,6 +6,7 @@ use App\Models\Cart;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\OrderStatusHistory;
+use App\Services\WhatsAppService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -145,6 +146,20 @@ class CheckoutController extends Controller
             $cart->delete();
 
             DB::commit();
+
+            // Send WhatsApp notifications (after commit, so order is saved)
+            try {
+                $order->load('items');
+                $whatsapp = new WhatsAppService();
+
+                // Send confirmation to customer
+                $whatsapp->sendOrderConfirmation($order);
+
+                // Send notification to admin
+                $whatsapp->sendAdminNewOrderNotification($order);
+            } catch (\Exception $e) {
+                \Log::error('WhatsApp notification failed: ' . $e->getMessage());
+            }
 
             return redirect()->route('checkout.success', $order->id)->with('success', __('Order placed successfully!'));
         } catch (\Exception $e) {

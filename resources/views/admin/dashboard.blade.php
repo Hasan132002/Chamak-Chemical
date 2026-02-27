@@ -19,6 +19,7 @@
     <style>
         * { font-family: 'Inter', sans-serif; }
         h1, h2, h3, h4, h5, h6 { font-family: 'Poppins', sans-serif; }
+        [x-cloak] { display: none !important; }
 
         .stat-card {
             background: white;
@@ -42,22 +43,40 @@
         }
     </style>
 </head>
-<body class="bg-gray-50">
+<body class="bg-gray-50" x-data="{ sidebarOpen: false }">
     <div class="flex h-screen overflow-hidden">
+
+        <!-- Mobile Sidebar Overlay -->
+        <div x-show="sidebarOpen" x-cloak
+             x-transition:enter="transition-opacity ease-out duration-300"
+             x-transition:enter-start="opacity-0"
+             x-transition:enter-end="opacity-100"
+             x-transition:leave="transition-opacity ease-in duration-200"
+             x-transition:leave-start="opacity-100"
+             x-transition:leave-end="opacity-0"
+             @click="sidebarOpen = false"
+             class="fixed inset-0 bg-black/50 z-40 md:hidden"></div>
+
         <!-- Sidebar -->
-        <aside class="w-64 bg-gradient-to-b from-primary-600 to-primary-800 text-white flex-shrink-0 hidden md:block">
-            <div class="p-6">
-                <div class="flex items-center gap-3 mb-8">
-                    <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
-                        <i class="fas fa-flask text-2xl"></i>
+        <aside class="fixed inset-y-0 left-0 z-50 w-64 bg-gradient-to-b from-primary-600 to-primary-800 text-white flex-shrink-0 transform transition-transform duration-300 md:relative md:translate-x-0"
+               :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'">
+            <div class="p-6 h-full flex flex-col overflow-y-auto">
+                <div class="flex items-center justify-between mb-8">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
+                            <i class="fas fa-flask text-2xl"></i>
+                        </div>
+                        <div>
+                            <h2 class="font-bold text-lg">Chamak</h2>
+                            <p class="text-xs text-blue-200">Admin Panel</p>
+                        </div>
                     </div>
-                    <div>
-                        <h2 class="font-bold text-lg">Chamak</h2>
-                        <p class="text-xs text-blue-200">Admin Panel</p>
-                    </div>
+                    <button @click="sidebarOpen = false" class="md:hidden p-2 rounded-lg hover:bg-white/10 text-white transition">
+                        <i class="fas fa-times text-lg"></i>
+                    </button>
                 </div>
 
-                <nav class="space-y-2">
+                <nav class="space-y-2 flex-1">
                     <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-3 px-4 py-3 rounded-lg bg-white/20 backdrop-blur">
                         <i class="fas fa-home"></i>
                         <span>Dashboard</span>
@@ -94,22 +113,27 @@
                         <i class="fas fa-chart-bar"></i>
                         <span>Reports</span>
                     </a>
-                    <a href="{{ route('admin.settings') }}" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/10 transition">
+                    <a href="{{ route('admin.deals.index') }}" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/10 transition">
+                        <i class="fas fa-fire"></i>
+                        <span>Deals</span>
+                    </a>
+                    <a href="{{ route('admin.banners.index') }}" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/10 transition">
+                        <i class="fas fa-images"></i>
+                        <span>Banners</span>
+                    </a>
+                    <a href="{{ route('admin.settings.edit') }}" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/10 transition">
                         <i class="fas fa-cog"></i>
                         <span>Settings</span>
                     </a>
                 </nav>
 
                 <!-- View Website & Logout -->
-                <div class="mt-auto space-y-3">
-                    <!-- View Website Button -->
+                <div class="mt-auto space-y-3 pt-4">
                     <a href="{{ route('home') }}" target="_blank" class="w-full flex items-center gap-3 px-4 py-3 rounded-lg bg-green-500/20 hover:bg-green-500/30 text-white transition">
                         <i class="fas fa-globe"></i>
                         <span>View Website</span>
                         <i class="fas fa-external-link-alt ml-auto text-xs"></i>
                     </a>
-
-                    <!-- Logout -->
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
                         <button type="submit" class="w-full flex items-center gap-3 px-4 py-3 rounded-lg bg-red-500/20 hover:bg-red-500/30 transition">
@@ -122,21 +146,29 @@
         </aside>
 
         <!-- Main Content -->
-        <main class="flex-1 overflow-y-auto">
+        <main class="flex-1 overflow-y-auto w-full">
             <!-- Top Bar -->
-            <header class="bg-white shadow-sm border-b border-gray-200">
-                <div class="px-8 py-4 flex items-center justify-between">
-                    <div>
-                        <h1 class="text-2xl font-bold text-gray-900">Dashboard</h1>
-                        <p class="text-sm text-gray-600">Welcome back, {{ auth()->user()->name }}</p>
+            <header class="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-10">
+                <div class="px-4 sm:px-6 lg:px-8 py-3 sm:py-4 flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <!-- Mobile Hamburger Button -->
+                        <button @click="sidebarOpen = true" class="md:hidden p-2 rounded-lg hover:bg-gray-100 transition" aria-label="Open sidebar">
+                            <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                            </svg>
+                        </button>
+                        <div>
+                            <h1 class="text-lg sm:text-2xl font-bold text-gray-900">Dashboard</h1>
+                            <p class="text-xs sm:text-sm text-gray-600">Welcome back, {{ auth()->user()->name }}</p>
+                        </div>
                     </div>
-                    <div class="flex items-center gap-4">
+                    <div class="flex items-center gap-2 sm:gap-4">
                         <button class="relative p-2 hover:bg-gray-100 rounded-lg">
-                            <i class="fas fa-bell text-xl text-gray-600"></i>
+                            <i class="fas fa-bell text-lg sm:text-xl text-gray-600"></i>
                             <span class="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full"></span>
                         </button>
                         <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 bg-gradient-to-br from-primary-500 to-blue-600 rounded-full flex items-center justify-center text-white font-bold">
+                            <div class="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-primary-500 to-blue-600 rounded-full flex items-center justify-center text-white font-bold text-sm sm:text-base">
                                 {{ substr(auth()->user()->name, 0, 1) }}
                             </div>
                         </div>
@@ -145,9 +177,9 @@
             </header>
 
             <!-- Dashboard Content -->
-            <div class="p-8">
+            <div class="p-4 sm:p-6 lg:p-8">
                 <!-- Stats Grid -->
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6 sm:mb-8">
                     @php
                         $totalSales = \App\Models\Order::sum('total_amount');
                         $todayOrders = \App\Models\Order::whereDate('created_at', today())->count();
@@ -160,7 +192,7 @@
                         <div class="flex items-center justify-between mb-4">
                             <div class="flex-1">
                                 <p class="text-white font-semibold text-sm mb-2 opacity-90">💰 Total Sales</p>
-                                <h3 class="text-4xl font-extrabold text-white">PKR {{ number_format($totalSales, 0) }}</h3>
+                                <h3 class="text-2xl sm:text-4xl font-extrabold text-white">PKR {{ number_format($totalSales, 0) }}</h3>
                             </div>
                             <div class="w-16 h-16 bg-white/30 rounded-2xl flex items-center justify-center">
                                 <i class="fas fa-dollar-sign text-3xl text-white"></i>
@@ -174,7 +206,7 @@
                         <div class="flex items-center justify-between mb-4">
                             <div class="flex-1">
                                 <p class="text-white font-semibold text-sm mb-2 opacity-90">📦 Orders Today</p>
-                                <h3 class="text-4xl font-extrabold text-white">{{ $todayOrders }}</h3>
+                                <h3 class="text-2xl sm:text-4xl font-extrabold text-white">{{ $todayOrders }}</h3>
                             </div>
                             <div class="w-16 h-16 bg-white/30 rounded-2xl flex items-center justify-center">
                                 <i class="fas fa-shopping-bag text-3xl text-white"></i>
@@ -188,7 +220,7 @@
                         <div class="flex items-center justify-between mb-4">
                             <div class="flex-1">
                                 <p class="text-white font-semibold text-sm mb-2 opacity-90">📦 Total Products</p>
-                                <h3 class="text-4xl font-extrabold text-white">{{ $totalProducts }}</h3>
+                                <h3 class="text-2xl sm:text-4xl font-extrabold text-white">{{ $totalProducts }}</h3>
                             </div>
                             <div class="w-16 h-16 bg-white/30 rounded-2xl flex items-center justify-center">
                                 <i class="fas fa-box text-3xl text-white"></i>
@@ -202,7 +234,7 @@
                         <div class="flex items-center justify-between mb-4">
                             <div class="flex-1">
                                 <p class="text-white font-semibold text-sm mb-2 opacity-90">👥 Pending Dealers</p>
-                                <h3 class="text-4xl font-extrabold text-white">{{ $pendingDealers }}</h3>
+                                <h3 class="text-2xl sm:text-4xl font-extrabold text-white">{{ $pendingDealers }}</h3>
                             </div>
                             <div class="w-16 h-16 bg-white/30 rounded-2xl flex items-center justify-center">
                                 <i class="fas fa-user-clock text-3xl text-white"></i>
@@ -213,20 +245,20 @@
                 </div>
 
                 <!-- Charts & Tables -->
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-8 mb-6 sm:mb-8">
                     <!-- Sales Chart -->
-                    <div class="lg:col-span-2 bg-white rounded-2xl shadow-lg p-6 animate-slide-in" style="animation-delay: 0.5s">
-                        <h3 class="text-xl font-bold mb-6 flex items-center text-gray-900">
+                    <div class="lg:col-span-2 bg-white rounded-2xl shadow-lg p-4 sm:p-6 animate-slide-in" style="animation-delay: 0.5s">
+                        <h3 class="text-lg sm:text-xl font-bold mb-4 sm:mb-6 flex items-center text-gray-900">
                             <i class="fas fa-chart-line mr-3 text-primary-500"></i>
                             Sales Overview (Last 7 Days)
                         </h3>
-                        <div style="height: 300px;">
+                        <div style="height: 250px;" class="sm:h-[300px]">
                             <canvas id="salesChart"></canvas>
                         </div>
                     </div>
 
                     <!-- Quick Actions -->
-                    <div class="bg-white rounded-2xl shadow-lg p-6 animate-slide-in" style="animation-delay: 0.6s">
+                    <div class="bg-white rounded-2xl shadow-lg p-4 sm:p-6 animate-slide-in" style="animation-delay: 0.6s">
                         <h3 class="text-xl font-bold mb-6 flex items-center">
                             <i class="fas fa-bolt mr-3 text-secondary-500"></i>
                             Quick Actions
@@ -248,8 +280,46 @@
                     </div>
                 </div>
 
+                <!-- Low Stock Alerts -->
+                @php
+                    $lowStockProducts = \App\Models\Product::whereColumn('stock_quantity', '<=', 'low_stock_threshold')
+                        ->with('translations')
+                        ->limit(5)
+                        ->get();
+                @endphp
+
+                @if($lowStockProducts->count() > 0)
+                <div class="bg-white rounded-2xl shadow-lg p-4 sm:p-6 mb-6 sm:mb-8 border-l-4 border-red-500 animate-slide-in" style="animation-delay: 0.65s">
+                    <div class="flex items-center justify-between mb-6">
+                        <h3 class="text-xl font-bold flex items-center text-red-600">
+                            <i class="fas fa-exclamation-triangle mr-3 animate-pulse"></i>
+                            Low Stock Alerts
+                        </h3>
+                        <a href="{{ route('admin.products.index') }}" class="text-red-500 hover:text-red-600 font-semibold text-sm">
+                            View All <i class="fas fa-arrow-right ml-1"></i>
+                        </a>
+                    </div>
+
+                    <div class="space-y-3">
+                        @foreach($lowStockProducts as $lowStock)
+                            <div class="flex items-center justify-between p-3 bg-red-50 rounded-lg">
+                                <div class="flex-1">
+                                    <p class="font-semibold text-gray-900">{{ $lowStock->translations->where('locale', 'en')->first()->name ?? 'N/A' }}</p>
+                                    <p class="text-xs text-gray-600">SKU: {{ $lowStock->sku }}</p>
+                                </div>
+                                <div class="text-right">
+                                    <span class="px-3 py-1 bg-red-500 text-white rounded-full text-xs font-bold">
+                                        {{ $lowStock->stock_quantity }} left
+                                    </span>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+                @endif
+
                 <!-- Recent Orders -->
-                <div class="bg-white rounded-2xl shadow-lg p-6 animate-slide-in" style="animation-delay: 0.7s">
+                <div class="bg-white rounded-2xl shadow-lg p-4 sm:p-6 animate-slide-in" style="animation-delay: 0.7s">
                     <div class="flex items-center justify-between mb-6">
                         <h3 class="text-xl font-bold flex items-center">
                             <i class="fas fa-shopping-cart mr-3 text-primary-500"></i>

@@ -7,7 +7,7 @@
 @section('content')
 <div class="animate-slide-in">
     <!-- Header with Stats -->
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6 mb-6 sm:mb-8">
         @php
             $totalOrders = \App\Models\Order::count();
             $pendingOrders = \App\Models\Order::where('status', 'pending')->count();
@@ -15,11 +15,11 @@
             $deliveredOrders = \App\Models\Order::where('status', 'delivered')->count();
         @endphp
 
-        <div class="bg-white rounded-xl shadow-lg p-6 hover-lift" style="border-left: 4px solid #3b82f6;">
+        <div class="bg-white rounded-xl shadow-lg p-4 sm:p-6 hover-lift" style="border-left: 4px solid #3b82f6;">
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-sm text-gray-600 font-semibold mb-1">Total Orders</p>
-                    <h3 class="text-3xl font-bold text-gray-900">{{ $totalOrders }}</h3>
+                    <h3 class="text-xl sm:text-3xl font-bold text-gray-900">{{ $totalOrders }}</h3>
                 </div>
                 <div class="w-14 h-14 rounded-xl flex items-center justify-center" style="background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);">
                     <i class="fas fa-shopping-bag text-2xl text-white"></i>
@@ -27,11 +27,11 @@
             </div>
         </div>
 
-        <div class="bg-white rounded-xl shadow-lg p-6 hover-lift" style="border-left: 4px solid #f59e0b;">
+        <div class="bg-white rounded-xl shadow-lg p-4 sm:p-6 hover-lift" style="border-left: 4px solid #f59e0b;">
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-sm text-gray-600 font-semibold mb-1">Pending</p>
-                    <h3 class="text-3xl font-bold text-orange-600">{{ $pendingOrders }}</h3>
+                    <h3 class="text-xl sm:text-3xl font-bold text-orange-600">{{ $pendingOrders }}</h3>
                 </div>
                 <div class="w-14 h-14 rounded-xl flex items-center justify-center" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);">
                     <i class="fas fa-clock text-2xl text-white"></i>
@@ -39,11 +39,11 @@
             </div>
         </div>
 
-        <div class="bg-white rounded-xl shadow-lg p-6 hover-lift" style="border-left: 4px solid #a855f7;">
+        <div class="bg-white rounded-xl shadow-lg p-4 sm:p-6 hover-lift" style="border-left: 4px solid #a855f7;">
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-sm text-gray-600 font-semibold mb-1">Processing</p>
-                    <h3 class="text-3xl font-bold text-purple-600">{{ $processingOrders }}</h3>
+                    <h3 class="text-xl sm:text-3xl font-bold text-purple-600">{{ $processingOrders }}</h3>
                 </div>
                 <div class="w-14 h-14 rounded-xl flex items-center justify-center" style="background: linear-gradient(135deg, #a855f7 0%, #9333ea 100%);">
                     <i class="fas fa-cog text-2xl text-white"></i>
@@ -51,11 +51,11 @@
             </div>
         </div>
 
-        <div class="bg-white rounded-xl shadow-lg p-6 hover-lift" style="border-left: 4px solid #10b981;">
+        <div class="bg-white rounded-xl shadow-lg p-4 sm:p-6 hover-lift" style="border-left: 4px solid #10b981;">
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-sm text-gray-600 font-semibold mb-1">Delivered</p>
-                    <h3 class="text-3xl font-bold text-green-600">{{ $deliveredOrders }}</h3>
+                    <h3 class="text-xl sm:text-3xl font-bold text-green-600">{{ $deliveredOrders }}</h3>
                 </div>
                 <div class="w-14 h-14 rounded-xl flex items-center justify-center" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
                     <i class="fas fa-check-circle text-2xl text-white"></i>

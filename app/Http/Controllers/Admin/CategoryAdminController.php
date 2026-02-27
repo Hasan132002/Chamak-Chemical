@@ -33,6 +33,7 @@ class CategoryAdminController extends Controller
 
         $category = Category::create([
             'slug' => $validated['slug'],
+            'icon' => $request->input('icon', 'fa-flask'),
             'sort_order' => $validated['sort_order'] ?? 0,
             'is_active' => $request->boolean('is_active', true),
         ]);

@@ -60,6 +60,33 @@ class SiteSettingSeeder extends Seeder
                 'value' => '+923001234567',
                 'group' => 'whatsapp',
             ],
+            [
+                'key' => 'whatsapp_order_notify_admin',
+                'value' => true,
+                'group' => 'whatsapp',
+            ],
+            [
+                'key' => 'whatsapp_order_notify_customer',
+                'value' => true,
+                'group' => 'whatsapp',
+            ],
+
+            // Delivery Banner
+            [
+                'key' => 'delivery_banner_text',
+                'value' => 'Special Offer: Free Shipping on Orders Above PKR 5,000! | Chamak Chemicals - Quality Guaranteed',
+                'group' => 'delivery',
+            ],
+            [
+                'key' => 'delivery_charges',
+                'value' => '200',
+                'group' => 'delivery',
+            ],
+            [
+                'key' => 'free_delivery_minimum',
+                'value' => '5000',
+                'group' => 'delivery',
+            ],
 
             // Payment Settings
             [

@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(php artisan db:seed --class=DealSeeder)",
+      "Bash(php artisan db:seed --class=BannerSeeder)"
+    ]
+  }
+}

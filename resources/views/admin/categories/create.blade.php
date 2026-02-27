@@ -35,6 +35,28 @@
                     @enderror
                 </div>
 
+                <!-- Icon Selection -->
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                        Category Icon
+                    </label>
+                    <select name="icon" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500">
+                        <option value="fa-flask">🧪 Flask (General Chemical)</option>
+                        <option value="fa-spray-can">🧴 Spray Can (Cleaners)</option>
+                        <option value="fa-soap">🧼 Soap (Washing)</option>
+                        <option value="fa-sink">🚿 Sink (Dish Wash)</option>
+                        <option value="fa-tint">💧 Droplet (Liquids)</option>
+                        <option value="fa-wind">💨 Wind (Air Freshener)</option>
+                        <option value="fa-hospital">🏥 Hospital (Medical)</option>
+                        <option value="fa-toilet">🚽 Toilet (HCL/Harpic)</option>
+                        <option value="fa-broom">🧹 Broom (Floor Cleaner)</option>
+                        <option value="fa-glass">🥃 Glass (Glass Cleaner)</option>
+                        <option value="fa-shirt">👕 Shirt (Fabric Care)</option>
+                        <option value="fa-pump-soap">🧴 Pump Soap (Hand Wash)</option>
+                    </select>
+                    <p class="text-xs text-gray-500 mt-1">Select an icon for this category</p>
+                </div>
+
                 <!-- Sort Order -->
                 <div>
                     <label class="block text-sm font-semibold text-gray-700 mb-2">

@@ -5,6 +5,9 @@ use App\Http\Controllers\Admin\OrderAdminController;
 use App\Http\Controllers\Admin\CategoryAdminController;
 use App\Http\Controllers\Admin\DealerAdminController;
 use App\Http\Controllers\Admin\UserAdminController;
+use App\Http\Controllers\Admin\DealAdminController;
+use App\Http\Controllers\Admin\BannerAdminController;
+use App\Http\Controllers\Admin\SettingsAdminController;
 use Illuminate\Support\Facades\Route;
 
 // Admin Login (No Auth Required)
@@ -66,10 +69,29 @@ Route::middleware('auth')->group(function () {
         Route::delete('/{user}', [UserAdminController::class, 'destroy'])->name('destroy');
     });
 
+    // Deals
+    Route::prefix('deals')->name('admin.deals.')->group(function () {
+        Route::get('/', [DealAdminController::class, 'index'])->name('index');
+        Route::get('/create', [DealAdminController::class, 'create'])->name('create');
+        Route::post('/', [DealAdminController::class, 'store'])->name('store');
+        Route::get('/{deal}/edit', [DealAdminController::class, 'edit'])->name('edit');
+        Route::put('/{deal}', [DealAdminController::class, 'update'])->name('update');
+        Route::delete('/{deal}', [DealAdminController::class, 'destroy'])->name('destroy');
+    });
+
+    // Banners
+    Route::prefix('banners')->name('admin.banners.')->group(function () {
+        Route::get('/', [BannerAdminController::class, 'index'])->name('index');
+        Route::get('/create', [BannerAdminController::class, 'create'])->name('create');
+        Route::post('/', [BannerAdminController::class, 'store'])->name('store');
+        Route::get('/{banner}/edit', [BannerAdminController::class, 'edit'])->name('edit');
+        Route::put('/{banner}', [BannerAdminController::class, 'update'])->name('update');
+        Route::delete('/{banner}', [BannerAdminController::class, 'destroy'])->name('destroy');
+    });
+
     // Settings
-    Route::get('/settings', function () {
-        return view('admin.settings');
-    })->name('admin.settings');
+    Route::get('/settings', [SettingsAdminController::class, 'edit'])->name('admin.settings.edit');
+    Route::put('/settings', [SettingsAdminController::class, 'update'])->name('admin.settings.update');
 
     // Reports & Analytics
     Route::get('/reports', function () {

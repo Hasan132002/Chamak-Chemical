@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Banner;
 use App\Models\Category;
+use App\Models\Deal;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -20,6 +22,13 @@ class HomeController extends Controller
             ->take(8)
             ->get();
 
-        return view('home', compact('categories', 'featuredProducts'));
+        $banners = Banner::active()->get();
+
+        $deals = Deal::active()
+            ->with('translations')
+            ->orderBy('sort_order')
+            ->get();
+
+        return view('home', compact('categories', 'featuredProducts', 'banners', 'deals'));
     }
 }

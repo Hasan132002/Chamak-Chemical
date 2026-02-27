@@ -44,24 +44,45 @@
             transform: translateY(-5px);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
         }
+        /* Mobile menu overlay */
+        .mobile-menu-overlay {
+            transition: opacity 0.3s ease;
+        }
+        .mobile-menu-panel {
+            transition: transform 0.3s ease;
+        }
     </style>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
+    <style>[x-cloak] { display: none !important; }</style>
 </head>
 <body class="antialiased bg-gray-50">
-    <!-- Top Announcement Bar -->
-    <div class="bg-gradient-secondary text-white py-2 text-center text-sm font-medium">
-        <i class="fas fa-gift mr-2"></i>
-        {{ __('Special Offer: Free Shipping on Orders Above PKR 5,000!') }}
-        <i class="fas fa-truck ml-2"></i>
+    <!-- Top Announcement Bar - Marquee -->
+    <div class="bg-gradient-secondary text-white py-2 overflow-hidden">
+        <div class="marquee-wrap">
+            <div class="marquee-track">
+                @php $bannerText = \App\Models\SiteSetting::get('delivery_banner_text', __('Special Offer: Free Shipping on Orders Above PKR 5,000!')); @endphp
+                <span class="marquee-item"><i class="fas fa-gift mr-2"></i>{{ $bannerText }}<i class="fas fa-truck mx-4"></i></span>
+                <span class="marquee-item"><i class="fas fa-gift mr-2"></i>{{ $bannerText }}<i class="fas fa-truck mx-4"></i></span>
+                <span class="marquee-item"><i class="fas fa-gift mr-2"></i>{{ $bannerText }}<i class="fas fa-truck mx-4"></i></span>
+            </div>
+        </div>
     </div>
+    <style>
+        .marquee-wrap { width: 100%; overflow: hidden; }
+        .marquee-track { display: inline-flex; white-space: nowrap; animation: marqueeScroll 18s linear infinite; }
+        .marquee-item { display: inline-flex; align-items: center; font-size: 0.8rem; font-weight: 500; padding: 0 1rem; }
+        @media (min-width: 640px) { .marquee-item { font-size: 0.875rem; } }
+        @keyframes marqueeScroll { 0% { transform: translateX(0); } 100% { transform: translateX(-33.33%); } }
+        .marquee-wrap:hover .marquee-track { animation-play-state: paused; }
+    </style>
 
     <!-- Header -->
-    <header class="bg-white shadow-lg sticky top-0 z-50 border-b-4 border-primary-500">
+    <header class="bg-white shadow-lg sticky top-0 z-50 border-b-4 border-primary-500" x-data="{ mobileMenuOpen: false }">
         <div class="container mx-auto px-4">
-            <!-- Top Bar -->
-            <div class="border-b border-gray-100 py-3">
+            <!-- Top Bar - Hidden on mobile -->
+            <div class="hidden md:block border-b border-gray-100 py-3">
                 <div class="flex justify-between items-center text-sm">
                     <div class="flex items-center space-x-6">
                         <a href="tel:+923001234567" class="text-gray-600 hover:text-primary-500 transition flex items-center">
@@ -86,21 +107,21 @@
             </div>
 
             <!-- Main Navigation -->
-            <nav class="py-5">
+            <nav class="py-3 md:py-5">
                 <div class="flex justify-between items-center">
                     <!-- Logo -->
-                    <a href="{{ route('home') }}" class="flex items-center space-x-3 group">
-                        <div class="w-12 h-12 bg-gradient-primary rounded-xl flex items-center justify-center text-white text-2xl font-bold shadow-lg group-hover:scale-110 transition">
+                    <a href="{{ route('home') }}" class="flex items-center space-x-2 sm:space-x-3 group">
+                        <div class="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-primary rounded-xl flex items-center justify-center text-white text-xl sm:text-2xl font-bold shadow-lg group-hover:scale-110 transition">
                             <i class="fas fa-flask"></i>
                         </div>
                         <div>
-                            <div class="text-2xl font-bold text-primary-500">Chamak Chemicals</div>
-                            <div class="text-xs text-gray-500">Premium Quality Since 2020</div>
+                            <div class="text-lg sm:text-2xl font-bold text-primary-500">Chamak Chemicals</div>
+                            <div class="text-xs text-gray-500 hidden sm:block">Premium Quality Since 2020</div>
                         </div>
                     </a>
 
-                    <!-- Navigation Links -->
-                    <div class="hidden md:flex items-center space-x-8">
+                    <!-- Desktop Navigation Links -->
+                    <div class="hidden lg:flex items-center space-x-8">
                         <a href="{{ route('home') }}" class="text-gray-700 hover:text-primary-500 font-semibold transition relative group">
                             {{ __('Home') }}
                             <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-500 group-hover:w-full transition-all duration-300"></span>
@@ -112,6 +133,10 @@
                         <a href="{{ route('categories.index') }}" class="text-gray-700 hover:text-primary-500 font-semibold transition relative group">
                             {{ __('Categories') }}
                             <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-500 group-hover:w-full transition-all duration-300"></span>
+                        </a>
+                        <a href="{{ route('deals.index') }}" class="text-gray-700 hover:text-primary-500 font-semibold transition relative group">
+                            {{ __('Deals') }}
+                            <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-red-500 group-hover:w-full transition-all duration-300"></span>
                         </a>
                         <a href="{{ route('wholesale.info') }}" class="text-gray-700 hover:text-primary-500 font-semibold transition relative group">
                             {{ __('Wholesale') }}
@@ -127,22 +152,89 @@
                         </a>
                     </div>
 
-                    <!-- Cart & Auth -->
-                    <div class="flex items-center space-x-4">
+                    <!-- Cart, Auth & Hamburger -->
+                    <div class="flex items-center space-x-2 sm:space-x-4">
                         <livewire:cart-icon />
                         @auth
-                            <a href="{{ route('account.dashboard') }}" class="flex items-center space-x-2 px-4 py-2 bg-gray-100 rounded-full hover:bg-primary-500 hover:text-white transition">
+                            <a href="{{ route('account.dashboard') }}" class="flex items-center space-x-2 px-3 sm:px-4 py-2 bg-gray-100 rounded-full hover:bg-primary-500 hover:text-white transition">
                                 <i class="fas fa-user"></i>
                                 <span class="hidden md:inline">{{ auth()->user()->name }}</span>
                             </a>
                         @else
-                            <a href="{{ route('login') }}" class="px-6 py-2 bg-primary-500 text-white rounded-full font-semibold hover:bg-primary-600 transition shadow-md hover:shadow-lg">
+                            <a href="{{ route('login') }}" class="hidden sm:inline-flex px-6 py-2 bg-primary-500 text-white rounded-full font-semibold hover:bg-primary-600 transition shadow-md hover:shadow-lg">
                                 <i class="fas fa-sign-in-alt mr-2"></i>{{ __('Login') }}
                             </a>
+                            <a href="{{ route('login') }}" class="sm:hidden p-2 text-primary-500">
+                                <i class="fas fa-sign-in-alt text-xl"></i>
+                            </a>
                         @endauth
+
+                        <!-- Hamburger Menu Button -->
+                        <button @click="mobileMenuOpen = !mobileMenuOpen" class="lg:hidden p-2 rounded-lg hover:bg-gray-100 transition focus:outline-none" aria-label="Toggle menu">
+                            <svg x-show="!mobileMenuOpen" class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                            </svg>
+                            <svg x-show="mobileMenuOpen" x-cloak class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                            </svg>
+                        </button>
                     </div>
                 </div>
             </nav>
+        </div>
+
+        <!-- Mobile Menu Panel -->
+        <div x-show="mobileMenuOpen" x-cloak
+             x-transition:enter="transition ease-out duration-200"
+             x-transition:enter-start="opacity-0 -translate-y-2"
+             x-transition:enter-end="opacity-100 translate-y-0"
+             x-transition:leave="transition ease-in duration-150"
+             x-transition:leave-start="opacity-100 translate-y-0"
+             x-transition:leave-end="opacity-0 -translate-y-2"
+             class="lg:hidden bg-white border-t border-gray-100 shadow-lg">
+            <div class="container mx-auto px-4 py-4">
+                <!-- Mobile Nav Links -->
+                <div class="space-y-1">
+                    <a href="{{ route('home') }}" class="block px-4 py-3 rounded-lg text-gray-700 hover:bg-primary-50 hover:text-primary-500 font-semibold transition">
+                        <i class="fas fa-home mr-3 w-5"></i>{{ __('Home') }}
+                    </a>
+                    <a href="{{ route('products.index') }}" class="block px-4 py-3 rounded-lg text-gray-700 hover:bg-primary-50 hover:text-primary-500 font-semibold transition">
+                        <i class="fas fa-box mr-3 w-5"></i>{{ __('Products') }}
+                    </a>
+                    <a href="{{ route('categories.index') }}" class="block px-4 py-3 rounded-lg text-gray-700 hover:bg-primary-50 hover:text-primary-500 font-semibold transition">
+                        <i class="fas fa-th-large mr-3 w-5"></i>{{ __('Categories') }}
+                    </a>
+                    <a href="{{ route('deals.index') }}" class="block px-4 py-3 rounded-lg text-gray-700 hover:bg-red-50 hover:text-red-500 font-semibold transition">
+                        <i class="fas fa-fire mr-3 w-5"></i>{{ __('Deals') }}
+                    </a>
+                    <a href="{{ route('wholesale.info') }}" class="block px-4 py-3 rounded-lg text-gray-700 hover:bg-primary-50 hover:text-primary-500 font-semibold transition">
+                        <i class="fas fa-handshake mr-3 w-5"></i>{{ __('Wholesale') }}
+                    </a>
+                    <a href="{{ route('blog.index') }}" class="block px-4 py-3 rounded-lg text-gray-700 hover:bg-primary-50 hover:text-primary-500 font-semibold transition">
+                        <i class="fas fa-blog mr-3 w-5"></i>{{ __('Blog') }}
+                    </a>
+                    <a href="{{ route('contact') }}" class="block px-4 py-3 rounded-lg text-gray-700 hover:bg-primary-50 hover:text-primary-500 font-semibold transition">
+                        <i class="fas fa-envelope mr-3 w-5"></i>{{ __('Contact') }}
+                    </a>
+                </div>
+
+                <!-- Mobile Contact & Language -->
+                <div class="mt-4 pt-4 border-t border-gray-100">
+                    <div class="flex items-center space-x-4 mb-3 px-4">
+                        <a href="tel:+923001234567" class="text-gray-600 hover:text-primary-500 transition flex items-center text-sm">
+                            <i class="fas fa-phone-alt mr-2"></i>+92-300-1234567
+                        </a>
+                    </div>
+                    <div class="flex items-center space-x-3 px-4">
+                        <a href="{{ route('locale.switch', 'en') }}" class="px-3 py-1 rounded-full text-sm transition {{ app()->getLocale() === 'en' ? 'bg-primary-500 text-white' : 'text-gray-600 bg-gray-100' }}">
+                            English
+                        </a>
+                        <a href="{{ route('locale.switch', 'ur') }}" class="px-3 py-1 rounded-full text-sm transition {{ app()->getLocale() === 'ur' ? 'bg-primary-500 text-white' : 'text-gray-600 bg-gray-100' }}">
+                            اردو
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
     </header>
 
@@ -152,8 +244,8 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white mt-20">
-        <div class="container mx-auto px-4 py-16">
+    <footer class="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white mt-10 sm:mt-20">
+        <div class="container mx-auto px-4 py-10 sm:py-16">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
                 <!-- About -->
                 <div class="space-y-4">

@@ -23,18 +23,31 @@
                 <div class="lg:col-span-2">
                     <div class="bg-white rounded-lg shadow-md">
                         @foreach($cart->items as $item)
-                            <div class="flex items-center gap-4 p-6 border-b last:border-b-0" wire:key="cart-item-{{ $item->id }}">
-                                @if($item->product->featured_image)
-                                    <img src="{{ asset('storage/' . $item->product->featured_image) }}"
-                                         alt="{{ $item->product->translate(app()->getLocale())->name }}"
-                                         class="w-24 h-24 object-cover rounded-lg">
-                                @else
-                                    <div class="w-24 h-24 bg-gradient-to-br from-blue-400 to-purple-600 rounded-lg flex items-center justify-center">
-                                        <i class="fas fa-box text-white text-3xl opacity-50"></i>
-                                    </div>
-                                @endif
+                            <div class="flex flex-col sm:flex-row sm:items-center gap-4 p-4 sm:p-6 border-b last:border-b-0" wire:key="cart-item-{{ $item->id }}">
+                                <div class="flex items-center gap-4">
+                                    @if($item->product->featured_image)
+                                        <img src="{{ asset('storage/' . $item->product->featured_image) }}"
+                                             alt="{{ $item->product->translate(app()->getLocale())->name }}"
+                                             class="w-20 h-20 sm:w-24 sm:h-24 object-cover rounded-lg flex-shrink-0">
+                                    @else
+                                        <div class="w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-br from-blue-400 to-purple-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                                            <i class="fas fa-box text-white text-2xl sm:text-3xl opacity-50"></i>
+                                        </div>
+                                    @endif
 
-                                <div class="flex-1">
+                                    <div class="flex-1 sm:hidden">
+                                        <h3 class="font-semibold text-sm mb-1">
+                                            <a href="{{ route('products.show', $item->product->slug) }}" class="hover:text-primary-500">
+                                                {{ $item->product->translate(app()->getLocale())->name }}
+                                            </a>
+                                        </h3>
+                                        <div class="text-primary-500 font-bold text-sm">
+                                            PKR {{ number_format($item->product->pricing->getCurrentPrice(), 0) }}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="hidden sm:block flex-1">
                                     <h3 class="font-semibold text-lg mb-1">
                                         <a href="{{ route('products.show', $item->product->slug) }}" class="hover:text-primary-500">
                                             {{ $item->product->translate(app()->getLocale())->name }}
@@ -46,15 +59,17 @@
                                     </div>
                                 </div>
 
-                                <!-- Quantity -->
-                                <div class="flex items-center gap-2">
-                                    <livewire:cart-item-quantity :cartItemId="$item->id" :key="'cart-qty-'.$item->id" />
-                                </div>
+                                <div class="flex items-center justify-between sm:justify-end gap-4">
+                                    <!-- Quantity -->
+                                    <div class="flex items-center gap-2">
+                                        <livewire:cart-item-quantity :cartItemId="$item->id" :key="'cart-qty-'.$item->id" />
+                                    </div>
 
-                                <!-- Total -->
-                                <div class="text-right">
-                                    <div class="font-bold text-lg">
-                                        PKR {{ number_format($item->product->pricing->getCurrentPrice() * $item->quantity, 0) }}
+                                    <!-- Total -->
+                                    <div class="text-right">
+                                        <div class="font-bold text-base sm:text-lg">
+                                            PKR {{ number_format($item->product->pricing->getCurrentPrice() * $item->quantity, 0) }}
+                                        </div>
                                     </div>
                                 </div>
                             </div>

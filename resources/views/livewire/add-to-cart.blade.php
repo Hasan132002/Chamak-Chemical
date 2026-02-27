@@ -38,9 +38,9 @@
     @endif
 
     <!-- Dynamic Price Display -->
-    <div class="mb-6 bg-gradient-to-r from-primary-50 to-blue-50 rounded-xl p-6 border-2 border-primary-200">
+    <div class="mb-6 bg-gradient-to-r from-primary-50 to-blue-50 rounded-xl p-4 sm:p-6 border-2 border-primary-200">
         <div class="text-sm text-gray-600 mb-1">{{ __('Price') }}:</div>
-        <div class="text-4xl font-extrabold text-primary-600">
+        <div class="text-2xl sm:text-4xl font-extrabold text-primary-600">
             PKR {{ number_format($currentPrice, 0) }}
         </div>
         @if($selectedVariant)
@@ -50,21 +50,29 @@
         @endif
     </div>
 
-    <div class="bg-gray-50 rounded-xl p-6 mb-6">
-        <div class="flex items-center gap-4">
+    <div class="bg-gray-50 rounded-xl p-4 sm:p-6 mb-6">
+        <!-- MOQ Info -->
+        @if($product->moq && $product->moq > 1)
+        <div class="mb-4 flex items-center gap-2 text-sm text-gray-700">
+            <i class="fas fa-box text-blue-600"></i>
+            <span class="font-semibold">{{ __('Minimum Order') }}: {{ $product->moq }} {{ __('units') }}</span>
+        </div>
+        @endif
+
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
             <!-- Quantity Selector with Icons -->
-            <div class="flex items-center border-2 border-gray-300 rounded-xl overflow-hidden bg-white shadow-sm">
+            <div class="flex items-center border-2 border-gray-300 rounded-xl overflow-hidden bg-white shadow-sm self-start">
                 <button wire:click="decrement"
                         type="button"
-                        class="px-5 py-3 hover:bg-primary-500 hover:text-white transition font-bold text-xl">
+                        class="px-4 sm:px-5 py-3 hover:bg-primary-500 hover:text-white transition font-bold text-lg sm:text-xl">
                     <i class="fas fa-minus"></i>
                 </button>
-                <div class="px-6 py-3 border-x-2 border-gray-300 min-w-20 text-center">
-                    <span class="text-2xl font-bold text-gray-900">{{ $quantity }}</span>
+                <div class="px-4 sm:px-6 py-3 border-x-2 border-gray-300 min-w-16 sm:min-w-20 text-center">
+                    <span class="text-xl sm:text-2xl font-bold text-gray-900">{{ $quantity }}</span>
                 </div>
                 <button wire:click="increment"
                         type="button"
-                        class="px-5 py-3 hover:bg-primary-500 hover:text-white transition font-bold text-xl">
+                        class="px-4 sm:px-5 py-3 hover:bg-primary-500 hover:text-white transition font-bold text-lg sm:text-xl">
                     <i class="fas fa-plus"></i>
                 </button>
             </div>
@@ -72,7 +80,7 @@
             <!-- Add to Cart Button -->
             <button wire:click="addToCart"
                     @if($product->isOutOfStock()) disabled @endif
-                    class="flex-1 bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-600 hover:to-primary-700 disabled:from-gray-400 disabled:to-gray-400 text-white font-bold py-4 px-8 rounded-xl transition shadow-lg hover:shadow-xl">
+                    class="flex-1 bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-600 hover:to-primary-700 disabled:from-gray-400 disabled:to-gray-400 text-white font-bold py-3 sm:py-4 px-6 sm:px-8 rounded-xl transition shadow-lg hover:shadow-xl text-sm sm:text-base">
                 @if($product->isOutOfStock())
                     <i class="fas fa-ban mr-2"></i>{{ __('Out of Stock') }}
                 @else

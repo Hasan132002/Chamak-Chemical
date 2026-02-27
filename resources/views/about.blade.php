@@ -3,21 +3,21 @@
 @section('title', __('About Us'))
 
 @section('content')
-    <div class="bg-gradient-to-r from-primary-500 to-blue-600 text-white py-16">
+    <div class="bg-gradient-to-r from-primary-500 to-blue-600 text-white py-10 sm:py-16">
         <div class="container mx-auto px-4 text-center">
-            <h1 class="text-5xl font-extrabold mb-4"><i class="fas fa-info-circle mr-3"></i>{{ __('About Us') }}</h1>
-            <p class="text-xl text-blue-100">{{ __('Learn more about Chamak Chemicals') }}</p>
+            <h1 class="text-3xl sm:text-5xl font-extrabold mb-3 sm:mb-4"><i class="fas fa-info-circle mr-2 sm:mr-3"></i>{{ __('About Us') }}</h1>
+            <p class="text-base sm:text-xl text-blue-100">{{ __('Learn more about Chamak Chemicals') }}</p>
         </div>
     </div>
 
-    <div class="container mx-auto px-4 py-16">
+    <div class="container mx-auto px-4 py-8 sm:py-16">
         <div class="max-w-4xl mx-auto">
-            <div class="bg-white rounded-2xl shadow-lg p-12">
+            <div class="bg-white rounded-2xl shadow-lg p-6 sm:p-12">
                 <div class="text-center mb-12">
                     <div class="w-24 h-24 bg-gradient-primary rounded-full flex items-center justify-center mx-auto mb-6">
                         <i class="fas fa-flask text-5xl text-white"></i>
                     </div>
-                    <h2 class="text-4xl font-bold mb-4">Chamak Chemicals</h2>
+                    <h2 class="text-2xl sm:text-4xl font-bold mb-4">Chamak Chemicals</h2>
                     <p class="text-xl text-gray-600">{{ __('Premium Quality Since 2020') }}</p>
                 </div>
 

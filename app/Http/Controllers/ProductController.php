@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Deal;
 use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
@@ -56,6 +57,12 @@ class ProductController extends Controller
             ->take(4)
             ->get();
 
-        return view('products.show', compact('product', 'relatedProducts'));
+        $deals = Deal::active()
+            ->with('translations')
+            ->orderBy('sort_order')
+            ->take(4)
+            ->get();
+
+        return view('products.show', compact('product', 'relatedProducts', 'deals'));
     }
 }

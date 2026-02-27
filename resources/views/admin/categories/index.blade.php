@@ -48,7 +48,7 @@
                             <td class="px-6 py-4">
                                 <div class="flex items-center gap-3">
                                     <div class="w-10 h-10 rounded-lg flex items-center justify-center" style="background: linear-gradient(135deg, #fed7aa 0%, #fdba74 100%);">
-                                        <i class="fas fa-layer-group text-orange-600"></i>
+                                        <i class="fas {{ $category->icon ?? 'fa-layer-group' }} text-orange-600"></i>
                                     </div>
                                     <div>
                                         <p class="font-bold text-gray-900">{{ $translation->name ?? 'N/A' }}</p>

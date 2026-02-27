@@ -3,14 +3,14 @@
 @section('title', __('Contact Us'))
 
 @section('content')
-    <div class="bg-gradient-to-r from-primary-500 to-blue-600 text-white py-16">
+    <div class="bg-gradient-to-r from-primary-500 to-blue-600 text-white py-10 sm:py-16">
         <div class="container mx-auto px-4 text-center">
-            <h1 class="text-5xl font-extrabold mb-4"><i class="fas fa-phone-alt mr-3"></i>{{ __('Contact Us') }}</h1>
-            <p class="text-xl text-blue-100">{{ __('Get in touch with us') }}</p>
+            <h1 class="text-3xl sm:text-5xl font-extrabold mb-3 sm:mb-4"><i class="fas fa-phone-alt mr-2 sm:mr-3"></i>{{ __('Contact Us') }}</h1>
+            <p class="text-base sm:text-xl text-blue-100">{{ __('Get in touch with us') }}</p>
         </div>
     </div>
 
-    <div class="container mx-auto px-4 py-16">
+    <div class="container mx-auto px-4 py-8 sm:py-16">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
             <!-- Contact Info -->
             <div class="space-y-8">
@@ -63,7 +63,7 @@
             </div>
 
             <!-- Contact Form -->
-            <div class="bg-white rounded-2xl shadow-lg p-8">
+            <div class="bg-white rounded-2xl shadow-lg p-5 sm:p-8">
                 <h3 class="text-2xl font-bold mb-6">{{ __('Send us a Message') }}</h3>
                 <form class="space-y-4">
                     <div>

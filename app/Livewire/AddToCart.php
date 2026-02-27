@@ -21,6 +21,9 @@ class AddToCart extends Component
         $this->productId = $productId;
         $this->product = Product::with('pricing', 'variations')->find($productId);
 
+        // Set default quantity to MOQ if exists
+        $this->quantity = $this->product->moq ?? 1;
+
         // Setup variants (kg/size options)
         $this->variants = $this->getProductVariants();
 
@@ -78,7 +81,8 @@ class AddToCart extends Component
 
     public function decrement()
     {
-        if ($this->quantity > 1) {
+        $minQty = $this->product->moq ?? 1;
+        if ($this->quantity > $minQty) {
             $this->quantity--;
         }
     }
@@ -87,6 +91,12 @@ class AddToCart extends Component
     {
         if ($this->product->isOutOfStock()) {
             session()->flash('error', __('Product is out of stock'));
+            return;
+        }
+
+        $minQty = $this->product->moq ?? 1;
+        if ($this->quantity < $minQty) {
+            session()->flash('error', __('Minimum order quantity is') . ' ' . $minQty . ' ' . __('units'));
             return;
         }
 
