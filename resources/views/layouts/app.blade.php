@@ -161,12 +161,14 @@
                                 <span class="hidden md:inline">{{ auth()->user()->name }}</span>
                             </a>
                         @else
-                            <a href="{{ route('login') }}" class="hidden sm:inline-flex px-6 py-2 bg-primary-500 text-white rounded-full font-semibold hover:bg-primary-600 transition shadow-md hover:shadow-lg">
-                                <i class="fas fa-sign-in-alt mr-2"></i>{{ __('Login') }}
-                            </a>
-                            <a href="{{ route('login') }}" class="sm:hidden p-2 text-primary-500">
-                                <i class="fas fa-sign-in-alt text-xl"></i>
-                            </a>
+                            @if(\App\Models\SiteSetting::get('public_login_enabled', false))
+                                <a href="{{ route('login') }}" class="hidden sm:inline-flex px-6 py-2 bg-primary-500 text-white rounded-full font-semibold hover:bg-primary-600 transition shadow-md hover:shadow-lg">
+                                    <i class="fas fa-sign-in-alt mr-2"></i>{{ __('Login') }}
+                                </a>
+                                <a href="{{ route('login') }}" class="sm:hidden p-2 text-primary-500">
+                                    <i class="fas fa-sign-in-alt text-xl"></i>
+                                </a>
+                            @endif
                         @endauth
 
                         <!-- Hamburger Menu Button -->
@@ -281,8 +283,11 @@
                     <ul class="space-y-3">
                         <li><a href="{{ route('products.index') }}" class="text-gray-400 hover:text-white hover:translate-x-2 inline-block transition"><i class="fas fa-chevron-right mr-2 text-xs"></i>{{ __('Products') }}</a></li>
                         <li><a href="{{ route('categories.index') }}" class="text-gray-400 hover:text-white hover:translate-x-2 inline-block transition"><i class="fas fa-chevron-right mr-2 text-xs"></i>{{ __('Categories') }}</a></li>
+                        <li><a href="{{ route('deals.index') }}" class="text-gray-400 hover:text-white hover:translate-x-2 inline-block transition"><i class="fas fa-chevron-right mr-2 text-xs"></i>{{ __('Deals') }}</a></li>
                         <li><a href="{{ route('wholesale.info') }}" class="text-gray-400 hover:text-white hover:translate-x-2 inline-block transition"><i class="fas fa-chevron-right mr-2 text-xs"></i>{{ __('Wholesale') }}</a></li>
+                        <li><a href="{{ route('blog.index') }}" class="text-gray-400 hover:text-white hover:translate-x-2 inline-block transition"><i class="fas fa-chevron-right mr-2 text-xs"></i>{{ __('Blog') }}</a></li>
                         <li><a href="{{ route('about') }}" class="text-gray-400 hover:text-white hover:translate-x-2 inline-block transition"><i class="fas fa-chevron-right mr-2 text-xs"></i>{{ __('About Us') }}</a></li>
+                        <li><a href="{{ route('contact') }}" class="text-gray-400 hover:text-white hover:translate-x-2 inline-block transition"><i class="fas fa-chevron-right mr-2 text-xs"></i>{{ __('Contact') }}</a></li>
                     </ul>
                 </div>
 
@@ -292,11 +297,11 @@
                         <i class="fas fa-th-large mr-2 text-secondary-500"></i>
                         {{ __('Categories') }}
                     </h4>
+                    @php $footerCategories = \App\Models\Category::where('is_active', true)->orderBy('sort_order')->take(6)->get(); @endphp
                     <ul class="space-y-3">
-                        <li><a href="#" class="text-gray-400 hover:text-white hover:translate-x-2 inline-block transition"><i class="fas fa-chevron-right mr-2 text-xs"></i>{{ __('Washing Powder') }}</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white hover:translate-x-2 inline-block transition"><i class="fas fa-chevron-right mr-2 text-xs"></i>{{ __('Dish Wash') }}</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white hover:translate-x-2 inline-block transition"><i class="fas fa-chevron-right mr-2 text-xs"></i>{{ __('Glass Cleaner') }}</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white hover:translate-x-2 inline-block transition"><i class="fas fa-chevron-right mr-2 text-xs"></i>{{ __('Hospital Chemicals') }}</a></li>
+                        @foreach($footerCategories as $footerCat)
+                            <li><a href="{{ route('categories.show', $footerCat->slug) }}" class="text-gray-400 hover:text-white hover:translate-x-2 inline-block transition"><i class="fas fa-chevron-right mr-2 text-xs"></i>{{ $footerCat->translate(app()->getLocale())->name }}</a></li>
+                        @endforeach
                     </ul>
                 </div>
 
@@ -325,9 +330,9 @@
                         &copy; {{ date('Y') }} Chamak Chemicals. {{ __('All rights reserved.') }}
                     </p>
                     <div class="flex space-x-6 text-sm text-gray-400">
-                        <a href="#" class="hover:text-white transition">{{ __('Privacy Policy') }}</a>
-                        <a href="#" class="hover:text-white transition">{{ __('Terms of Service') }}</a>
-                        <a href="#" class="hover:text-white transition">{{ __('Refund Policy') }}</a>
+                        <a href="{{ route('privacy-policy') }}" class="hover:text-white transition">{{ __('Privacy Policy') }}</a>
+                        <a href="{{ route('terms-of-service') }}" class="hover:text-white transition">{{ __('Terms of Service') }}</a>
+                        <a href="{{ route('refund-policy') }}" class="hover:text-white transition">{{ __('Refund Policy') }}</a>
                     </div>
                 </div>
             </div>

@@ -374,6 +374,65 @@
         </div>
     </section>
 
+    <!-- Welcome Popup -->
+    <div x-data="{ showPopup: false }"
+         x-init="setTimeout(() => { if(!sessionStorage.getItem('popupClosed')) { showPopup = true } }, 2000)"
+         x-show="showPopup"
+         x-cloak
+         class="fixed inset-0 z-[100] flex items-center justify-center p-4"
+         x-transition:enter="ease-out duration-300"
+         x-transition:enter-start="opacity-0"
+         x-transition:enter-end="opacity-100"
+         x-transition:leave="ease-in duration-200"
+         x-transition:leave-start="opacity-100"
+         x-transition:leave-end="opacity-0">
+        <!-- Backdrop -->
+        <div class="absolute inset-0 bg-black/60" @click="showPopup = false; sessionStorage.setItem('popupClosed', '1')"></div>
+        <!-- Popup Content -->
+        <div class="relative bg-white rounded-2xl shadow-2xl max-w-md w-full overflow-hidden"
+             x-transition:enter="ease-out duration-300"
+             x-transition:enter-start="opacity-0 scale-90"
+             x-transition:enter-end="opacity-100 scale-100">
+            <!-- Close Button -->
+            <button @click="showPopup = false; sessionStorage.setItem('popupClosed', '1')"
+                    class="absolute top-3 right-3 z-10 w-8 h-8 bg-white/90 hover:bg-white rounded-full flex items-center justify-center shadow-lg text-gray-600 hover:text-gray-900 transition">
+                <i class="fas fa-times"></i>
+            </button>
+            <!-- Top Banner -->
+            <div class="gradient-primary p-6 text-center text-white">
+                <i class="fas fa-gift text-4xl mb-3"></i>
+                <h3 class="text-2xl font-bold mb-1">{{ __('Welcome to Chamak Chemicals!') }}</h3>
+                <p class="text-blue-100 text-sm">{{ __('Pakistan\'s Trusted Chemical Supplier') }}</p>
+            </div>
+            <!-- Body -->
+            <div class="p-6 text-center">
+                <div class="bg-orange-50 border-2 border-dashed border-orange-300 rounded-xl p-4 mb-4">
+                    <p class="text-orange-600 font-bold text-lg mb-1"><i class="fas fa-truck mr-2"></i>{{ __('FREE SHIPPING') }}</p>
+                    <p class="text-gray-700 text-sm">{{ __('On all orders above PKR 5,000') }}</p>
+                </div>
+                <div class="space-y-3 text-sm text-gray-600 mb-5">
+                    <div class="flex items-center gap-2">
+                        <i class="fas fa-check-circle text-green-500"></i>
+                        <span>{{ __('Lab-tested & certified products') }}</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <i class="fas fa-check-circle text-green-500"></i>
+                        <span>{{ __('Delivery in 2-3 days across Pakistan') }}</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <i class="fas fa-check-circle text-green-500"></i>
+                        <span>{{ __('Wholesale & bulk order discounts') }}</span>
+                    </div>
+                </div>
+                <a href="{{ route('products.index') }}"
+                   @click="sessionStorage.setItem('popupClosed', '1')"
+                   class="inline-block w-full gradient-secondary text-white font-bold py-3 px-6 rounded-xl hover:opacity-90 transition">
+                    <i class="fas fa-shopping-bag mr-2"></i>{{ __('Shop Now') }}
+                </a>
+            </div>
+        </div>
+    </div>
+
     <!-- Add CSS for animations -->
     <style>
         @keyframes blob {

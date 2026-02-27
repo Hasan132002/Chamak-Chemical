@@ -117,6 +117,25 @@
             </div>
         </div>
 
+        <!-- Public Login/Register Settings -->
+        <div class="mb-8">
+            <h3 class="text-xl font-bold text-gray-900 mb-6 flex items-center">
+                <i class="fas fa-user-lock text-purple-500 mr-3"></i>
+                Public Login / Registration
+            </h3>
+
+            <div class="flex items-center">
+                <label class="flex items-center cursor-pointer">
+                    <input type="checkbox" name="public_login_enabled" value="1" {{ old('public_login_enabled', $settings['public_login_enabled']) ? 'checked' : '' }}
+                        class="w-5 h-5 text-purple-600 border-gray-300 rounded focus:ring-2 focus:ring-purple-500">
+                    <span class="ml-3 text-sm font-semibold text-gray-700">
+                        <i class="fas fa-sign-in-alt text-purple-500 mr-1"></i>Enable Public Login & Registration
+                    </span>
+                </label>
+            </div>
+            <p class="text-xs text-gray-500 mt-2">When disabled, the Login/Signup buttons will be hidden and /login, /register routes will show 404. Admin can still login via <strong>/admin/login</strong></p>
+        </div>
+
         <!-- Submit -->
         <div>
             <button type="submit" class="px-6 sm:px-8 py-3 sm:py-4 rounded-xl text-white font-bold text-sm sm:text-lg shadow-lg hover-lift" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">

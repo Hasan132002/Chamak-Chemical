@@ -64,6 +64,11 @@ Route::get('/about', function () { return view('about'); })->name('about');
 Route::get('/account', function () { return view('account.dashboard'); })->name('account.dashboard')->middleware('auth');
 Route::post('/newsletter/subscribe', function () { return back()->with('success', 'Subscribed!'); })->name('newsletter.subscribe');
 
+// Policy Pages
+Route::get('/privacy-policy', function () { return view('pages.privacy-policy'); })->name('privacy-policy');
+Route::get('/terms-of-service', function () { return view('pages.terms-of-service'); })->name('terms-of-service');
+Route::get('/refund-policy', function () { return view('pages.refund-policy'); })->name('refund-policy');
+
 // Breeze Authentication Routes
 Route::get('/dashboard', function () {
     return view('dashboard');

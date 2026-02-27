@@ -17,6 +17,7 @@ class SettingsAdminController extends Controller
             'whatsapp_number' => SiteSetting::get('whatsapp_number', '+923001234567'),
             'whatsapp_order_notify_admin' => SiteSetting::get('whatsapp_order_notify_admin', true),
             'whatsapp_order_notify_customer' => SiteSetting::get('whatsapp_order_notify_customer', true),
+            'public_login_enabled' => SiteSetting::get('public_login_enabled', false),
         ];
 
         return view('admin.settings.edit', compact('settings'));
@@ -31,6 +32,7 @@ class SettingsAdminController extends Controller
             'whatsapp_number' => 'nullable|string|max:20',
             'whatsapp_order_notify_admin' => 'nullable',
             'whatsapp_order_notify_customer' => 'nullable',
+            'public_login_enabled' => 'nullable',
         ]);
 
         SiteSetting::set('delivery_banner_text', $validated['delivery_banner_text'], 'delivery');
@@ -39,6 +41,7 @@ class SettingsAdminController extends Controller
         SiteSetting::set('whatsapp_number', $validated['whatsapp_number'] ?? '+923001234567', 'whatsapp');
         SiteSetting::set('whatsapp_order_notify_admin', $request->has('whatsapp_order_notify_admin'), 'whatsapp');
         SiteSetting::set('whatsapp_order_notify_customer', $request->has('whatsapp_order_notify_customer'), 'whatsapp');
+        SiteSetting::set('public_login_enabled', $request->has('public_login_enabled'), 'auth');
 
         return redirect()->route('admin.settings.edit')
             ->with('success', 'Settings updated successfully!');

@@ -10,10 +10,13 @@ use App\Http\Controllers\Admin\BannerAdminController;
 use App\Http\Controllers\Admin\SettingsAdminController;
 use Illuminate\Support\Facades\Route;
 
-// Admin Login (No Auth Required)
+// Admin Login (No Auth Required) - always accessible regardless of public_login_enabled setting
 Route::get('/login', function () {
     return view('admin.auth.login');
 })->name('admin.login')->middleware('guest');
+
+Route::post('/login', [\App\Http\Controllers\Auth\AuthenticatedSessionController::class, 'store'])
+    ->name('admin.login.store')->middleware('guest');
 
 // Protected Admin Routes (Require Authentication)
 Route::middleware('auth')->group(function () {
