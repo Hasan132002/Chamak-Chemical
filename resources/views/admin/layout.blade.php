@@ -133,6 +133,14 @@
                         <i class="fas fa-images w-5"></i>
                         <span>Banners</span>
                     </a>
+                    <a href="{{ route('admin.contact-leads.index') }}" class="flex items-center gap-3 px-4 py-3 rounded-lg text-white {{ request()->routeIs('admin.contact-leads.*') ? 'bg-white/20' : 'hover:bg-white/10' }} transition">
+                        <i class="fas fa-envelope w-5"></i>
+                        <span>Contact Leads</span>
+                        @php $newLeads = \App\Models\ContactLead::where('status', 'new')->count(); @endphp
+                        @if($newLeads > 0)
+                            <span class="ml-auto bg-red-500 px-2 py-1 rounded-full text-xs font-bold">{{ $newLeads }}</span>
+                        @endif
+                    </a>
                     <a href="{{ route('admin.settings.edit') }}" class="flex items-center gap-3 px-4 py-3 rounded-lg text-white {{ request()->routeIs('admin.settings.*') ? 'bg-white/20' : 'hover:bg-white/10' }} transition">
                         <i class="fas fa-cog w-5"></i>
                         <span>Settings</span>

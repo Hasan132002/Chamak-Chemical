@@ -60,6 +60,7 @@ Route::get('/blog', function () {
     return view('blog.index', compact('posts'));
 })->name('blog.index');
 Route::get('/contact', function () { return view('contact'); })->name('contact');
+Route::post('/contact', [\App\Http\Controllers\ContactController::class, 'store'])->name('contact.store');
 Route::get('/about', function () { return view('about'); })->name('about');
 Route::get('/account', function () { return view('account.dashboard'); })->name('account.dashboard')->middleware('auth');
 Route::post('/newsletter/subscribe', function () { return back()->with('success', 'Subscribed!'); })->name('newsletter.subscribe');

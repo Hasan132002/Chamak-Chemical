@@ -155,6 +155,44 @@
                         class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500">
                 </div>
             </div>
+
+            <!-- Discount / Sale Price Section -->
+            <div class="mt-6 p-4 bg-red-50 rounded-xl border border-red-200">
+                <h4 class="text-lg font-bold text-gray-900 mb-4 flex items-center">
+                    <i class="fas fa-tags text-red-500 mr-2"></i>
+                    Discount / Sale Price
+                    <span class="text-xs text-gray-500 ml-2 font-normal">(Optional - Leave empty for no discount)</span>
+                    @if($product->pricing && $product->pricing->isSaleActive())
+                        <span class="ml-3 bg-red-500 text-white text-xs px-2 py-1 rounded-full font-bold">SALE ACTIVE</span>
+                    @endif
+                </h4>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Sale Price -->
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Sale / Discount Price (PKR)</label>
+                        <input type="number" name="sale_price" value="{{ old('sale_price', $product->pricing->sale_price ?? '') }}" min="0" step="0.01"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500"
+                            placeholder="e.g., 350">
+                        <p class="text-xs text-gray-500 mt-1">Retail price will show as strikethrough, this will be the new price</p>
+                    </div>
+
+                    <!-- Sale Start Date -->
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Sale Start Date</label>
+                        <input type="date" name="sale_start_date" value="{{ old('sale_start_date', $product->pricing->sale_start_date ? $product->pricing->sale_start_date->format('Y-m-d') : '') }}"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500">
+                        <p class="text-xs text-gray-500 mt-1">Leave empty to start immediately</p>
+                    </div>
+
+                    <!-- Sale End Date -->
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Sale End Date</label>
+                        <input type="date" name="sale_end_date" value="{{ old('sale_end_date', $product->pricing->sale_end_date ? $product->pricing->sale_end_date->format('Y-m-d') : '') }}"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500">
+                        <p class="text-xs text-gray-500 mt-1">Leave empty for no end date</p>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- Product Variations -->

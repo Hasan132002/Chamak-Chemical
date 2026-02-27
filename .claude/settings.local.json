@@ -7,7 +7,10 @@
       "Bash(php artisan route:list --name=admin.banners)",
       "Bash(php artisan route:list --name=admin.settings)",
       "Bash(php artisan route:list --name=deals)",
-      "Bash(php artisan route:clear)"
+      "Bash(php artisan route:clear)",
+      "Bash(php artisan make:model ContactLead -m)",
+      "Bash(php artisan tinker --execute=\"echo json_encode\\(\\\\App\\\\Models\\\\Deal::select\\(''id'',''image'',''is_active''\\)->get\\(\\)->toArray\\(\\), JSON_PRETTY_PRINT\\);\")",
+      "Bash(php artisan tinker --execute=\":*)"
     ]
   }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\SiteSetting;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class SettingsAdminController extends Controller
 {
@@ -18,6 +19,13 @@ class SettingsAdminController extends Controller
             'whatsapp_order_notify_admin' => SiteSetting::get('whatsapp_order_notify_admin', true),
             'whatsapp_order_notify_customer' => SiteSetting::get('whatsapp_order_notify_customer', true),
             'public_login_enabled' => SiteSetting::get('public_login_enabled', false),
+            'site_phone' => SiteSetting::get('site_phone', '+92-300-1234567'),
+            'site_email' => SiteSetting::get('site_email', 'info@chamakchemical.com'),
+            'site_address' => SiteSetting::get('site_address', 'Karachi, Pakistan'),
+            'site_logo' => SiteSetting::get('site_logo', null),
+            'facebook_url' => SiteSetting::get('facebook_url', ''),
+            'instagram_url' => SiteSetting::get('instagram_url', ''),
+            'twitter_url' => SiteSetting::get('twitter_url', ''),
         ];
 
         return view('admin.settings.edit', compact('settings'));
@@ -33,6 +41,13 @@ class SettingsAdminController extends Controller
             'whatsapp_order_notify_admin' => 'nullable',
             'whatsapp_order_notify_customer' => 'nullable',
             'public_login_enabled' => 'nullable',
+            'site_phone' => 'nullable|string|max:20',
+            'site_email' => 'nullable|email|max:255',
+            'site_address' => 'nullable|string|max:500',
+            'site_logo' => 'nullable|image|mimes:jpg,jpeg,png,svg,webp|max:2048',
+            'facebook_url' => 'nullable|string|max:500',
+            'instagram_url' => 'nullable|string|max:500',
+            'twitter_url' => 'nullable|string|max:500',
         ]);
 
         SiteSetting::set('delivery_banner_text', $validated['delivery_banner_text'], 'delivery');
@@ -42,6 +57,22 @@ class SettingsAdminController extends Controller
         SiteSetting::set('whatsapp_order_notify_admin', $request->has('whatsapp_order_notify_admin'), 'whatsapp');
         SiteSetting::set('whatsapp_order_notify_customer', $request->has('whatsapp_order_notify_customer'), 'whatsapp');
         SiteSetting::set('public_login_enabled', $request->has('public_login_enabled'), 'auth');
+        SiteSetting::set('site_phone', $validated['site_phone'] ?? '+92-300-1234567', 'site');
+        SiteSetting::set('site_email', $validated['site_email'] ?? 'info@chamakchemical.com', 'site');
+        SiteSetting::set('site_address', $validated['site_address'] ?? 'Karachi, Pakistan', 'site');
+        SiteSetting::set('facebook_url', $validated['facebook_url'] ?? '', 'social');
+        SiteSetting::set('instagram_url', $validated['instagram_url'] ?? '', 'social');
+        SiteSetting::set('twitter_url', $validated['twitter_url'] ?? '', 'social');
+
+        // Handle logo upload
+        if ($request->hasFile('site_logo')) {
+            $oldLogo = SiteSetting::get('site_logo');
+            if ($oldLogo) {
+                Storage::disk('public')->delete($oldLogo);
+            }
+            $path = $request->file('site_logo')->store('site', 'public');
+            SiteSetting::set('site_logo', $path, 'site');
+        }
 
         return redirect()->route('admin.settings.edit')
             ->with('success', 'Settings updated successfully!');

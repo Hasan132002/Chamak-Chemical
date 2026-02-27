@@ -28,7 +28,7 @@ class DealAdminController extends Controller
             'title_ur' => 'required|string|max:255',
             'description_en' => 'nullable|string',
             'description_ur' => 'nullable|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
             'url' => 'nullable|string|max:255',
             'discount_percentage' => 'nullable|numeric|min:0|max:100',
             'starts_at' => 'nullable|date',
@@ -36,7 +36,14 @@ class DealAdminController extends Controller
             'sort_order' => 'nullable|integer',
         ]);
 
+        $imagePath = null;
+        if ($request->hasFile('image')) {
+            Storage::disk('public')->makeDirectory('deals');
+            $imagePath = $request->file('image')->store('deals', 'public');
+        }
+
         $deal = Deal::create([
+            'image' => $imagePath,
             'url' => $validated['url'] ?? null,
             'discount_percentage' => $validated['discount_percentage'] ?? null,
             'starts_at' => $validated['starts_at'] ?? null,
@@ -44,10 +51,6 @@ class DealAdminController extends Controller
             'sort_order' => $validated['sort_order'] ?? 0,
             'is_active' => $request->boolean('is_active', true),
         ]);
-
-        if ($request->hasFile('image')) {
-            $deal->update(['image' => $request->file('image')->store('deals', 'public')]);
-        }
 
         DealTranslation::create([
             'deal_id' => $deal->id,
@@ -80,7 +83,7 @@ class DealAdminController extends Controller
             'title_ur' => 'required|string|max:255',
             'description_en' => 'nullable|string',
             'description_ur' => 'nullable|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
             'url' => 'nullable|string|max:255',
             'discount_percentage' => 'nullable|numeric|min:0|max:100',
             'starts_at' => 'nullable|date',
@@ -88,7 +91,16 @@ class DealAdminController extends Controller
             'sort_order' => 'nullable|integer',
         ]);
 
+        if ($request->hasFile('image')) {
+            if ($deal->image) {
+                Storage::disk('public')->delete($deal->image);
+            }
+            Storage::disk('public')->makeDirectory('deals');
+            $validated['image'] = $request->file('image')->store('deals', 'public');
+        }
+
         $deal->update([
+            'image' => $validated['image'] ?? $deal->image,
             'url' => $validated['url'] ?? null,
             'discount_percentage' => $validated['discount_percentage'] ?? null,
             'starts_at' => $validated['starts_at'] ?? null,
@@ -96,13 +108,6 @@ class DealAdminController extends Controller
             'sort_order' => $validated['sort_order'] ?? 0,
             'is_active' => $request->boolean('is_active', true),
         ]);
-
-        if ($request->hasFile('image')) {
-            if ($deal->image) {
-                Storage::disk('public')->delete($deal->image);
-            }
-            $deal->update(['image' => $request->file('image')->store('deals', 'public')]);
-        }
 
         $deal->translations()->where('locale', 'en')->update([
             'title' => $validated['title_en'],

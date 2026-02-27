@@ -41,6 +41,9 @@ class ProductAdminController extends Controller
             'description_ur' => 'required|string',
             'retail_price' => 'required|numeric|min:0',
             'wholesale_price' => 'required|numeric|min:0',
+            'sale_price' => 'nullable|numeric|min:0',
+            'sale_start_date' => 'nullable|date',
+            'sale_end_date' => 'nullable|date|after_or_equal:sale_start_date',
             'moq' => 'required|integer|min:1',
             'images.*' => 'nullable|image|max:2048',
         ]);
@@ -95,6 +98,9 @@ class ProductAdminController extends Controller
             'product_id' => $product->id,
             'retail_price' => $validated['retail_price'],
             'wholesale_price' => $validated['wholesale_price'],
+            'sale_price' => $validated['sale_price'] ?? null,
+            'sale_start_date' => $validated['sale_start_date'] ?? null,
+            'sale_end_date' => $validated['sale_end_date'] ?? null,
         ]);
 
         // Handle Variations (if provided)
@@ -139,6 +145,9 @@ class ProductAdminController extends Controller
             'description_ur' => 'required|string',
             'retail_price' => 'required|numeric|min:0',
             'wholesale_price' => 'required|numeric|min:0',
+            'sale_price' => 'nullable|numeric|min:0',
+            'sale_start_date' => 'nullable|date',
+            'sale_end_date' => 'nullable|date|after_or_equal:sale_start_date',
             'moq' => 'required|integer|min:1',
             'images.*' => 'nullable|image|max:2048',
         ]);
@@ -185,6 +194,9 @@ class ProductAdminController extends Controller
         $product->pricing()->update([
             'retail_price' => $validated['retail_price'],
             'wholesale_price' => $validated['wholesale_price'],
+            'sale_price' => $validated['sale_price'] ?? null,
+            'sale_start_date' => $validated['sale_start_date'] ?? null,
+            'sale_end_date' => $validated['sale_end_date'] ?? null,
         ]);
 
         // Handle existing variation updates

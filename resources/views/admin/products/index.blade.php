@@ -76,7 +76,14 @@
                             <!-- Price -->
                             <td class="px-6 py-4">
                                 <div>
-                                    <p class="text-lg font-bold text-green-600">PKR {{ number_format($pricing->retail_price ?? 0, 0) }}</p>
+                                    @if($pricing && $pricing->isSaleActive())
+                                        <p class="text-sm text-gray-400 line-through">PKR {{ number_format($pricing->retail_price ?? 0, 0) }}</p>
+                                        <p class="text-lg font-bold text-red-600">PKR {{ number_format($pricing->sale_price, 0) }}
+                                            <span class="text-xs bg-red-100 text-red-600 px-1.5 py-0.5 rounded font-bold ml-1">-{{ number_format((($pricing->retail_price - $pricing->sale_price) / $pricing->retail_price) * 100, 0) }}%</span>
+                                        </p>
+                                    @else
+                                        <p class="text-lg font-bold text-green-600">PKR {{ number_format($pricing->retail_price ?? 0, 0) }}</p>
+                                    @endif
                                     @if(isset($pricing->wholesale_price))
                                         <p class="text-xs text-gray-500">Wholesale: PKR {{ number_format($pricing->wholesale_price, 0) }}</p>
                                     @endif

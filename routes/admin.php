@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\UserAdminController;
 use App\Http\Controllers\Admin\DealAdminController;
 use App\Http\Controllers\Admin\BannerAdminController;
 use App\Http\Controllers\Admin\SettingsAdminController;
+use App\Http\Controllers\Admin\ContactLeadAdminController;
 use Illuminate\Support\Facades\Route;
 
 // Admin Login (No Auth Required) - always accessible regardless of public_login_enabled setting
@@ -95,6 +96,14 @@ Route::middleware('auth')->group(function () {
     // Settings
     Route::get('/settings', [SettingsAdminController::class, 'edit'])->name('admin.settings.edit');
     Route::put('/settings', [SettingsAdminController::class, 'update'])->name('admin.settings.update');
+
+    // Contact Leads
+    Route::prefix('contact-leads')->name('admin.contact-leads.')->group(function () {
+        Route::get('/', [ContactLeadAdminController::class, 'index'])->name('index');
+        Route::get('/{lead}', [ContactLeadAdminController::class, 'show'])->name('show');
+        Route::put('/{lead}/status', [ContactLeadAdminController::class, 'updateStatus'])->name('status');
+        Route::delete('/{lead}', [ContactLeadAdminController::class, 'destroy'])->name('destroy');
+    });
 
     // Reports & Analytics
     Route::get('/reports', function () {

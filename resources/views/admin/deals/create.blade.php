@@ -28,7 +28,7 @@
                     </label>
                     <input type="file" name="image" accept="image/*"
                         class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent @error('image') border-red-500 @enderror">
-                    <p class="text-xs text-gray-500 mt-1">Recommended: 800x400px, Max 2MB (JPG, PNG, WebP)</p>
+                    <p class="text-xs text-gray-500 mt-1">Recommended: 800x400px, Max 5MB (JPG, PNG, WebP)</p>
                     @error('image')
                         <p class="text-red-500 text-sm mt-1"><i class="fas fa-exclamation-circle mr-1"></i>{{ $message }}</p>
                     @enderror
