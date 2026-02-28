@@ -74,7 +74,8 @@ class AddToCart extends Component
 
     public function increment()
     {
-        if ($this->quantity < $this->product->stock_quantity) {
+        $maxStock = $this->product->stock_quantity ?? 9999;
+        if ($this->quantity < $maxStock) {
             $this->quantity++;
         }
     }
@@ -87,7 +88,7 @@ class AddToCart extends Component
         }
     }
 
-    public function addToCart()
+    public function addToCart($redirect = false)
     {
         if ($this->product->isOutOfStock()) {
             session()->flash('error', __('Product is out of stock'));
@@ -96,11 +97,12 @@ class AddToCart extends Component
 
         $minQty = $this->product->moq ?? 1;
         if ($this->quantity < $minQty) {
-            session()->flash('error', __('Minimum order quantity is') . ' ' . $minQty . ' ' . __('units'));
+            session()->flash('error', __('Minimum order quantity is') . ' ' . $minQty);
             return;
         }
 
-        if ($this->quantity > $this->product->stock_quantity) {
+        $maxStock = $this->product->stock_quantity ?? 9999;
+        if ($this->quantity > $maxStock) {
             session()->flash('error', __('Insufficient stock'));
             return;
         }
@@ -135,11 +137,16 @@ class AddToCart extends Component
             ]);
         }
 
-        // Dispatch globally to update cart icon
-        $this->dispatch('cart-updated')->to(CartIcon::class);
-        $this->dispatch('$refresh');
+        // Dispatch Livewire event + browser event for reliable cart icon update
+        $this->dispatch('cart-updated');
+        $this->js("window.dispatchEvent(new CustomEvent('cart-count-changed'))");
+
+        if ($redirect) {
+            return redirect()->route('checkout.index');
+        }
+
         session()->flash('success', __('Product added to cart successfully!'));
-        $this->quantity = 1;
+        $this->quantity = $minQty;
     }
 
     public function render()

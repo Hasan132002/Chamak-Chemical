@@ -23,14 +23,17 @@
 
         .stat-card {
             background: white;
-            border-radius: 1rem;
-            padding: 1.5rem;
+            border-radius: 0.75rem;
+            padding: 0.875rem;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease;
         }
+        @media (min-width: 640px) {
+            .stat-card { padding: 1.25rem; border-radius: 1rem; }
+        }
         .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -5px rgba(0, 0, 0, 0.1);
         }
 
         @keyframes slideIn {
@@ -179,7 +182,7 @@
             <!-- Dashboard Content -->
             <div class="p-4 sm:p-6 lg:p-8">
                 <!-- Stats Grid -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6 sm:mb-8">
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-4 sm:mb-6">
                     @php
                         $totalSales = \App\Models\Order::sum('total_amount');
                         $todayOrders = \App\Models\Order::whereDate('created_at', today())->count();
@@ -189,58 +192,58 @@
 
                     <!-- Total Sales -->
                     <div class="stat-card text-white animate-slide-in" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); animation-delay: 0.1s">
-                        <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center justify-between mb-2 sm:mb-3">
                             <div class="flex-1">
-                                <p class="text-white font-semibold text-sm mb-2 opacity-90">💰 Total Sales</p>
-                                <h3 class="text-2xl sm:text-4xl font-extrabold text-white">PKR {{ number_format($totalSales, 0) }}</h3>
+                                <p class="text-white font-semibold text-xs sm:text-sm mb-1 opacity-90">Total Sales</p>
+                                <h3 class="text-lg sm:text-2xl font-extrabold text-white">PKR {{ number_format($totalSales, 0) }}</h3>
                             </div>
-                            <div class="w-16 h-16 bg-white/30 rounded-2xl flex items-center justify-center">
-                                <i class="fas fa-dollar-sign text-3xl text-white"></i>
+                            <div class="w-10 h-10 sm:w-14 sm:h-14 bg-white/30 rounded-xl flex items-center justify-center">
+                                <i class="fas fa-dollar-sign text-lg sm:text-2xl text-white"></i>
                             </div>
                         </div>
-                        <p class="text-white font-medium text-sm opacity-90"><i class="fas fa-arrow-up mr-2"></i>All time revenue</p>
+                        <p class="text-white font-medium text-xs opacity-80">All time revenue</p>
                     </div>
 
                     <!-- Today Orders -->
                     <div class="stat-card text-white animate-slide-in" style="background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); animation-delay: 0.2s">
-                        <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center justify-between mb-2 sm:mb-3">
                             <div class="flex-1">
-                                <p class="text-white font-semibold text-sm mb-2 opacity-90">📦 Orders Today</p>
-                                <h3 class="text-2xl sm:text-4xl font-extrabold text-white">{{ $todayOrders }}</h3>
+                                <p class="text-white font-semibold text-xs sm:text-sm mb-1 opacity-90">Orders Today</p>
+                                <h3 class="text-lg sm:text-2xl font-extrabold text-white">{{ $todayOrders }}</h3>
                             </div>
-                            <div class="w-16 h-16 bg-white/30 rounded-2xl flex items-center justify-center">
-                                <i class="fas fa-shopping-bag text-3xl text-white"></i>
+                            <div class="w-10 h-10 sm:w-14 sm:h-14 bg-white/30 rounded-xl flex items-center justify-center">
+                                <i class="fas fa-shopping-bag text-lg sm:text-2xl text-white"></i>
                             </div>
                         </div>
-                        <p class="text-white font-medium text-sm opacity-90"><i class="fas fa-calendar mr-2"></i>New orders today</p>
+                        <p class="text-white font-medium text-xs opacity-80">New orders today</p>
                     </div>
 
                     <!-- Total Products -->
                     <div class="stat-card text-white animate-slide-in" style="background: linear-gradient(135deg, #a855f7 0%, #9333ea 100%); animation-delay: 0.3s">
-                        <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center justify-between mb-2 sm:mb-3">
                             <div class="flex-1">
-                                <p class="text-white font-semibold text-sm mb-2 opacity-90">📦 Total Products</p>
-                                <h3 class="text-2xl sm:text-4xl font-extrabold text-white">{{ $totalProducts }}</h3>
+                                <p class="text-white font-semibold text-xs sm:text-sm mb-1 opacity-90">Total Products</p>
+                                <h3 class="text-lg sm:text-2xl font-extrabold text-white">{{ $totalProducts }}</h3>
                             </div>
-                            <div class="w-16 h-16 bg-white/30 rounded-2xl flex items-center justify-center">
-                                <i class="fas fa-box text-3xl text-white"></i>
+                            <div class="w-10 h-10 sm:w-14 sm:h-14 bg-white/30 rounded-xl flex items-center justify-center">
+                                <i class="fas fa-box text-lg sm:text-2xl text-white"></i>
                             </div>
                         </div>
-                        <p class="text-white font-medium text-sm opacity-90"><i class="fas fa-cube mr-2"></i>In your catalog</p>
+                        <p class="text-white font-medium text-xs opacity-80">In your catalog</p>
                     </div>
 
                     <!-- Pending Dealers -->
                     <div class="stat-card text-white animate-slide-in" style="background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); animation-delay: 0.4s">
-                        <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center justify-between mb-2 sm:mb-3">
                             <div class="flex-1">
-                                <p class="text-white font-semibold text-sm mb-2 opacity-90">👥 Pending Dealers</p>
-                                <h3 class="text-2xl sm:text-4xl font-extrabold text-white">{{ $pendingDealers }}</h3>
+                                <p class="text-white font-semibold text-xs sm:text-sm mb-1 opacity-90">Pending Dealers</p>
+                                <h3 class="text-lg sm:text-2xl font-extrabold text-white">{{ $pendingDealers }}</h3>
                             </div>
-                            <div class="w-16 h-16 bg-white/30 rounded-2xl flex items-center justify-center">
-                                <i class="fas fa-user-clock text-3xl text-white"></i>
+                            <div class="w-10 h-10 sm:w-14 sm:h-14 bg-white/30 rounded-xl flex items-center justify-center">
+                                <i class="fas fa-user-clock text-lg sm:text-2xl text-white"></i>
                             </div>
                         </div>
-                        <p class="text-white font-medium text-sm opacity-90"><i class="fas fa-exclamation mr-2"></i>Need approval</p>
+                        <p class="text-white font-medium text-xs opacity-80">Need approval</p>
                     </div>
                 </div>
 
@@ -259,8 +262,8 @@
 
                     <!-- Quick Actions -->
                     <div class="bg-white rounded-2xl shadow-lg p-4 sm:p-6 animate-slide-in" style="animation-delay: 0.6s">
-                        <h3 class="text-xl font-bold mb-6 flex items-center">
-                            <i class="fas fa-bolt mr-3 text-secondary-500"></i>
+                        <h3 class="text-lg sm:text-xl font-bold mb-4 sm:mb-6 flex items-center">
+                            <i class="fas fa-bolt mr-2 sm:mr-3 text-secondary-500"></i>
                             Quick Actions
                         </h3>
                         <div class="space-y-3">
@@ -289,13 +292,13 @@
                 @endphp
 
                 @if($lowStockProducts->count() > 0)
-                <div class="bg-white rounded-2xl shadow-lg p-4 sm:p-6 mb-6 sm:mb-8 border-l-4 border-red-500 animate-slide-in" style="animation-delay: 0.65s">
-                    <div class="flex items-center justify-between mb-6">
-                        <h3 class="text-xl font-bold flex items-center text-red-600">
-                            <i class="fas fa-exclamation-triangle mr-3 animate-pulse"></i>
+                <div class="bg-white rounded-2xl shadow-lg p-4 sm:p-6 mb-4 sm:mb-8 border-l-4 border-red-500 animate-slide-in" style="animation-delay: 0.65s">
+                    <div class="flex items-center justify-between mb-4 sm:mb-6">
+                        <h3 class="text-base sm:text-xl font-bold flex items-center text-red-600">
+                            <i class="fas fa-exclamation-triangle mr-2 sm:mr-3 animate-pulse"></i>
                             Low Stock Alerts
                         </h3>
-                        <a href="{{ route('admin.products.index') }}" class="text-red-500 hover:text-red-600 font-semibold text-sm">
+                        <a href="{{ route('admin.products.index') }}" class="text-red-500 hover:text-red-600 font-semibold text-xs sm:text-sm">
                             View All <i class="fas fa-arrow-right ml-1"></i>
                         </a>
                     </div>
@@ -320,12 +323,12 @@
 
                 <!-- Recent Orders -->
                 <div class="bg-white rounded-2xl shadow-lg p-4 sm:p-6 animate-slide-in" style="animation-delay: 0.7s">
-                    <div class="flex items-center justify-between mb-6">
-                        <h3 class="text-xl font-bold flex items-center">
-                            <i class="fas fa-shopping-cart mr-3 text-primary-500"></i>
+                    <div class="flex items-center justify-between mb-4 sm:mb-6">
+                        <h3 class="text-base sm:text-xl font-bold flex items-center">
+                            <i class="fas fa-shopping-cart mr-2 sm:mr-3 text-primary-500"></i>
                             Recent Orders
                         </h3>
-                        <a href="{{ route('admin.orders.index') }}" class="text-primary-500 hover:text-primary-600 font-semibold text-sm">
+                        <a href="{{ route('admin.orders.index') }}" class="text-primary-500 hover:text-primary-600 font-semibold text-xs sm:text-sm">
                             View All <i class="fas fa-arrow-right ml-1"></i>
                         </a>
                     </div>

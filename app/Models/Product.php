@@ -83,11 +83,17 @@ class Product extends Model
 
     public function isLowStock(): bool
     {
+        if (is_null($this->stock_quantity)) {
+            return false;
+        }
         return $this->stock_quantity <= $this->low_stock_threshold;
     }
 
     public function isOutOfStock(): bool
     {
+        if (is_null($this->stock_quantity)) {
+            return false;
+        }
         return $this->stock_quantity <= 0;
     }
 }

@@ -3704,6 +3704,22 @@ namespace App\Models {
 	/**
 	 * App\Models\ContactLead
 	 *
+	 * @property \Illuminate\Support\Carbon|null $updated_at
+	 * @property \Illuminate\Support\Carbon|null $created_at
+	 * @property mixed $status
+	 * @property string $message
+	 * @property string|null $phone
+	 * @property string $email
+	 * @property string $name
+	 * @property int $id
+	 * @method static \Illuminate\Database\Eloquent\Builder<ContactLead>|ContactLead whereId($value)
+	 * @method static \Illuminate\Database\Eloquent\Builder<ContactLead>|ContactLead whereName($value)
+	 * @method static \Illuminate\Database\Eloquent\Builder<ContactLead>|ContactLead whereEmail($value)
+	 * @method static \Illuminate\Database\Eloquent\Builder<ContactLead>|ContactLead wherePhone($value)
+	 * @method static \Illuminate\Database\Eloquent\Builder<ContactLead>|ContactLead whereMessage($value)
+	 * @method static \Illuminate\Database\Eloquent\Builder<ContactLead>|ContactLead whereStatus($value)
+	 * @method static \Illuminate\Database\Eloquent\Builder<ContactLead>|ContactLead whereCreatedAt($value)
+	 * @method static \Illuminate\Database\Eloquent\Builder<ContactLead>|ContactLead whereUpdatedAt($value)
 	 * @method static \Illuminate\Database\Eloquent\Builder<ContactLead>|ContactLead newModelQuery()
 	 * @method static \Illuminate\Database\Eloquent\Builder<ContactLead>|ContactLead newQuery()
 	 * @method static \Illuminate\Database\Eloquent\Builder<ContactLead>|ContactLead query()

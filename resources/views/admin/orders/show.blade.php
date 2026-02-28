@@ -15,9 +15,9 @@
         <!-- Main Order Details -->
         <div class="lg:col-span-2 space-y-6">
             <!-- Order Items -->
-            <div class="bg-white rounded-2xl shadow-lg p-6">
-                <h3 class="text-xl font-bold text-gray-900 mb-6 flex items-center">
-                    <i class="fas fa-shopping-cart text-blue-500 mr-3"></i>
+            <div class="bg-white rounded-2xl shadow-lg p-4 sm:p-6">
+                <h3 class="text-lg sm:text-xl font-bold text-gray-900 mb-4 sm:mb-6 flex items-center">
+                    <i class="fas fa-shopping-cart text-blue-500 mr-2 sm:mr-3"></i>
                     Order Items
                 </h3>
 
@@ -26,17 +26,17 @@
                         @php
                             $translation = $item->product->translations->where('locale', 'en')->first();
                         @endphp
-                        <div class="flex items-center gap-4 p-4 bg-gray-50 rounded-xl">
-                            <div class="w-16 h-16 rounded-lg flex items-center justify-center" style="background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);">
-                                <i class="fas fa-box text-2xl text-indigo-400"></i>
+                        <div class="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 bg-gray-50 rounded-xl">
+                            <div class="w-12 h-12 sm:w-16 sm:h-16 rounded-lg flex items-center justify-center flex-shrink-0" style="background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);">
+                                <i class="fas fa-box text-lg sm:text-2xl text-indigo-400"></i>
                             </div>
-                            <div class="flex-1">
-                                <h4 class="font-bold text-gray-900">{{ $translation->name ?? 'N/A' }}</h4>
-                                <p class="text-sm text-gray-600">SKU: {{ $item->product->sku }}</p>
-                                <p class="text-sm text-gray-600">Quantity: {{ $item->quantity }} × PKR {{ number_format($item->unit_price, 0) }}</p>
+                            <div class="flex-1 min-w-0">
+                                <h4 class="font-bold text-sm sm:text-base text-gray-900 truncate">{{ $translation->name ?? 'N/A' }}</h4>
+                                <p class="text-xs sm:text-sm text-gray-600">SKU: {{ $item->product->sku }}</p>
+                                <p class="text-xs sm:text-sm text-gray-600">{{ $item->quantity }} × PKR {{ number_format($item->unit_price, 0) }}</p>
                             </div>
-                            <div class="text-right">
-                                <p class="text-lg font-bold text-green-600">PKR {{ number_format($item->subtotal, 0) }}</p>
+                            <div class="text-right flex-shrink-0">
+                                <p class="text-sm sm:text-lg font-bold text-green-600">PKR {{ number_format($item->subtotal, 0) }}</p>
                             </div>
                         </div>
                     @endforeach
@@ -70,9 +70,9 @@
             </div>
 
             <!-- Shipping Address -->
-            <div class="bg-white rounded-2xl shadow-lg p-6">
-                <h3 class="text-xl font-bold text-gray-900 mb-6 flex items-center">
-                    <i class="fas fa-map-marker-alt text-red-500 mr-3"></i>
+            <div class="bg-white rounded-2xl shadow-lg p-4 sm:p-6">
+                <h3 class="text-lg sm:text-xl font-bold text-gray-900 mb-4 sm:mb-6 flex items-center">
+                    <i class="fas fa-map-marker-alt text-red-500 mr-2 sm:mr-3"></i>
                     Shipping Address
                 </h3>
 
@@ -89,9 +89,9 @@
 
             <!-- Status History -->
             @if($order->statusHistory && $order->statusHistory->count() > 0)
-            <div class="bg-white rounded-2xl shadow-lg p-6">
-                <h3 class="text-xl font-bold text-gray-900 mb-6 flex items-center">
-                    <i class="fas fa-history text-purple-500 mr-3"></i>
+            <div class="bg-white rounded-2xl shadow-lg p-4 sm:p-6">
+                <h3 class="text-lg sm:text-xl font-bold text-gray-900 mb-4 sm:mb-6 flex items-center">
+                    <i class="fas fa-history text-purple-500 mr-2 sm:mr-3"></i>
                     Status History
                 </h3>
 
@@ -125,9 +125,9 @@
         <!-- Sidebar -->
         <div class="space-y-6">
             <!-- Order Status -->
-            <div class="bg-white rounded-2xl shadow-lg p-6">
-                <h3 class="text-xl font-bold text-gray-900 mb-6 flex items-center">
-                    <i class="fas fa-info-circle text-blue-500 mr-3"></i>
+            <div class="bg-white rounded-2xl shadow-lg p-4 sm:p-6">
+                <h3 class="text-lg sm:text-xl font-bold text-gray-900 mb-4 sm:mb-6 flex items-center">
+                    <i class="fas fa-info-circle text-blue-500 mr-2 sm:mr-3"></i>
                     Order Status
                 </h3>
 
@@ -161,9 +161,9 @@
             </div>
 
             <!-- Customer Info -->
-            <div class="bg-white rounded-2xl shadow-lg p-6">
-                <h3 class="text-xl font-bold text-gray-900 mb-6 flex items-center">
-                    <i class="fas fa-user text-green-500 mr-3"></i>
+            <div class="bg-white rounded-2xl shadow-lg p-4 sm:p-6">
+                <h3 class="text-lg sm:text-xl font-bold text-gray-900 mb-4 sm:mb-6 flex items-center">
+                    <i class="fas fa-user text-green-500 mr-2 sm:mr-3"></i>
                     Customer Info
                 </h3>
 
@@ -190,9 +190,9 @@
             </div>
 
             <!-- Payment Info -->
-            <div class="bg-white rounded-2xl shadow-lg p-6">
-                <h3 class="text-xl font-bold text-gray-900 mb-6 flex items-center">
-                    <i class="fas fa-credit-card text-orange-500 mr-3"></i>
+            <div class="bg-white rounded-2xl shadow-lg p-4 sm:p-6">
+                <h3 class="text-lg sm:text-xl font-bold text-gray-900 mb-4 sm:mb-6 flex items-center">
+                    <i class="fas fa-credit-card text-orange-500 mr-2 sm:mr-3"></i>
                     Payment Info
                 </h3>
 

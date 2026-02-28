@@ -7,26 +7,26 @@
 @section('content')
 <div class="animate-slide-in">
     <!-- Header -->
-    <div class="flex items-center justify-between mb-6">
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-4 sm:mb-6 gap-3">
         <div>
-            <h2 class="text-2xl font-bold text-gray-900 flex items-center">
-                <i class="fas fa-blog text-green-500 mr-3"></i>
+            <h2 class="text-xl sm:text-2xl font-bold text-gray-900 flex items-center">
+                <i class="fas fa-blog text-green-500 mr-2 sm:mr-3"></i>
                 All Blog Posts
-                <span class="ml-3 text-sm font-normal text-gray-500">({{ $posts->total() }} total)</span>
+                <span class="ml-2 sm:ml-3 text-xs sm:text-sm font-normal text-gray-500">({{ $posts->total() }} total)</span>
             </h2>
         </div>
-        <a href="{{ route('admin.blog.create') }}" class="px-6 py-3 rounded-xl text-white font-semibold shadow-lg hover-lift" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
+        <a href="{{ route('admin.blog.create') }}" class="px-4 sm:px-6 py-2 sm:py-3 rounded-xl text-white font-semibold shadow-lg hover-lift text-sm sm:text-base text-center" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
             <i class="fas fa-plus mr-2"></i>New Post
         </a>
     </div>
 
     @if($posts->count() > 0)
     <!-- Blog Posts Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
         @foreach($posts as $post)
         @php $translation = $post->translate('en'); @endphp
         <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover-lift">
-            <div class="h-48 bg-gradient-to-br from-green-100 to-blue-100 flex items-center justify-center relative">
+            <div class="h-36 sm:h-48 bg-gradient-to-br from-green-100 to-blue-100 flex items-center justify-center relative">
                 @if($post->featured_image)
                     <img src="{{ asset('storage/' . $post->featured_image) }}" alt="{{ $translation->title ?? '' }}" class="w-full h-full object-cover">
                 @else
@@ -43,7 +43,7 @@
                 </div>
             </div>
 
-            <div class="p-6">
+            <div class="p-4 sm:p-6">
                 <div class="flex items-center gap-2 mb-3">
                     <span class="text-xs text-gray-500">
                         <i class="fas fa-calendar mr-1"></i>

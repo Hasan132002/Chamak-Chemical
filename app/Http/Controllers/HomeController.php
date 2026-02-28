@@ -29,6 +29,13 @@ class HomeController extends Controller
             ->orderBy('sort_order')
             ->get();
 
-        return view('home', compact('categories', 'featuredProducts', 'banners', 'deals'));
+        // New arrivals - latest products
+        $newArrivals = Product::where('is_active', true)
+            ->with(['translations', 'pricing', 'category'])
+            ->latest()
+            ->take(6)
+            ->get();
+
+        return view('home', compact('categories', 'featuredProducts', 'banners', 'deals', 'newArrivals'));
     }
 }

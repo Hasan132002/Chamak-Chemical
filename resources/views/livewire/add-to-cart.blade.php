@@ -3,6 +3,11 @@
         <div class="bg-green-100 border-l-4 border-green-500 text-green-700 px-6 py-4 rounded-lg mb-4 animate__animated animate__fadeIn">
             <i class="fas fa-check-circle mr-2"></i>{{ session('success') }}
         </div>
+        <script>
+            // Dispatch event to update cart icon count in real-time
+            Livewire.dispatch('cart-updated');
+            window.dispatchEvent(new CustomEvent('cart-count-changed'));
+        </script>
     @endif
 
     @if(session()->has('error'))
@@ -55,7 +60,7 @@
         @if($product->moq && $product->moq > 1)
         <div class="mb-4 flex items-center gap-2 text-sm text-gray-700">
             <i class="fas fa-box text-blue-600"></i>
-            <span class="font-semibold">{{ __('Minimum Order') }}: {{ $product->moq }} {{ __('units') }}</span>
+            <span class="font-semibold">{{ __('Minimum Order') }}: {{ $product->moq }} {{ __('pcs') }}</span>
         </div>
         @endif
 
@@ -90,9 +95,9 @@
         </div>
     </div>
 
-    <!-- Buy Now -->
+    <!-- Buy Now - Adds to cart and goes to checkout -->
     @if(!$product->isOutOfStock())
-        <button wire:click="addToCart"
+        <button wire:click="addToCart(true)"
                 class="w-full bg-gradient-to-r from-secondary-500 to-orange-600 hover:from-secondary-600 hover:to-orange-700 text-white font-bold py-4 px-8 rounded-xl transition shadow-lg hover:shadow-xl">
             <i class="fas fa-bolt mr-2"></i>{{ __('Buy Now') }}
         </button>

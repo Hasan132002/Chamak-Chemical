@@ -7,15 +7,15 @@
 @section('content')
 <div class="animate-slide-in">
     <!-- Header -->
-    <div class="flex items-center justify-between mb-6">
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-4 sm:mb-6 gap-3">
         <div>
-            <h2 class="text-2xl font-bold text-gray-900 flex items-center">
-                <i class="fas fa-ticket-alt text-orange-500 mr-3"></i>
+            <h2 class="text-xl sm:text-2xl font-bold text-gray-900 flex items-center">
+                <i class="fas fa-ticket-alt text-orange-500 mr-2 sm:mr-3"></i>
                 All Coupons
             </h2>
-            <p class="text-sm text-gray-600 mt-1">Manage promotional codes and discounts</p>
+            <p class="text-xs sm:text-sm text-gray-600 mt-1">Manage promotional codes and discounts</p>
         </div>
-        <button class="px-6 py-3 rounded-xl text-white font-semibold shadow-lg hover-lift" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);">
+        <button class="px-4 sm:px-6 py-2 sm:py-3 rounded-xl text-white font-semibold shadow-lg hover-lift text-sm sm:text-base" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);">
             <i class="fas fa-plus mr-2"></i>Create Coupon
         </button>
     </div>
@@ -96,51 +96,51 @@
     </div>
 
     <!-- Coupon Stats -->
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mt-8">
-        <div class="bg-white rounded-xl shadow-lg p-6 hover-lift">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6 mt-4 sm:mt-8">
+        <div class="bg-white rounded-xl shadow-lg p-3 sm:p-6 hover-lift">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-sm text-gray-600 font-semibold mb-1">Active Coupons</p>
-                    <h3 class="text-3xl font-bold text-green-600">3</h3>
+                    <p class="text-xs sm:text-sm text-gray-600 font-semibold mb-1">Active</p>
+                    <h3 class="text-xl sm:text-3xl font-bold text-green-600">3</h3>
                 </div>
-                <div class="w-14 h-14 rounded-xl flex items-center justify-center" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
-                    <i class="fas fa-check-circle text-2xl text-white"></i>
+                <div class="w-10 h-10 sm:w-14 sm:h-14 rounded-xl flex items-center justify-center" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
+                    <i class="fas fa-check-circle text-lg sm:text-2xl text-white"></i>
                 </div>
             </div>
         </div>
 
-        <div class="bg-white rounded-xl shadow-lg p-6 hover-lift">
+        <div class="bg-white rounded-xl shadow-lg p-3 sm:p-6 hover-lift">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-sm text-gray-600 font-semibold mb-1">Total Usage</p>
-                    <h3 class="text-3xl font-bold text-blue-600">275</h3>
+                    <p class="text-xs sm:text-sm text-gray-600 font-semibold mb-1">Usage</p>
+                    <h3 class="text-xl sm:text-3xl font-bold text-blue-600">275</h3>
                 </div>
-                <div class="w-14 h-14 rounded-xl flex items-center justify-center" style="background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);">
-                    <i class="fas fa-chart-line text-2xl text-white"></i>
+                <div class="w-10 h-10 sm:w-14 sm:h-14 rounded-xl flex items-center justify-center" style="background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);">
+                    <i class="fas fa-chart-line text-lg sm:text-2xl text-white"></i>
                 </div>
             </div>
         </div>
 
-        <div class="bg-white rounded-xl shadow-lg p-6 hover-lift">
+        <div class="bg-white rounded-xl shadow-lg p-3 sm:p-6 hover-lift">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-sm text-gray-600 font-semibold mb-1">Discount Given</p>
-                    <h3 class="text-3xl font-bold text-orange-600">PKR 45K</h3>
+                    <p class="text-xs sm:text-sm text-gray-600 font-semibold mb-1">Discount</p>
+                    <h3 class="text-xl sm:text-3xl font-bold text-orange-600">PKR 45K</h3>
                 </div>
-                <div class="w-14 h-14 rounded-xl flex items-center justify-center" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);">
-                    <i class="fas fa-money-bill-wave text-2xl text-white"></i>
+                <div class="w-10 h-10 sm:w-14 sm:h-14 rounded-xl flex items-center justify-center" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);">
+                    <i class="fas fa-money-bill-wave text-lg sm:text-2xl text-white"></i>
                 </div>
             </div>
         </div>
 
-        <div class="bg-white rounded-xl shadow-lg p-6 hover-lift">
+        <div class="bg-white rounded-xl shadow-lg p-3 sm:p-6 hover-lift">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-sm text-gray-600 font-semibold mb-1">Expired</p>
-                    <h3 class="text-3xl font-bold text-red-600">1</h3>
+                    <p class="text-xs sm:text-sm text-gray-600 font-semibold mb-1">Expired</p>
+                    <h3 class="text-xl sm:text-3xl font-bold text-red-600">1</h3>
                 </div>
-                <div class="w-14 h-14 rounded-xl flex items-center justify-center" style="background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);">
-                    <i class="fas fa-times-circle text-2xl text-white"></i>
+                <div class="w-10 h-10 sm:w-14 sm:h-14 rounded-xl flex items-center justify-center" style="background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);">
+                    <i class="fas fa-times-circle text-lg sm:text-2xl text-white"></i>
                 </div>
             </div>
         </div>

@@ -7,45 +7,45 @@
 @section('content')
 <div class="animate-slide-in">
     <!-- Header with Stats -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-6 mb-4 sm:mb-8">
         @php
             $totalDealers = \App\Models\Dealer::count();
             $pendingDealers = \App\Models\Dealer::where('approval_status', 'pending')->count();
             $approvedDealers = \App\Models\Dealer::where('approval_status', 'approved')->count();
         @endphp
 
-        <div class="bg-white rounded-xl shadow-lg p-6 hover-lift" style="border-left: 4px solid #3b82f6;">
+        <div class="bg-white rounded-xl shadow-lg p-3 sm:p-6 hover-lift" style="border-left: 4px solid #3b82f6;">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-sm text-gray-600 font-semibold mb-1">Total Dealers</p>
-                    <h3 class="text-3xl font-bold text-gray-900">{{ $totalDealers }}</h3>
+                    <p class="text-xs sm:text-sm text-gray-600 font-semibold mb-1">Total Dealers</p>
+                    <h3 class="text-xl sm:text-3xl font-bold text-gray-900">{{ $totalDealers }}</h3>
                 </div>
-                <div class="w-14 h-14 rounded-xl flex items-center justify-center" style="background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);">
-                    <i class="fas fa-handshake text-2xl text-white"></i>
+                <div class="w-10 h-10 sm:w-14 sm:h-14 rounded-xl flex items-center justify-center" style="background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);">
+                    <i class="fas fa-handshake text-lg sm:text-2xl text-white"></i>
                 </div>
             </div>
         </div>
 
-        <div class="bg-white rounded-xl shadow-lg p-6 hover-lift" style="border-left: 4px solid #f59e0b;">
+        <div class="bg-white rounded-xl shadow-lg p-3 sm:p-6 hover-lift" style="border-left: 4px solid #f59e0b;">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-sm text-gray-600 font-semibold mb-1">Pending Approval</p>
-                    <h3 class="text-3xl font-bold text-orange-600">{{ $pendingDealers }}</h3>
+                    <p class="text-xs sm:text-sm text-gray-600 font-semibold mb-1">Pending</p>
+                    <h3 class="text-xl sm:text-3xl font-bold text-orange-600">{{ $pendingDealers }}</h3>
                 </div>
-                <div class="w-14 h-14 rounded-xl flex items-center justify-center" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);">
-                    <i class="fas fa-clock text-2xl text-white"></i>
+                <div class="w-10 h-10 sm:w-14 sm:h-14 rounded-xl flex items-center justify-center" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);">
+                    <i class="fas fa-clock text-lg sm:text-2xl text-white"></i>
                 </div>
             </div>
         </div>
 
-        <div class="bg-white rounded-xl shadow-lg p-6 hover-lift" style="border-left: 4px solid #10b981;">
+        <div class="bg-white rounded-xl shadow-lg p-3 sm:p-6 hover-lift col-span-2 md:col-span-1" style="border-left: 4px solid #10b981;">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-sm text-gray-600 font-semibold mb-1">Approved</p>
-                    <h3 class="text-3xl font-bold text-green-600">{{ $approvedDealers }}</h3>
+                    <p class="text-xs sm:text-sm text-gray-600 font-semibold mb-1">Approved</p>
+                    <h3 class="text-xl sm:text-3xl font-bold text-green-600">{{ $approvedDealers }}</h3>
                 </div>
-                <div class="w-14 h-14 rounded-xl flex items-center justify-center" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
-                    <i class="fas fa-check-circle text-2xl text-white"></i>
+                <div class="w-10 h-10 sm:w-14 sm:h-14 rounded-xl flex items-center justify-center" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
+                    <i class="fas fa-check-circle text-lg sm:text-2xl text-white"></i>
                 </div>
             </div>
         </div>
@@ -53,9 +53,9 @@
 
     <!-- Dealers Table -->
     <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
-        <div class="p-6 border-b border-gray-200">
-            <h2 class="text-2xl font-bold text-gray-900 flex items-center">
-                <i class="fas fa-list mr-3 text-blue-500"></i>
+        <div class="p-4 sm:p-6 border-b border-gray-200">
+            <h2 class="text-lg sm:text-2xl font-bold text-gray-900 flex items-center">
+                <i class="fas fa-list mr-2 sm:mr-3 text-blue-500"></i>
                 All Dealers
             </h2>
         </div>

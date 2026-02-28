@@ -7,24 +7,24 @@
 @section('content')
 <div class="animate-slide-in">
     <!-- Header with Add Button -->
-    <div class="flex items-center justify-between mb-6">
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-4 sm:mb-6 gap-3">
         <div>
-            <h2 class="text-2xl font-bold text-gray-900 flex items-center">
-                <i class="fas fa-users text-blue-500 mr-3"></i>
+            <h2 class="text-xl sm:text-2xl font-bold text-gray-900 flex items-center">
+                <i class="fas fa-users text-blue-500 mr-2 sm:mr-3"></i>
                 All Users
             </h2>
-            <p class="text-sm text-gray-600 mt-1">Manage customer and admin accounts</p>
+            <p class="text-xs sm:text-sm text-gray-600 mt-1">Manage customer and admin accounts</p>
         </div>
-        <a href="{{ route('admin.users.create') }}" class="px-6 py-3 rounded-xl text-white font-semibold shadow-lg hover-lift" style="background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);">
+        <a href="{{ route('admin.users.create') }}" class="px-4 sm:px-6 py-2 sm:py-3 rounded-xl text-white font-semibold shadow-lg hover-lift text-sm sm:text-base text-center" style="background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);">
             <i class="fas fa-plus mr-2"></i>Add New User
         </a>
     </div>
 
     <!-- Users Table -->
     <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
-        <div class="p-6 border-b border-gray-200">
+        <div class="p-4 sm:p-6 border-b border-gray-200">
             <div class="flex items-center justify-between">
-                <h3 class="text-xl font-bold text-gray-900">User List</h3>
+                <h3 class="text-base sm:text-xl font-bold text-gray-900">User List</h3>
                 <div class="flex gap-2">
                     <button class="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm font-semibold transition">
                         <i class="fas fa-filter mr-2"></i>Filter

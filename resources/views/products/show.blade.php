@@ -3,25 +3,30 @@
 @section('title', $product->translate(app()->getLocale())->name)
 
 @section('content')
-    <!-- Breadcrumb -->
-    <div class="bg-gray-100 py-4">
+    <!-- Breadcrumb with Back Button -->
+    <div class="bg-gray-100 py-3">
         <div class="container mx-auto px-4">
-            <nav class="text-sm">
-                <a href="{{ route('home') }}" class="text-gray-600 hover:text-primary-500">{{ __('Home') }}</a>
-                <span class="mx-2">/</span>
-                <a href="{{ route('products.index') }}" class="text-gray-600 hover:text-primary-500">{{ __('Products') }}</a>
-                <span class="mx-2">/</span>
-                <a href="{{ route('categories.show', $product->category->slug) }}" class="text-gray-600 hover:text-primary-500">
-                    {{ $product->category->translate(app()->getLocale())->name }}
+            <div class="flex items-center gap-3">
+                <a href="javascript:history.back()" class="flex items-center justify-center w-9 h-9 bg-white hover:bg-primary-500 hover:text-white text-gray-600 rounded-full shadow-sm transition" title="{{ __('Go Back') }}">
+                    <i class="fas fa-arrow-left text-sm"></i>
                 </a>
-                <span class="mx-2">/</span>
-                <span class="text-gray-900">{{ $product->translate(app()->getLocale())->name }}</span>
-            </nav>
+                <nav class="text-sm">
+                    <a href="{{ route('home') }}" class="text-gray-600 hover:text-primary-500">{{ __('Home') }}</a>
+                    <span class="mx-2">/</span>
+                    <a href="{{ route('products.index') }}" class="text-gray-600 hover:text-primary-500">{{ __('Products') }}</a>
+                    <span class="mx-2">/</span>
+                    <a href="{{ route('categories.show', $product->category->slug) }}" class="text-gray-600 hover:text-primary-500">
+                        {{ $product->category->translate(app()->getLocale())->name }}
+                    </a>
+                    <span class="mx-2">/</span>
+                    <span class="text-gray-900">{{ $product->translate(app()->getLocale())->name }}</span>
+                </nav>
+            </div>
         </div>
     </div>
 
-    <div class="container mx-auto px-4 py-8">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+    <div class="container mx-auto px-4 py-4 sm:py-8">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-12">
             <!-- Product Images - Auto Slider -->
             <div x-data="{
                 currentSlide: 0,
@@ -59,7 +64,7 @@
                         <div class="relative">
                             <img :src="images[currentSlide]"
                                  alt="{{ $product->translate(app()->getLocale())->name }}"
-                                 class="w-full h-[400px] sm:h-[500px] object-contain bg-gray-50 transition-opacity duration-500">
+                                 class="w-full h-[250px] sm:h-[400px] object-contain bg-gray-50 transition-opacity duration-500">
 
                             <!-- Prev/Next Buttons -->
                             <template x-if="images.length > 1">
@@ -115,7 +120,7 @@
 
             <!-- Product Details -->
             <div>
-                <h1 class="text-2xl sm:text-4xl font-bold mb-4">{{ $product->translate(app()->getLocale())->name }}</h1>
+                <h1 class="text-xl sm:text-3xl font-bold mb-3">{{ $product->translate(app()->getLocale())->name }}</h1>
 
                 <div class="flex items-center gap-4 mb-6">
                     <span class="text-xs text-gray-500">{{ __('SKU') }}: {{ $product->sku }}</span>
@@ -124,24 +129,9 @@
                     </span>
                 </div>
 
-                <!-- Price -->
-                <div class="mb-6 sm:mb-8">
-                    @if($product->pricing->isSaleActive())
-                        <div class="flex flex-wrap items-baseline gap-2 sm:gap-3">
-                            <span class="text-2xl sm:text-4xl font-bold text-primary-500">PKR {{ number_format($product->pricing->sale_price, 0) }}</span>
-                            <span class="text-lg sm:text-2xl text-gray-400 line-through">PKR {{ number_format($product->pricing->retail_price, 0) }}</span>
-                            <span class="bg-secondary-500 text-white px-3 py-1 rounded-full text-xs sm:text-sm font-bold">
-                                {{ number_format((($product->pricing->retail_price - $product->pricing->sale_price) / $product->pricing->retail_price) * 100, 0) }}% OFF
-                            </span>
-                        </div>
-                    @else
-                        <span class="text-2xl sm:text-4xl font-bold text-primary-500">PKR {{ number_format($product->pricing->retail_price, 0) }}</span>
-                    @endif
-                </div>
-
                 <!-- Short Description -->
-                <div class="mb-8">
-                    <p class="text-gray-700 leading-relaxed">
+                <div class="mb-6">
+                    <p class="text-gray-700 leading-relaxed text-sm sm:text-base">
                         {{ $product->translate(app()->getLocale())->short_description }}
                     </p>
                 </div>
@@ -152,8 +142,8 @@
                     <div class="flex items-center gap-2">
                         <i class="fas fa-info-circle text-yellow-600"></i>
                         <div>
-                            <p class="font-semibold text-gray-900">{{ __('Minimum Order Quantity') }}: {{ $product->moq }} {{ __('units') }}</p>
-                            <p class="text-sm text-gray-600">{{ __('Wholesale orders require minimum') }} {{ $product->moq }} {{ __('units') }}</p>
+                            <p class="font-semibold text-gray-900">{{ __('Minimum Order Quantity') }}: {{ $product->moq }}</p>
+                            <p class="text-sm text-gray-600">{{ __('Wholesale orders require minimum') }} {{ $product->moq }} {{ __('pcs') }}</p>
                         </div>
                     </div>
                 </div>
@@ -176,7 +166,7 @@
                         <span class="text-sm text-gray-500 line-through">PKR {{ number_format($product->pricing->retail_price, 0) }}</span>
                     </div>
                     <p class="text-sm text-gray-600 mb-3">
-                        <i class="fas fa-box-open mr-1"></i>{{ __('For orders of') }} {{ $product->moq ?? 1 }}+ {{ __('units') }}
+                        <i class="fas fa-box-open mr-1"></i>{{ __('For orders of') }} {{ $product->moq ?? 1 }}+ {{ __('pcs') }}
                     </p>
                     @guest
                     <a href="{{ route('wholesale.register') }}" class="block text-center bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-lg font-semibold transition">
@@ -193,7 +183,7 @@
                         <i class="fas fa-exclamation-triangle text-red-600 text-xl"></i>
                         <div>
                             <p class="font-semibold text-red-900">{{ __('Low Stock Alert!') }}</p>
-                            <p class="text-sm text-red-700">{{ __('Only') }} {{ $product->stock_quantity }} {{ __('units left. Order now!') }}</p>
+                            <p class="text-sm text-red-700">{{ __('Only') }} {{ $product->stock_quantity }} {{ __('left. Order now!') }}</p>
                         </div>
                     </div>
                 </div>
@@ -210,7 +200,7 @@
                             @foreach($product->wholesalePricing->sortBy('min_quantity') as $pricing)
                                 <div class="flex justify-between items-center">
                                     <span class="text-sm text-gray-700">
-                                        {{ ucfirst($pricing->dealer_tier) }} ({{ $pricing->min_quantity }}+ units)
+                                        {{ ucfirst($pricing->dealer_tier) }} ({{ $pricing->min_quantity }}+ pcs)
                                     </span>
                                     <span class="font-bold text-primary-500">PKR {{ number_format($pricing->unit_price, 0) }}</span>
                                 </div>

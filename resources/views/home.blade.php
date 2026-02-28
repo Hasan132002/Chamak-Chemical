@@ -115,64 +115,55 @@
     </section>
     @endif
 
-    <!-- Hot Deals Section -->
+    <!-- Hot Deals Section - Grid like Featured Products -->
     @if($deals->count() > 0)
     <section class="py-8 sm:py-14 bg-gradient-to-r from-red-50 to-orange-50">
         <div class="container mx-auto px-4">
-            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 sm:mb-10 gap-4">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 sm:mb-8 gap-3">
                 <div>
-                    <h2 class="text-3xl sm:text-5xl font-extrabold mb-2 bg-gradient-to-r from-red-500 to-orange-600 bg-clip-text text-transparent">
+                    <h2 class="text-2xl sm:text-4xl font-extrabold mb-1 bg-gradient-to-r from-red-500 to-orange-600 bg-clip-text text-transparent">
                         <i class="fas fa-fire text-red-500"></i> {{ __('Hot Deals') }}
                     </h2>
-                    <p class="text-gray-600 text-sm sm:text-base">{{ __('Don\'t miss our amazing deals and promotions!') }}</p>
+                    <p class="text-gray-600 text-xs sm:text-sm">{{ __('Don\'t miss our amazing deals and promotions!') }}</p>
                 </div>
-                <a href="{{ route('deals.index') }}" class="px-5 sm:px-6 py-2 sm:py-3 bg-red-500 text-white rounded-full font-semibold hover:bg-red-600 transition shadow-lg hover-lift text-sm sm:text-base">
-                    {{ __('View All Deals') }} <i class="fas fa-arrow-right ml-2"></i>
+                <a href="{{ route('deals.index') }}" class="px-4 py-2 bg-red-500 text-white rounded-full font-semibold hover:bg-red-600 transition shadow-lg text-xs sm:text-sm">
+                    {{ __('View All Deals') }} <i class="fas fa-arrow-right ml-1"></i>
                 </a>
             </div>
 
-            <!-- Horizontal Scrollable Deals -->
-            <div class="flex gap-4 sm:gap-6 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide" style="-webkit-overflow-scrolling: touch;">
+            <!-- Deals Grid - Same layout as Featured Products -->
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-4">
                 @foreach($deals as $deal)
                     @php $translation = $deal->translate(app()->getLocale()); @endphp
-                    <div class="flex-shrink-0 w-72 sm:w-80 snap-start">
-                        <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover-lift border-2 border-transparent hover:border-red-500 transition-all h-full">
+                    <a href="{{ $deal->url ?? '#' }}" class="group">
+                        <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100 hover:border-red-400 hover:shadow-lg transition-all h-full">
                             <div class="relative overflow-hidden">
                                 @if($deal->image)
-                                    <img src="{{ asset('storage/' . $deal->image) }}" alt="{{ $translation->title ?? '' }}" class="w-full h-40 sm:h-48 object-cover hover:scale-110 transition-transform duration-500">
+                                    <img src="{{ asset('storage/' . $deal->image) }}" alt="{{ $translation->title ?? '' }}" class="w-full h-28 sm:h-36 object-cover group-hover:scale-105 transition-transform duration-300">
                                 @else
-                                    <div class="w-full h-40 sm:h-48 bg-gradient-to-br from-red-400 to-orange-500 flex items-center justify-center">
-                                        <i class="fas fa-fire text-white text-5xl opacity-50"></i>
+                                    <div class="w-full h-28 sm:h-36 bg-gradient-to-br from-red-400 to-orange-500 flex items-center justify-center">
+                                        <i class="fas fa-fire text-white text-3xl opacity-50"></i>
                                     </div>
                                 @endif
                                 @if($deal->discount_percentage)
-                                    <div class="absolute top-3 right-3">
-                                        <span class="bg-red-600 text-white px-3 py-1.5 rounded-full text-sm font-bold shadow-lg animate-pulse">
-                                            {{ number_format($deal->discount_percentage, 0) }}% {{ __('OFF') }}
-                                        </span>
-                                    </div>
+                                    <span class="absolute top-1.5 right-1.5 z-10 bg-red-600 text-white px-1.5 py-0.5 rounded text-[10px] font-bold">
+                                        {{ number_format($deal->discount_percentage, 0) }}% {{ __('OFF') }}
+                                    </span>
                                 @endif
                                 @if($deal->ends_at)
-                                    <div class="absolute bottom-3 left-3">
-                                        <span class="bg-black/70 text-white px-2 py-1 rounded text-xs font-semibold">
-                                            <i class="fas fa-clock mr-1"></i>{{ __('Ends') }}: {{ $deal->ends_at->format('d M') }}
-                                        </span>
-                                    </div>
+                                    <span class="absolute bottom-1.5 left-1.5 bg-black/60 text-white px-1.5 py-0.5 rounded text-[10px]">
+                                        <i class="fas fa-clock mr-0.5"></i>{{ $deal->ends_at->format('d M') }}
+                                    </span>
                                 @endif
                             </div>
-                            <div class="p-4 sm:p-5">
-                                <h3 class="font-bold text-gray-900 mb-1 text-lg">{{ $translation->title ?? '' }}</h3>
-                                @if($translation->description)
-                                    <p class="text-gray-600 text-sm line-clamp-2 mb-3">{{ $translation->description }}</p>
-                                @endif
-                                @if($deal->url)
-                                    <a href="{{ $deal->url }}" class="inline-flex items-center text-red-500 font-semibold text-sm hover:text-red-600 transition">
-                                        {{ __('Shop Now') }} <i class="fas fa-arrow-right ml-2"></i>
-                                    </a>
-                                @endif
+                            <div class="p-2.5 sm:p-3">
+                                <h3 class="font-bold text-gray-900 group-hover:text-red-500 mb-1 text-xs sm:text-sm leading-tight line-clamp-2 transition">{{ $translation->title ?? '' }}</h3>
+                                <span class="inline-flex items-center text-red-500 font-semibold text-xs">
+                                    {{ __('Shop Now') }} <i class="fas fa-arrow-right ml-1"></i>
+                                </span>
                             </div>
                         </div>
-                    </div>
+                    </a>
                 @endforeach
             </div>
         </div>
@@ -180,27 +171,84 @@
     @endif
 
     <!-- Featured Categories - Modern Cards -->
-    <section class="py-10 sm:py-20 bg-gray-50">
+    <section class="py-8 sm:py-14 bg-gray-50">
         <div class="container mx-auto px-4">
-            <div class="text-center mb-8 sm:mb-16 animate__animated animate__fadeIn">
-                <h2 class="text-3xl sm:text-5xl font-extrabold mb-3 sm:mb-4 bg-gradient-to-r from-primary-500 to-blue-600 bg-clip-text text-transparent">
+            <div class="text-center mb-6 sm:mb-10">
+                <h2 class="text-2xl sm:text-4xl font-extrabold mb-1 sm:mb-2 bg-gradient-to-r from-primary-500 to-blue-600 bg-clip-text text-transparent">
                     {{ __('Product Categories') }}
                 </h2>
-                <p class="text-gray-600 text-sm sm:text-lg">{{ __('Explore our wide range of chemical products') }}</p>
+                <p class="text-gray-600 text-xs sm:text-sm">{{ __('Explore our wide range of chemical products') }}</p>
             </div>
-            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-6">
+            @php
+                $fallbackIcons = ['fas fa-flask', 'fas fa-spray-can', 'fas fa-vial', 'fas fa-broom', 'fas fa-pump-soap', 'fas fa-tint', 'fas fa-fill-drip', 'fas fa-hand-sparkles'];
+                $iconColors = ['text-blue-500', 'text-purple-500', 'text-green-500', 'text-orange-500', 'text-pink-500', 'text-cyan-500', 'text-indigo-500', 'text-red-500'];
+            @endphp
+            <div class="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-4">
                 @foreach($categories as $index => $category)
-                    <a href="{{ route('categories.show', $category->slug) }}" class="group animate__animated animate__fadeInUp" style="animation-delay: {{ $index * 100 }}ms">
-                        <div class="bg-white rounded-2xl shadow-lg p-4 sm:p-8 text-center hover-lift border-2 border-transparent hover:border-primary-500 transition-all">
-                            <div class="text-3xl sm:text-5xl mb-3 sm:mb-4 transform group-hover:scale-125 transition-transform">
-                                <i class="fas fa-flask text-primary-500"></i>
+                    <a href="{{ route('categories.show', $category->slug) }}" class="group">
+                        <div class="bg-white rounded-xl shadow-md p-3 sm:p-5 text-center hover-lift border border-gray-100 hover:border-primary-500 transition-all">
+                            <div class="text-2xl sm:text-3xl mb-2 sm:mb-3 transform group-hover:scale-110 transition-transform">
+                                <i class="{{ $category->icon ?: $fallbackIcons[$index % count($fallbackIcons)] }} {{ $iconColors[$index % count($iconColors)] }}"></i>
                             </div>
-                            <h3 class="font-bold text-gray-800 group-hover:text-primary-500 transition">
+                            <h3 class="font-bold text-xs sm:text-sm text-gray-800 group-hover:text-primary-500 transition leading-tight">
                                 {{ $category->translate(app()->getLocale())->name }}
                             </h3>
-                            <div class="mt-3 text-xs text-gray-500 flex items-center justify-center">
-                                <span>{{ __('View Products') }}</span>
-                                <i class="fas fa-arrow-right ml-2 group-hover:translate-x-2 transition"></i>
+                        </div>
+                    </a>
+                @endforeach
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Products - Compact Grid -->
+    <section class="py-8 sm:py-14 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 sm:mb-8 gap-3">
+                <div>
+                    <h2 class="text-2xl sm:text-4xl font-extrabold mb-1 bg-gradient-to-r from-primary-500 to-blue-600 bg-clip-text text-transparent">
+                        {{ __('Featured Products') }}
+                    </h2>
+                    <p class="text-gray-600 text-xs sm:text-sm">{{ __('Handpicked bestsellers just for you') }}</p>
+                </div>
+                <a href="{{ route('products.index') }}" class="px-4 py-2 bg-primary-500 text-white rounded-full font-semibold hover:bg-primary-600 transition shadow-lg text-xs sm:text-sm">
+                    {{ __('View All') }} <i class="fas fa-arrow-right ml-1"></i>
+                </a>
+            </div>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-4">
+                @foreach($featuredProducts as $index => $product)
+                    <a href="{{ route('products.show', $product->slug) }}" class="group">
+                        <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100 hover:border-primary-500 hover:shadow-lg transition-all h-full">
+                            <div class="relative overflow-hidden">
+                                @if($product->pricing->isSaleActive())
+                                    <span class="absolute top-1.5 right-1.5 z-10 bg-red-500 text-white px-1.5 py-0.5 rounded text-[10px] font-bold">
+                                        -{{ number_format((($product->pricing->retail_price - $product->pricing->sale_price) / $product->pricing->retail_price) * 100, 0) }}%
+                                    </span>
+                                @endif
+                                @if($product->featured_image)
+                                    <img src="{{ asset('storage/' . $product->featured_image) }}"
+                                         alt="{{ $product->translate(app()->getLocale())->name }}"
+                                         class="w-full h-28 sm:h-36 object-cover group-hover:scale-105 transition-transform duration-300">
+                                @else
+                                    <div class="w-full h-28 sm:h-36 bg-gradient-to-br from-primary-400 via-blue-500 to-purple-500 flex items-center justify-center">
+                                        <i class="fas fa-flask text-white text-3xl opacity-50"></i>
+                                    </div>
+                                @endif
+                            </div>
+                            <div class="p-2.5 sm:p-3">
+                                <p class="text-[10px] text-gray-400 font-semibold uppercase tracking-wide mb-0.5">
+                                    {{ $product->category->translate(app()->getLocale())->name }}
+                                </p>
+                                <h3 class="font-bold text-xs sm:text-sm text-gray-900 group-hover:text-primary-500 transition line-clamp-2 mb-1.5 leading-tight">
+                                    {{ $product->translate(app()->getLocale())->name }}
+                                </h3>
+                                <div>
+                                    @if($product->pricing->isSaleActive())
+                                        <span class="text-gray-400 line-through text-[10px]">PKR {{ number_format($product->pricing->retail_price, 0) }}</span>
+                                        <div class="text-primary-500 font-bold text-sm">PKR {{ number_format($product->pricing->sale_price, 0) }}</div>
+                                    @else
+                                        <div class="text-primary-500 font-bold text-sm">PKR {{ number_format($product->pricing->retail_price, 0) }}</div>
+                                    @endif
+                                </div>
                             </div>
                         </div>
                     </a>
@@ -209,113 +257,137 @@
         </div>
     </section>
 
-    <!-- Featured Products - Premium Design -->
-    <section class="py-10 sm:py-20 bg-white">
+    <!-- New Arrivals -->
+    @if($newArrivals->count() > 0)
+    <section class="py-8 sm:py-14 bg-gradient-to-r from-blue-50 to-indigo-50">
         <div class="container mx-auto px-4">
-            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 sm:mb-12 gap-4">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 sm:mb-8 gap-3">
                 <div>
-                    <h2 class="text-3xl sm:text-5xl font-extrabold mb-2 bg-gradient-to-r from-primary-500 to-blue-600 bg-clip-text text-transparent">
-                        {{ __('Featured Products') }}
+                    <h2 class="text-2xl sm:text-4xl font-extrabold mb-1 bg-gradient-to-r from-indigo-500 to-purple-600 bg-clip-text text-transparent">
+                        <i class="fas fa-star text-indigo-500"></i> {{ __('New Arrivals') }}
                     </h2>
-                    <p class="text-gray-600 text-sm sm:text-base">{{ __('Handpicked bestsellers just for you') }}</p>
+                    <p class="text-gray-600 text-xs sm:text-sm">{{ __('Check out our latest products') }}</p>
                 </div>
-                <a href="{{ route('products.index') }}" class="px-5 sm:px-6 py-2 sm:py-3 bg-primary-500 text-white rounded-full font-semibold hover:bg-primary-600 transition shadow-lg hover-lift text-sm sm:text-base">
-                    {{ __('View All') }} <i class="fas fa-arrow-right ml-2"></i>
+                <a href="{{ route('products.index') }}" class="px-4 py-2 bg-indigo-500 text-white rounded-full font-semibold hover:bg-indigo-600 transition shadow-lg text-xs sm:text-sm">
+                    {{ __('View All') }} <i class="fas fa-arrow-right ml-1"></i>
                 </a>
             </div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-8">
-                @foreach($featuredProducts as $index => $product)
-                    <div class="group animate__animated animate__fadeInUp hover-lift" style="animation-delay: {{ $index * 100 }}ms">
-                        <div class="bg-white rounded-2xl shadow-xl overflow-hidden border-2 border-transparent hover:border-primary-500 transition-all">
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-4">
+                @foreach($newArrivals as $product)
+                    <a href="{{ route('products.show', $product->slug) }}" class="group">
+                        <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100 hover:border-indigo-400 hover:shadow-lg transition-all h-full">
                             <div class="relative overflow-hidden">
+                                <span class="absolute top-1.5 left-1.5 z-10 bg-indigo-500 text-white px-1.5 py-0.5 rounded text-[10px] font-bold">
+                                    {{ __('NEW') }}
+                                </span>
                                 @if($product->pricing->isSaleActive())
-                                    <div class="absolute top-3 right-3 z-10">
-                                        <span class="gradient-secondary text-white px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-bold shadow-lg animate-pulse">
-                                            {{ number_format((($product->pricing->retail_price - $product->pricing->sale_price) / $product->pricing->retail_price) * 100, 0) }}% {{ __('OFF') }}
-                                        </span>
+                                    <span class="absolute top-1.5 right-1.5 z-10 bg-red-500 text-white px-1.5 py-0.5 rounded text-[10px] font-bold">
+                                        -{{ number_format((($product->pricing->retail_price - $product->pricing->sale_price) / $product->pricing->retail_price) * 100, 0) }}%
+                                    </span>
+                                @endif
+                                @if($product->featured_image)
+                                    <img src="{{ asset('storage/' . $product->featured_image) }}"
+                                         alt="{{ $product->translate(app()->getLocale())->name }}"
+                                         class="w-full h-28 sm:h-36 object-cover group-hover:scale-105 transition-transform duration-300">
+                                @else
+                                    @php
+                                        $naGradients = ['from-indigo-400 via-purple-500 to-pink-500','from-blue-400 via-cyan-500 to-teal-500','from-green-400 via-emerald-500 to-teal-600'];
+                                        $naGradient = $naGradients[$product->id % count($naGradients)];
+                                    @endphp
+                                    <div class="w-full h-28 sm:h-36 bg-gradient-to-br {{ $naGradient }} flex items-center justify-center">
+                                        <i class="fas fa-flask text-white text-3xl opacity-50"></i>
                                     </div>
                                 @endif
-                                <a href="{{ route('products.show', $product->slug) }}">
-                                    @if($product->featured_image)
-                                        <img src="{{ asset('storage/' . $product->featured_image) }}"
-                                             alt="{{ $product->translate(app()->getLocale())->name }}"
-                                             class="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500">
-                                    @else
-                                        <div class="w-full h-64 bg-gradient-to-br from-primary-400 via-blue-500 to-purple-500 flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
-                                            <i class="fas fa-flask text-white text-6xl opacity-50"></i>
-                                        </div>
-                                    @endif
-                                </a>
-                                <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                             </div>
-                            <div class="p-3 sm:p-6">
-                                <div class="text-xs text-gray-500 mb-2 font-semibold uppercase tracking-wider">
-                                    <i class="fas fa-tag mr-1"></i>{{ $product->category->translate(app()->getLocale())->name }}
-                                </div>
-                                <h3 class="font-bold text-lg text-gray-900 mb-3 group-hover:text-primary-500 transition line-clamp-2">
-                                    <a href="{{ route('products.show', $product->slug) }}">
-                                        {{ $product->translate(app()->getLocale())->name }}
-                                    </a>
-                                </h3>
-                                <p class="text-gray-600 text-sm mb-4 line-clamp-2">
-                                    {{ $product->translate(app()->getLocale())->short_description }}
+                            <div class="p-2.5 sm:p-3">
+                                <p class="text-[10px] text-gray-400 font-semibold uppercase tracking-wide mb-0.5">
+                                    {{ $product->category->translate(app()->getLocale())->name }}
                                 </p>
-                                <div class="flex justify-between items-center pt-4 border-t border-gray-100">
-                                    <div>
-                                        @if($product->pricing->isSaleActive())
-                                            <div class="flex items-center gap-2 mb-1">
-                                                <span class="text-gray-400 line-through text-sm">PKR {{ number_format($product->pricing->retail_price, 0) }}</span>
-                                                <span class="bg-red-100 text-red-600 px-2 py-0.5 rounded text-xs font-bold">-{{ number_format((($product->pricing->retail_price - $product->pricing->sale_price) / $product->pricing->retail_price) * 100, 0) }}%</span>
-                                            </div>
-                                            <div class="text-primary-500 font-bold text-xl">PKR {{ number_format($product->pricing->sale_price, 0) }}</div>
-                                        @else
-                                            <div class="text-primary-500 font-bold text-xl">PKR {{ number_format($product->pricing->retail_price, 0) }}</div>
-                                        @endif
-                                    </div>
-                                    <a href="{{ route('products.show', $product->slug) }}" class="gradient-primary text-white px-5 py-2.5 rounded-lg font-semibold hover:shadow-lg transition group">
-                                        <i class="fas fa-eye mr-2"></i>{{ __('View') }}
-                                    </a>
+                                <h3 class="font-bold text-xs sm:text-sm text-gray-900 group-hover:text-indigo-500 transition line-clamp-2 mb-1.5 leading-tight">
+                                    {{ $product->translate(app()->getLocale())->name }}
+                                </h3>
+                                <div>
+                                    @if($product->pricing->isSaleActive())
+                                        <span class="text-gray-400 line-through text-[10px]">PKR {{ number_format($product->pricing->retail_price, 0) }}</span>
+                                        <div class="text-indigo-500 font-bold text-sm">PKR {{ number_format($product->pricing->sale_price, 0) }}</div>
+                                    @else
+                                        <div class="text-indigo-500 font-bold text-sm">PKR {{ number_format($product->pricing->retail_price, 0) }}</div>
+                                    @endif
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </a>
                 @endforeach
             </div>
         </div>
     </section>
+    @endif
 
-    <!-- Wholesale Banner - Eye-catching -->
-    <section class="relative py-12 sm:py-24 overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-to-r from-secondary-500 via-orange-500 to-secondary-600"></div>
-        <div class="absolute inset-0 opacity-10">
-            <div class="absolute top-0 left-0 w-96 h-96 bg-white rounded-full filter blur-3xl"></div>
-            <div class="absolute bottom-0 right-0 w-96 h-96 bg-yellow-300 rounded-full filter blur-3xl"></div>
-        </div>
-        <div class="container mx-auto px-4 text-center relative z-10">
-            <div class="animate__animated animate__fadeIn">
-                <div class="text-5xl sm:text-7xl mb-4 sm:mb-6"><i class="fas fa-warehouse text-white/80"></i></div>
-                <h2 class="text-3xl sm:text-5xl md:text-6xl font-extrabold mb-4 sm:mb-6 text-white">
-                    {{ __('Looking for Wholesale?') }}
-                </h2>
-                <p class="text-base sm:text-xl md:text-2xl mb-6 sm:mb-10 text-orange-100 max-w-2xl mx-auto">
-                    {{ __('Get special pricing on bulk orders. Register as a dealer today!') }}
-                </p>
-                <a href="{{ route('wholesale.register') }}" class="inline-block bg-white text-secondary-500 hover:bg-gray-100 font-bold py-4 px-10 rounded-full text-lg transition shadow-2xl hover-lift">
-                    <i class="fas fa-user-plus mr-2"></i>{{ __('Become a Dealer') }}
-                    <i class="fas fa-arrow-right ml-2"></i>
-                </a>
+    <!-- Stats Counter -->
+    <section class="py-8 sm:py-12 bg-gradient-to-r from-primary-600 via-blue-600 to-primary-700 text-white">
+        <div class="container mx-auto px-4">
+            @php
+                $statProducts = \App\Models\Product::where('is_active', true)->count();
+                $statCustomers = \App\Models\User::count();
+                $statOrders = \App\Models\Order::count();
+            @endphp
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-8 text-center"
+                 x-data="{
+                     products: 0, customers: 0, orders: 0, cities: 0,
+                     targetProducts: {{ $statProducts }},
+                     targetCustomers: {{ $statCustomers }},
+                     targetOrders: {{ $statOrders }},
+                     targetCities: 50,
+                     animateCount(prop, target) {
+                         let steps = 40;
+                         let step = Math.max(Math.ceil(target / steps), 1);
+                         let interval = setInterval(() => {
+                             this[prop] = Math.min(this[prop] + step, target);
+                             if (this[prop] >= target) clearInterval(interval);
+                         }, 30);
+                     }
+                 }"
+                 x-intersect.once="animateCount('products', targetProducts); animateCount('customers', targetCustomers); animateCount('orders', targetOrders); animateCount('cities', targetCities)">
+                <div>
+                    <div class="w-12 h-12 sm:w-14 sm:h-14 bg-white/20 rounded-xl flex items-center justify-center mx-auto mb-2 sm:mb-3">
+                        <i class="fas fa-box text-xl sm:text-2xl"></i>
+                    </div>
+                    <div class="text-2xl sm:text-4xl font-extrabold mb-1" x-text="products + '+'"></div>
+                    <div class="text-blue-200 text-xs sm:text-sm font-semibold">{{ __('Products') }}</div>
+                </div>
+                <div>
+                    <div class="w-12 h-12 sm:w-14 sm:h-14 bg-white/20 rounded-xl flex items-center justify-center mx-auto mb-2 sm:mb-3">
+                        <i class="fas fa-users text-xl sm:text-2xl"></i>
+                    </div>
+                    <div class="text-2xl sm:text-4xl font-extrabold mb-1" x-text="customers + '+'"></div>
+                    <div class="text-blue-200 text-xs sm:text-sm font-semibold">{{ __('Happy Customers') }}</div>
+                </div>
+                <div>
+                    <div class="w-12 h-12 sm:w-14 sm:h-14 bg-white/20 rounded-xl flex items-center justify-center mx-auto mb-2 sm:mb-3">
+                        <i class="fas fa-shopping-bag text-xl sm:text-2xl"></i>
+                    </div>
+                    <div class="text-2xl sm:text-4xl font-extrabold mb-1" x-text="orders + '+'"></div>
+                    <div class="text-blue-200 text-xs sm:text-sm font-semibold">{{ __('Orders Delivered') }}</div>
+                </div>
+                <div>
+                    <div class="w-12 h-12 sm:w-14 sm:h-14 bg-white/20 rounded-xl flex items-center justify-center mx-auto mb-2 sm:mb-3">
+                        <i class="fas fa-map-marker-alt text-xl sm:text-2xl"></i>
+                    </div>
+                    <div class="text-2xl sm:text-4xl font-extrabold mb-1" x-text="cities + '+'"></div>
+                    <div class="text-blue-200 text-xs sm:text-sm font-semibold">{{ __('Cities Covered') }}</div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Why Choose Us - Modern Icon Design -->
-    <section class="py-10 sm:py-20 bg-gray-50">
+    <!-- Why Choose Us -->
+    <section class="py-8 sm:py-14 bg-gray-50">
         <div class="container mx-auto px-4">
-            <div class="text-center mb-8 sm:mb-16">
-                <h2 class="text-3xl sm:text-5xl font-extrabold mb-3 sm:mb-4 bg-gradient-to-r from-primary-500 to-blue-600 bg-clip-text text-transparent">
+            <div class="text-center mb-6 sm:mb-10">
+                <h2 class="text-2xl sm:text-4xl font-extrabold mb-1 sm:mb-2 bg-gradient-to-r from-primary-500 to-blue-600 bg-clip-text text-transparent">
                     {{ __('Why Choose Chamak Chemicals?') }}
                 </h2>
-                <p class="text-gray-600 text-sm sm:text-lg">{{ __('Excellence in every aspect of our service') }}</p>
+                <p class="text-gray-600 text-xs sm:text-sm">{{ __('Excellence in every aspect of our service') }}</p>
             </div>
             <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-8">
                 <div class="bg-white rounded-2xl p-4 sm:p-8 text-center hover-lift shadow-lg group">
@@ -350,26 +422,115 @@
         </div>
     </section>
 
-    <!-- Trust Badges -->
-    <section class="py-12 bg-white border-y border-gray-200">
+    <!-- Trust Badges - 6 items with auto-sliding -->
+    <section class="py-6 sm:py-10 bg-white border-y border-gray-200 overflow-hidden" x-data="{
+        badges: 6,
+        init() {
+            // Auto scroll animation handled by CSS
+        }
+    }">
         <div class="container mx-auto px-4">
-            <div class="flex flex-wrap justify-center items-center gap-6 sm:gap-12 opacity-60">
-                <div class="flex items-center space-x-2">
-                    <i class="fas fa-shield-alt text-2xl text-green-500"></i>
-                    <span class="font-semibold">{{ __('100% Authentic') }}</span>
+            <div class="trust-badges-track flex items-center gap-6 sm:gap-10">
+                <!-- First set -->
+                <div class="trust-badge-item flex-shrink-0 flex flex-col items-center gap-2 min-w-[120px] sm:min-w-[150px] bg-gray-50 rounded-xl py-4 px-3 sm:px-5 border border-gray-100">
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 bg-green-100 rounded-full flex items-center justify-center">
+                        <i class="fas fa-shield-alt text-lg sm:text-xl text-green-600"></i>
+                    </div>
+                    <span class="font-bold text-xs sm:text-sm text-gray-800 text-center">{{ __('100% Authentic') }}</span>
                 </div>
-                <div class="flex items-center space-x-2">
-                    <i class="fas fa-lock text-2xl text-blue-500"></i>
-                    <span class="font-semibold">{{ __('Secure Payment') }}</span>
+                <div class="trust-badge-item flex-shrink-0 flex flex-col items-center gap-2 min-w-[120px] sm:min-w-[150px] bg-gray-50 rounded-xl py-4 px-3 sm:px-5 border border-gray-100">
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 bg-blue-100 rounded-full flex items-center justify-center">
+                        <i class="fas fa-lock text-lg sm:text-xl text-blue-600"></i>
+                    </div>
+                    <span class="font-bold text-xs sm:text-sm text-gray-800 text-center">{{ __('Secure Payment') }}</span>
                 </div>
-                <div class="flex items-center space-x-2">
-                    <i class="fas fa-undo text-2xl text-orange-500"></i>
-                    <span class="font-semibold">{{ __('Easy Returns') }}</span>
+                <div class="trust-badge-item flex-shrink-0 flex flex-col items-center gap-2 min-w-[120px] sm:min-w-[150px] bg-gray-50 rounded-xl py-4 px-3 sm:px-5 border border-gray-100">
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 bg-orange-100 rounded-full flex items-center justify-center">
+                        <i class="fas fa-undo text-lg sm:text-xl text-orange-600"></i>
+                    </div>
+                    <span class="font-bold text-xs sm:text-sm text-gray-800 text-center">{{ __('Easy Returns') }}</span>
                 </div>
-                <div class="flex items-center space-x-2">
-                    <i class="fas fa-truck text-2xl text-purple-500"></i>
-                    <span class="font-semibold">{{ __('Free Shipping 5000+') }}</span>
+                <div class="trust-badge-item flex-shrink-0 flex flex-col items-center gap-2 min-w-[120px] sm:min-w-[150px] bg-gray-50 rounded-xl py-4 px-3 sm:px-5 border border-gray-100">
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 bg-purple-100 rounded-full flex items-center justify-center">
+                        <i class="fas fa-truck text-lg sm:text-xl text-purple-600"></i>
+                    </div>
+                    <span class="font-bold text-xs sm:text-sm text-gray-800 text-center">{{ __('Free Shipping 5000+') }}</span>
                 </div>
+                <div class="trust-badge-item flex-shrink-0 flex flex-col items-center gap-2 min-w-[120px] sm:min-w-[150px] bg-gray-50 rounded-xl py-4 px-3 sm:px-5 border border-gray-100">
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 bg-teal-100 rounded-full flex items-center justify-center">
+                        <i class="fas fa-award text-lg sm:text-xl text-teal-600"></i>
+                    </div>
+                    <span class="font-bold text-xs sm:text-sm text-gray-800 text-center">{{ __('Trusted Brand') }}</span>
+                </div>
+                <div class="trust-badge-item flex-shrink-0 flex flex-col items-center gap-2 min-w-[120px] sm:min-w-[150px] bg-gray-50 rounded-xl py-4 px-3 sm:px-5 border border-gray-100">
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 bg-red-100 rounded-full flex items-center justify-center">
+                        <i class="fas fa-headset text-lg sm:text-xl text-red-600"></i>
+                    </div>
+                    <span class="font-bold text-xs sm:text-sm text-gray-800 text-center">{{ __('24/7 Support') }}</span>
+                </div>
+                <!-- Duplicate set for seamless loop -->
+                <div class="trust-badge-item flex-shrink-0 flex flex-col items-center gap-2 min-w-[120px] sm:min-w-[150px] bg-gray-50 rounded-xl py-4 px-3 sm:px-5 border border-gray-100">
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 bg-green-100 rounded-full flex items-center justify-center">
+                        <i class="fas fa-shield-alt text-lg sm:text-xl text-green-600"></i>
+                    </div>
+                    <span class="font-bold text-xs sm:text-sm text-gray-800 text-center">{{ __('100% Authentic') }}</span>
+                </div>
+                <div class="trust-badge-item flex-shrink-0 flex flex-col items-center gap-2 min-w-[120px] sm:min-w-[150px] bg-gray-50 rounded-xl py-4 px-3 sm:px-5 border border-gray-100">
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 bg-blue-100 rounded-full flex items-center justify-center">
+                        <i class="fas fa-lock text-lg sm:text-xl text-blue-600"></i>
+                    </div>
+                    <span class="font-bold text-xs sm:text-sm text-gray-800 text-center">{{ __('Secure Payment') }}</span>
+                </div>
+                <div class="trust-badge-item flex-shrink-0 flex flex-col items-center gap-2 min-w-[120px] sm:min-w-[150px] bg-gray-50 rounded-xl py-4 px-3 sm:px-5 border border-gray-100">
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 bg-orange-100 rounded-full flex items-center justify-center">
+                        <i class="fas fa-undo text-lg sm:text-xl text-orange-600"></i>
+                    </div>
+                    <span class="font-bold text-xs sm:text-sm text-gray-800 text-center">{{ __('Easy Returns') }}</span>
+                </div>
+                <div class="trust-badge-item flex-shrink-0 flex flex-col items-center gap-2 min-w-[120px] sm:min-w-[150px] bg-gray-50 rounded-xl py-4 px-3 sm:px-5 border border-gray-100">
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 bg-purple-100 rounded-full flex items-center justify-center">
+                        <i class="fas fa-truck text-lg sm:text-xl text-purple-600"></i>
+                    </div>
+                    <span class="font-bold text-xs sm:text-sm text-gray-800 text-center">{{ __('Free Shipping 5000+') }}</span>
+                </div>
+                <div class="trust-badge-item flex-shrink-0 flex flex-col items-center gap-2 min-w-[120px] sm:min-w-[150px] bg-gray-50 rounded-xl py-4 px-3 sm:px-5 border border-gray-100">
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 bg-teal-100 rounded-full flex items-center justify-center">
+                        <i class="fas fa-award text-lg sm:text-xl text-teal-600"></i>
+                    </div>
+                    <span class="font-bold text-xs sm:text-sm text-gray-800 text-center">{{ __('Trusted Brand') }}</span>
+                </div>
+                <div class="trust-badge-item flex-shrink-0 flex flex-col items-center gap-2 min-w-[120px] sm:min-w-[150px] bg-gray-50 rounded-xl py-4 px-3 sm:px-5 border border-gray-100">
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 bg-red-100 rounded-full flex items-center justify-center">
+                        <i class="fas fa-headset text-lg sm:text-xl text-red-600"></i>
+                    </div>
+                    <span class="font-bold text-xs sm:text-sm text-gray-800 text-center">{{ __('24/7 Support') }}</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Wholesale Banner - Compact, right before footer -->
+    <section class="relative py-8 sm:py-12 overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-secondary-500 via-orange-500 to-secondary-600"></div>
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div class="flex items-center gap-3 sm:gap-4 text-white">
+                    <div class="w-12 h-12 sm:w-14 sm:h-14 bg-white/20 rounded-xl flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-warehouse text-xl sm:text-2xl text-white"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-xl sm:text-2xl font-extrabold text-white">
+                            {{ __('Looking for Wholesale?') }}
+                        </h2>
+                        <p class="text-xs sm:text-sm text-orange-100">
+                            {{ __('Get special pricing on bulk orders. Register as a dealer today!') }}
+                        </p>
+                    </div>
+                </div>
+                <a href="{{ route('wholesale.register') }}" class="flex-shrink-0 bg-white text-secondary-500 hover:bg-gray-100 font-bold py-2.5 px-6 sm:py-3 sm:px-8 rounded-full text-sm transition shadow-xl">
+                    <i class="fas fa-user-plus mr-2"></i>{{ __('Become a Dealer') }}
+                    <i class="fas fa-arrow-right ml-1"></i>
+                </a>
             </div>
         </div>
     </section>
@@ -458,6 +619,18 @@
         }
         .scrollbar-hide::-webkit-scrollbar { display: none; }
         .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+        /* Trust badges auto-sliding */
+        .trust-badges-track {
+            animation: trustBadgesScroll 20s linear infinite;
+            width: max-content;
+        }
+        .trust-badges-track:hover {
+            animation-play-state: paused;
+        }
+        @keyframes trustBadgesScroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
         .banner-slider-aspect { aspect-ratio: 16/9; }
         @media (min-width: 640px) { .banner-slider-aspect { aspect-ratio: 16/7; } }
         @media (min-width: 1024px) { .banner-slider-aspect { aspect-ratio: 16/6; } }
