@@ -3,14 +3,14 @@
 @section('title', __('Become a Dealer'))
 
 @section('content')
-    <div class="bg-gradient-to-r from-primary-500 to-primary-700 text-white py-12">
+    <div class="bg-gradient-to-r from-primary-500 to-primary-700 text-white py-8">
         <div class="container mx-auto px-4 text-center">
-            <h1 class="text-4xl font-bold mb-4">{{ __('Become a Dealer Partner') }}</h1>
-            <p class="text-xl">{{ __('Join our network and get special partner pricing') }}</p>
+            <h1 class="text-2xl sm:text-3xl font-bold mb-2">{{ __('Become a Dealer Partner') }}</h1>
+            <p class="text-sm sm:text-base">{{ __('Join our network and get special partner pricing') }}</p>
         </div>
     </div>
 
-    <div class="container mx-auto px-4 py-12">
+    <div class="container mx-auto px-4 py-6 sm:py-8">
         <div class="max-w-3xl mx-auto">
             <!-- Benefits -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">

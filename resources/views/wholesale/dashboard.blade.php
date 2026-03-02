@@ -3,53 +3,53 @@
 @section('title', __('Dealer Dashboard'))
 
 @section('content')
-    <div class="bg-primary-500 text-white py-8">
+    <div class="bg-primary-500 text-white py-5">
         <div class="container mx-auto px-4">
-            <h1 class="text-3xl font-bold">{{ __('Dealer Dashboard') }}</h1>
+            <h1 class="text-xl sm:text-lg font-bold">{{ __('Dealer Dashboard') }}</h1>
             <p>{{ __('Welcome back') }}, {{ auth()->user()->name }}</p>
         </div>
     </div>
 
-    <div class="container mx-auto px-4 py-8">
+    <div class="container mx-auto px-4 py-5">
         <!-- Dealer Status -->
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-            <div class="bg-white rounded-lg shadow-md p-6">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mb-6">
+            <div class="bg-white rounded-lg shadow-md p-4">
                 <div class="text-sm text-gray-600 mb-1">{{ __('Status') }}</div>
-                <div class="text-2xl font-bold {{ $dealer->isApproved() ? 'text-green-500' : 'text-yellow-500' }}">
+                <div class="text-lg font-bold {{ $dealer->isApproved() ? 'text-green-500' : 'text-yellow-500' }}">
                     {{ ucfirst($dealer->approval_status) }}
                 </div>
             </div>
 
-            <div class="bg-white rounded-lg shadow-md p-6">
+            <div class="bg-white rounded-lg shadow-md p-4">
                 <div class="text-sm text-gray-600 mb-1">{{ __('Dealer Tier') }}</div>
-                <div class="text-2xl font-bold text-primary-500">
+                <div class="text-lg font-bold text-primary-500">
                     {{ ucfirst($dealer->dealer_tier) }}
                 </div>
             </div>
 
-            <div class="bg-white rounded-lg shadow-md p-6">
+            <div class="bg-white rounded-lg shadow-md p-4">
                 <div class="text-sm text-gray-600 mb-1">{{ __('Credit Limit') }}</div>
-                <div class="text-2xl font-bold text-secondary-500">
+                <div class="text-lg font-bold text-secondary-500">
                     PKR {{ number_format($dealer->credit_limit, 0) }}
                 </div>
             </div>
 
-            <div class="bg-white rounded-lg shadow-md p-6">
+            <div class="bg-white rounded-lg shadow-md p-4">
                 <div class="text-sm text-gray-600 mb-1">{{ __('Total Orders') }}</div>
-                <div class="text-2xl font-bold text-gray-800">
+                <div class="text-lg font-bold text-gray-800">
                     {{ $orders->total() }}
                 </div>
             </div>
         </div>
 
         @if(!$dealer->isApproved())
-            <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-6 mb-8">
+            <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6">
                 <h3 class="font-bold text-yellow-800 mb-2">{{ __('Pending Approval') }}</h3>
                 <p class="text-yellow-700">{{ __('Your dealer registration is under review. We will contact you once approved.') }}</p>
             </div>
         @else
             <!-- Wholesale Pricing Info -->
-            <div class="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-8">
+            <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
                 <h3 class="font-bold text-lg mb-4">{{ __('Your Partner Discounts') }}</h3>
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                     <div class="text-center">
@@ -82,8 +82,8 @@
         @endif
 
         <!-- Recent Orders -->
-        <div class="bg-white rounded-lg shadow-md p-6">
-            <h2 class="text-2xl font-bold mb-6">{{ __('Recent Orders') }}</h2>
+        <div class="bg-white rounded-lg shadow-md p-4">
+            <h2 class="text-lg font-bold mb-4">{{ __('Recent Orders') }}</h2>
 
             @if($orders->count() > 0)
                 <div class="overflow-x-auto">

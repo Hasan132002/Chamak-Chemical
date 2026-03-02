@@ -44,18 +44,18 @@
                         <div class="container mx-auto px-4 sm:px-8">
                             <div class="max-w-xl">
                                 @if($banner->title)
-                                    <h2 class="text-2xl sm:text-4xl md:text-6xl font-extrabold text-white mb-2 sm:mb-4 leading-tight">
+                                    <h2 class="text-xl sm:text-3xl md:text-4xl font-extrabold text-white mb-2 sm:mb-3 leading-tight">
                                         {{ $banner->title }}
                                     </h2>
                                 @endif
                                 @if($banner->subtitle)
-                                    <p class="text-sm sm:text-lg md:text-2xl text-white/90 mb-4 sm:mb-6">
+                                    <p class="text-sm sm:text-base md:text-lg text-white/90 mb-3 sm:mb-5">
                                         {{ $banner->subtitle }}
                                     </p>
                                 @endif
                                 @if($banner->button_text && $banner->button_url)
                                     <a href="{{ $banner->button_url }}"
-                                       class="inline-block bg-white text-primary-500 hover:bg-gray-100 font-bold py-3 px-6 sm:py-4 sm:px-8 rounded-xl text-sm sm:text-lg transition shadow-2xl hover-lift">
+                                       class="inline-block bg-white text-primary-500 hover:bg-gray-100 font-bold py-2.5 px-5 sm:py-3 sm:px-6 rounded-xl text-sm sm:text-base transition shadow-2xl hover-lift">
                                         {{ $banner->button_text }}
                                         <i class="fas fa-arrow-right ml-2"></i>
                                     </a>
@@ -92,21 +92,21 @@
     </section>
     @else
     <!-- Fallback Hero Section -->
-    <section class="relative overflow-hidden bg-gradient-to-br from-primary-500 via-blue-600 to-primary-700 text-white py-12 sm:py-24">
+    <section class="relative overflow-hidden bg-gradient-to-br from-primary-500 via-blue-600 to-primary-700 text-white py-10 sm:py-16">
         <div class="container mx-auto px-4 relative z-10">
             <div class="max-w-4xl mx-auto text-center">
-                <h1 class="text-3xl sm:text-5xl md:text-7xl font-extrabold mb-4 sm:mb-6 leading-tight">
+                <h1 class="text-2xl sm:text-3xl md:text-4xl font-extrabold mb-3 sm:mb-4 leading-tight">
                     {{ __('Premium Chemical Products for Every Need') }}
                 </h1>
-                <p class="text-base sm:text-xl md:text-2xl mb-6 sm:mb-10 text-blue-100">
+                <p class="text-sm sm:text-base md:text-lg mb-4 sm:mb-6 text-blue-100">
                     {{ __('High-quality cleaning and industrial chemicals. Retail and dealer pricing available.') }}
                 </p>
                 <div class="flex flex-col sm:flex-row justify-center gap-4">
-                    <a href="{{ route('products.index') }}" class="group px-8 py-4 bg-white text-primary-500 hover:bg-gray-100 font-bold rounded-xl transition shadow-2xl hover-lift text-lg">
+                    <a href="{{ route('products.index') }}" class="group px-6 py-3 bg-white text-primary-500 hover:bg-gray-100 font-bold rounded-xl transition shadow-2xl hover-lift text-base">
                         <i class="fas fa-shopping-bag mr-2"></i>{{ __('Shop Now') }}
                         <i class="fas fa-arrow-right ml-2"></i>
                     </a>
-                    <a href="{{ route('wholesale.register') }}" class="px-8 py-4 gradient-secondary text-white font-bold rounded-xl transition shadow-2xl hover-lift text-lg">
+                    <a href="{{ route('wholesale.register') }}" class="px-6 py-3 gradient-secondary text-white font-bold rounded-xl transition shadow-2xl hover-lift text-base">
                         <i class="fas fa-handshake mr-2"></i>{{ __('Partner Inquiry') }}
                     </a>
                 </div>
@@ -117,11 +117,11 @@
 
     <!-- Hot Deals Section - Grid like Featured Products -->
     @if($deals->count() > 0)
-    <section class="py-8 sm:py-14 bg-gradient-to-r from-red-50 to-orange-50">
+    <section class="py-6 sm:py-10 bg-gradient-to-r from-red-50 to-orange-50">
         <div class="container mx-auto px-4">
-            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 sm:mb-8 gap-3">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 sm:mb-6 gap-3">
                 <div>
-                    <h2 class="text-2xl sm:text-4xl font-extrabold mb-1 bg-gradient-to-r from-red-500 to-orange-600 bg-clip-text text-transparent">
+                    <h2 class="text-xl sm:text-2xl font-extrabold mb-1 bg-gradient-to-r from-red-500 to-orange-600 bg-clip-text text-transparent">
                         <i class="fas fa-fire text-red-500"></i> {{ __('Hot Deals') }}
                     </h2>
                     <p class="text-gray-600 text-xs sm:text-sm">{{ __('Don\'t miss our amazing deals and promotions!') }}</p>
@@ -171,10 +171,10 @@
     @endif
 
     <!-- Featured Categories - Modern Cards -->
-    <section class="py-8 sm:py-14 bg-gray-50">
+    <section class="py-6 sm:py-10 bg-gray-50">
         <div class="container mx-auto px-4">
-            <div class="text-center mb-6 sm:mb-10">
-                <h2 class="text-2xl sm:text-4xl font-extrabold mb-1 sm:mb-2 bg-gradient-to-r from-primary-500 to-blue-600 bg-clip-text text-transparent">
+            <div class="text-center mb-4 sm:mb-6">
+                <h2 class="text-xl sm:text-2xl font-extrabold mb-1 sm:mb-2 bg-gradient-to-r from-primary-500 to-blue-600 bg-clip-text text-transparent">
                     {{ __('Product Categories') }}
                 </h2>
                 <p class="text-gray-600 text-xs sm:text-sm">{{ __('Explore our wide range of chemical products') }}</p>
@@ -201,11 +201,11 @@
     </section>
 
     <!-- Featured Products - Compact Grid -->
-    <section class="py-8 sm:py-14 bg-white">
+    <section class="py-6 sm:py-10 bg-white">
         <div class="container mx-auto px-4">
-            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 sm:mb-8 gap-3">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 sm:mb-6 gap-3">
                 <div>
-                    <h2 class="text-2xl sm:text-4xl font-extrabold mb-1 bg-gradient-to-r from-primary-500 to-blue-600 bg-clip-text text-transparent">
+                    <h2 class="text-xl sm:text-2xl font-extrabold mb-1 bg-gradient-to-r from-primary-500 to-blue-600 bg-clip-text text-transparent">
                         {{ __('Featured Products') }}
                     </h2>
                     <p class="text-gray-600 text-xs sm:text-sm">{{ __('Handpicked bestsellers just for you') }}</p>
@@ -259,11 +259,11 @@
 
     <!-- New Arrivals -->
     @if($newArrivals->count() > 0)
-    <section class="py-8 sm:py-14 bg-gradient-to-r from-blue-50 to-indigo-50">
+    <section class="py-6 sm:py-10 bg-gradient-to-r from-blue-50 to-indigo-50">
         <div class="container mx-auto px-4">
-            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 sm:mb-8 gap-3">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 sm:mb-6 gap-3">
                 <div>
-                    <h2 class="text-2xl sm:text-4xl font-extrabold mb-1 bg-gradient-to-r from-indigo-500 to-purple-600 bg-clip-text text-transparent">
+                    <h2 class="text-xl sm:text-2xl font-extrabold mb-1 bg-gradient-to-r from-indigo-500 to-purple-600 bg-clip-text text-transparent">
                         <i class="fas fa-star text-indigo-500"></i> {{ __('New Arrivals') }}
                     </h2>
                     <p class="text-gray-600 text-xs sm:text-sm">{{ __('Check out our latest products') }}</p>
@@ -324,7 +324,7 @@
     @endif
 
     <!-- Stats Counter -->
-    <section class="py-8 sm:py-12 bg-gradient-to-r from-primary-600 via-blue-600 to-primary-700 text-white">
+    <section class="py-5 sm:py-8 bg-gradient-to-r from-primary-600 via-blue-600 to-primary-700 text-white">
         <div class="container mx-auto px-4">
             @php
                 $statProducts = \App\Models\Product::where('is_active', true)->count();
@@ -352,28 +352,28 @@
                     <div class="w-12 h-12 sm:w-14 sm:h-14 bg-white/20 rounded-xl flex items-center justify-center mx-auto mb-2 sm:mb-3">
                         <i class="fas fa-box text-xl sm:text-2xl"></i>
                     </div>
-                    <div class="text-2xl sm:text-4xl font-extrabold mb-1" x-text="products + '+'"></div>
+                    <div class="text-xl sm:text-2xl font-extrabold mb-1" x-text="products + '+'"></div>
                     <div class="text-blue-200 text-xs sm:text-sm font-semibold">{{ __('Products') }}</div>
                 </div>
                 <div>
                     <div class="w-12 h-12 sm:w-14 sm:h-14 bg-white/20 rounded-xl flex items-center justify-center mx-auto mb-2 sm:mb-3">
                         <i class="fas fa-users text-xl sm:text-2xl"></i>
                     </div>
-                    <div class="text-2xl sm:text-4xl font-extrabold mb-1" x-text="customers + '+'"></div>
+                    <div class="text-xl sm:text-2xl font-extrabold mb-1" x-text="customers + '+'"></div>
                     <div class="text-blue-200 text-xs sm:text-sm font-semibold">{{ __('Happy Customers') }}</div>
                 </div>
                 <div>
                     <div class="w-12 h-12 sm:w-14 sm:h-14 bg-white/20 rounded-xl flex items-center justify-center mx-auto mb-2 sm:mb-3">
                         <i class="fas fa-shopping-bag text-xl sm:text-2xl"></i>
                     </div>
-                    <div class="text-2xl sm:text-4xl font-extrabold mb-1" x-text="orders + '+'"></div>
+                    <div class="text-xl sm:text-2xl font-extrabold mb-1" x-text="orders + '+'"></div>
                     <div class="text-blue-200 text-xs sm:text-sm font-semibold">{{ __('Orders Delivered') }}</div>
                 </div>
                 <div>
                     <div class="w-12 h-12 sm:w-14 sm:h-14 bg-white/20 rounded-xl flex items-center justify-center mx-auto mb-2 sm:mb-3">
                         <i class="fas fa-map-marker-alt text-xl sm:text-2xl"></i>
                     </div>
-                    <div class="text-2xl sm:text-4xl font-extrabold mb-1" x-text="cities + '+'"></div>
+                    <div class="text-xl sm:text-2xl font-extrabold mb-1" x-text="cities + '+'"></div>
                     <div class="text-blue-200 text-xs sm:text-sm font-semibold">{{ __('Cities Covered') }}</div>
                 </div>
             </div>
@@ -381,41 +381,41 @@
     </section>
 
     <!-- Why Choose Us -->
-    <section class="py-8 sm:py-14 bg-gray-50">
+    <section class="py-6 sm:py-10 bg-gray-50">
         <div class="container mx-auto px-4">
-            <div class="text-center mb-6 sm:mb-10">
-                <h2 class="text-2xl sm:text-4xl font-extrabold mb-1 sm:mb-2 bg-gradient-to-r from-primary-500 to-blue-600 bg-clip-text text-transparent">
+            <div class="text-center mb-4 sm:mb-6">
+                <h2 class="text-xl sm:text-2xl font-extrabold mb-1 sm:mb-2 bg-gradient-to-r from-primary-500 to-blue-600 bg-clip-text text-transparent">
                     {{ __('Why Choose Chamak Chemicals?') }}
                 </h2>
                 <p class="text-gray-600 text-xs sm:text-sm">{{ __('Excellence in every aspect of our service') }}</p>
             </div>
             <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-8">
-                <div class="bg-white rounded-2xl p-4 sm:p-8 text-center hover-lift shadow-lg group">
-                    <div class="w-14 h-14 sm:w-20 sm:h-20 gradient-primary rounded-xl sm:rounded-2xl flex items-center justify-center mx-auto mb-3 sm:mb-6 group-hover:scale-110 group-hover:rotate-6 transition-all shadow-xl">
-                        <i class="fas fa-certificate text-xl sm:text-3xl text-white"></i>
+                <div class="bg-white rounded-xl p-3 sm:p-5 text-center hover-lift shadow-lg group">
+                    <div class="w-12 h-12 sm:w-14 sm:h-14 gradient-primary rounded-xl flex items-center justify-center mx-auto mb-2 sm:mb-4 group-hover:scale-110 group-hover:rotate-6 transition-all shadow-xl">
+                        <i class="fas fa-certificate text-lg sm:text-xl text-white"></i>
                     </div>
-                    <h3 class="font-bold text-sm sm:text-xl mb-1 sm:mb-3 text-gray-900">{{ __('Quality Products') }}</h3>
+                    <h3 class="font-bold text-sm sm:text-base mb-1 sm:mb-2 text-gray-900">{{ __('Quality Products') }}</h3>
                     <p class="text-gray-600 leading-relaxed text-xs sm:text-base hidden sm:block">{{ __('Lab-tested and certified chemicals meeting international standards') }}</p>
                 </div>
-                <div class="bg-white rounded-2xl p-4 sm:p-8 text-center hover-lift shadow-lg group">
-                    <div class="w-14 h-14 sm:w-20 sm:h-20 gradient-secondary rounded-xl sm:rounded-2xl flex items-center justify-center mx-auto mb-3 sm:mb-6 group-hover:scale-110 group-hover:rotate-6 transition-all shadow-xl">
-                        <i class="fas fa-shipping-fast text-xl sm:text-3xl text-white"></i>
+                <div class="bg-white rounded-xl p-3 sm:p-5 text-center hover-lift shadow-lg group">
+                    <div class="w-12 h-12 sm:w-14 sm:h-14 gradient-secondary rounded-xl flex items-center justify-center mx-auto mb-2 sm:mb-4 group-hover:scale-110 group-hover:rotate-6 transition-all shadow-xl">
+                        <i class="fas fa-shipping-fast text-lg sm:text-xl text-white"></i>
                     </div>
-                    <h3 class="font-bold text-sm sm:text-xl mb-1 sm:mb-3 text-gray-900">{{ __('Fast Delivery') }}</h3>
+                    <h3 class="font-bold text-sm sm:text-base mb-1 sm:mb-2 text-gray-900">{{ __('Fast Delivery') }}</h3>
                     <p class="text-gray-600 leading-relaxed text-xs sm:text-base hidden sm:block">{{ __('Quick and reliable shipping across Pakistan within 2-3 days') }}</p>
                 </div>
-                <div class="bg-white rounded-2xl p-4 sm:p-8 text-center hover-lift shadow-lg group">
-                    <div class="w-14 h-14 sm:w-20 sm:h-20 bg-gradient-to-br from-green-400 to-green-600 rounded-xl sm:rounded-2xl flex items-center justify-center mx-auto mb-3 sm:mb-6 group-hover:scale-110 group-hover:rotate-6 transition-all shadow-xl">
-                        <i class="fas fa-tags text-xl sm:text-3xl text-white"></i>
+                <div class="bg-white rounded-xl p-3 sm:p-5 text-center hover-lift shadow-lg group">
+                    <div class="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-green-400 to-green-600 rounded-xl flex items-center justify-center mx-auto mb-2 sm:mb-4 group-hover:scale-110 group-hover:rotate-6 transition-all shadow-xl">
+                        <i class="fas fa-tags text-lg sm:text-xl text-white"></i>
                     </div>
-                    <h3 class="font-bold text-sm sm:text-xl mb-1 sm:mb-3 text-gray-900">{{ __('Best Prices') }}</h3>
+                    <h3 class="font-bold text-sm sm:text-base mb-1 sm:mb-2 text-gray-900">{{ __('Best Prices') }}</h3>
                     <p class="text-gray-600 leading-relaxed text-xs sm:text-base hidden sm:block">{{ __('Competitive pricing for retail & dealer with bulk discounts') }}</p>
                 </div>
-                <div class="bg-white rounded-2xl p-4 sm:p-8 text-center hover-lift shadow-lg group">
-                    <div class="w-14 h-14 sm:w-20 sm:h-20 bg-gradient-to-br from-purple-400 to-purple-600 rounded-xl sm:rounded-2xl flex items-center justify-center mx-auto mb-3 sm:mb-6 group-hover:scale-110 group-hover:rotate-6 transition-all shadow-xl">
-                        <i class="fas fa-headset text-xl sm:text-3xl text-white"></i>
+                <div class="bg-white rounded-xl p-3 sm:p-5 text-center hover-lift shadow-lg group">
+                    <div class="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-purple-400 to-purple-600 rounded-xl flex items-center justify-center mx-auto mb-2 sm:mb-4 group-hover:scale-110 group-hover:rotate-6 transition-all shadow-xl">
+                        <i class="fas fa-headset text-lg sm:text-xl text-white"></i>
                     </div>
-                    <h3 class="font-bold text-sm sm:text-xl mb-1 sm:mb-3 text-gray-900">{{ __('24/7 Support') }}</h3>
+                    <h3 class="font-bold text-sm sm:text-base mb-1 sm:mb-2 text-gray-900">{{ __('24/7 Support') }}</h3>
                     <p class="text-gray-600 leading-relaxed text-xs sm:text-base hidden sm:block">{{ __('Customer support via WhatsApp, email, and phone') }}</p>
                 </div>
             </div>
@@ -423,7 +423,7 @@
     </section>
 
     <!-- Trust Badges - 6 items with auto-sliding -->
-    <section class="py-6 sm:py-10 bg-white border-y border-gray-200 overflow-hidden" x-data="{
+    <section class="py-4 sm:py-6 bg-white border-y border-gray-200 overflow-hidden" x-data="{
         badges: 6,
         init() {
             // Auto scroll animation handled by CSS
@@ -510,7 +510,7 @@
     </section>
 
     <!-- Wholesale Banner - Compact, right before footer -->
-    <section class="relative py-8 sm:py-12 overflow-hidden">
+    <section class="relative py-5 sm:py-8 overflow-hidden">
         <div class="absolute inset-0 bg-gradient-to-r from-secondary-500 via-orange-500 to-secondary-600"></div>
         <div class="container mx-auto px-4 relative z-10">
             <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
@@ -560,9 +560,9 @@
                 <i class="fas fa-times"></i>
             </button>
             <!-- Top Banner -->
-            <div class="gradient-primary p-6 text-center text-white">
-                <i class="fas fa-gift text-4xl mb-3"></i>
-                <h3 class="text-2xl font-bold mb-1">{{ __('Welcome to Chamak Chemicals!') }}</h3>
+            <div class="gradient-primary p-5 text-center text-white">
+                <i class="fas fa-gift text-3xl mb-2"></i>
+                <h3 class="text-xl font-bold mb-1">{{ __('Welcome to Chamak Chemicals!') }}</h3>
                 <p class="text-blue-100 text-sm">{{ __('Pakistan\'s Trusted Chemical Supplier') }}</p>
             </div>
             <!-- Body -->

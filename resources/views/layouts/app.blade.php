@@ -168,7 +168,7 @@
             </div>
 
             <!-- Main Navigation -->
-            <nav class="py-3 md:py-4">
+            <nav class="py-2 md:py-3">
                 <div class="flex justify-between items-center">
                     <!-- Logo -->
                     <a href="{{ route('home') }}" class="flex items-center space-x-2 sm:space-x-3 group">
@@ -180,7 +180,7 @@
                             </div>
                         @endif
                         <div>
-                            <div class="text-lg sm:text-2xl font-bold text-primary-500">Chamak Chemicals</div>
+                            <div class="text-base sm:text-xl font-bold text-primary-500">Chamak Chemicals</div>
                             <div class="text-xs text-gray-500 hidden sm:block">Premium Quality Since 2020</div>
                         </div>
                     </a>
@@ -461,16 +461,16 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white mt-10 sm:mt-20">
-        <div class="container mx-auto px-4 py-10 sm:py-16">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+    <footer class="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white mt-8 sm:mt-12">
+        <div class="container mx-auto px-4 py-8 sm:py-10">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
                 <!-- About -->
                 <div class="space-y-4">
                     <div class="flex items-center space-x-3 mb-4">
                         <div class="w-10 h-10 gradient-primary rounded-lg flex items-center justify-center">
                             <i class="fas fa-flask text-white text-xl"></i>
                         </div>
-                        <h3 class="text-2xl font-bold">Chamak</h3>
+                        <h3 class="text-xl font-bold">Chamak</h3>
                     </div>
                     <p class="text-gray-400 leading-relaxed">{{ __('Your trusted partner for premium chemical products. Quality guaranteed since 2020.') }}</p>
                     <div class="flex space-x-3">
@@ -497,7 +497,7 @@
 
                 <!-- Quick Links -->
                 <div>
-                    <h4 class="text-lg font-bold mb-6 flex items-center">
+                    <h4 class="text-base font-bold mb-4 flex items-center">
                         <i class="fas fa-link mr-2 text-primary-500"></i>
                         {{ __('Quick Links') }}
                     </h4>
@@ -528,7 +528,7 @@
 
                 <!-- Categories -->
                 <div>
-                    <h4 class="text-lg font-bold mb-6 flex items-center">
+                    <h4 class="text-base font-bold mb-4 flex items-center">
                         <i class="fas fa-th-large mr-2 text-secondary-500"></i>
                         {{ __('Categories') }}
                     </h4>
@@ -542,7 +542,7 @@
 
                 <!-- Newsletter -->
                 <div>
-                    <h4 class="text-lg font-bold mb-6 flex items-center">
+                    <h4 class="text-base font-bold mb-4 flex items-center">
                         <i class="fas fa-envelope-open-text mr-2 text-secondary-500"></i>
                         {{ __('Newsletter') }}
                     </h4>
@@ -576,8 +576,8 @@
 
     <!-- WhatsApp Float Button -->
     <a href="https://wa.me/{{ $whatsappClean }}" target="_blank"
-       class="fixed bottom-6 right-6 bg-gradient-to-r from-green-400 to-green-600 text-white w-16 h-16 rounded-full shadow-2xl hover:scale-110 transition flex items-center justify-center z-50 animate__animated animate__pulse animate__infinite">
-        <i class="fab fa-whatsapp text-3xl"></i>
+       class="fixed bottom-6 right-6 bg-gradient-to-r from-green-400 to-green-600 text-white w-14 h-14 rounded-full shadow-2xl hover:scale-110 transition flex items-center justify-center z-50 animate__animated animate__pulse animate__infinite">
+        <i class="fab fa-whatsapp text-2xl"></i>
     </a>
 
     <!-- Back to Top Button -->

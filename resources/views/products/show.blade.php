@@ -25,8 +25,8 @@
         </div>
     </div>
 
-    <div class="container mx-auto px-4 py-4 sm:py-8">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-12">
+    <div class="container mx-auto px-4 py-3 sm:py-6">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-8">
             <!-- Product Images - Auto Slider -->
             <div x-data="{
                 currentSlide: 0,
@@ -120,9 +120,9 @@
 
             <!-- Product Details -->
             <div>
-                <h1 class="text-xl sm:text-3xl font-bold mb-3">{{ $product->translate(app()->getLocale())->name }}</h1>
+                <h1 class="text-lg sm:text-2xl font-bold mb-2">{{ $product->translate(app()->getLocale())->name }}</h1>
 
-                <div class="flex items-center gap-4 mb-6">
+                <div class="flex items-center gap-4 mb-4">
                     <span class="text-xs text-gray-500">{{ __('SKU') }}: {{ $product->sku }}</span>
                     <span class="text-xs px-3 py-1 rounded-full {{ $product->isOutOfStock() ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700' }}">
                         {{ $product->isOutOfStock() ? __('Out of Stock') : __('In Stock') }} ({{ $product->stock_quantity }})
@@ -130,7 +130,7 @@
                 </div>
 
                 <!-- Short Description -->
-                <div class="mb-6">
+                <div class="mb-4">
                     <p class="text-gray-700 leading-relaxed text-sm sm:text-base">
                         {{ $product->translate(app()->getLocale())->short_description }}
                     </p>
@@ -138,7 +138,7 @@
 
                 <!-- MOQ & Wholesale Info -->
                 @if($product->moq && $product->moq > 1)
-                <div class="mb-6 bg-yellow-50 border-l-4 border-yellow-500 p-4 rounded-lg">
+                <div class="mb-4 bg-yellow-50 border-l-4 border-yellow-500 p-3 rounded-lg">
                     <div class="flex items-center gap-2">
                         <i class="fas fa-info-circle text-yellow-600"></i>
                         <div>
@@ -149,32 +149,26 @@
                 </div>
                 @endif
 
-                <!-- Wholesale Pricing Box -->
-                @if($product->pricing->wholesale_price && $product->pricing->wholesale_price < $product->pricing->retail_price)
-                <div class="mb-6 bg-gradient-to-r from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-xl p-4 sm:p-6">
+                <!-- Partner Price Box - Only visible to logged-in dealers -->
+                @auth
+                @if(auth()->user()->isDealer() && $product->pricing->wholesale_price && $product->pricing->wholesale_price < $product->pricing->retail_price)
+                <div class="mb-4 bg-gradient-to-r from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-xl p-3 sm:p-5">
                     <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-3 gap-2">
                         <h3 class="font-bold text-base sm:text-lg text-gray-900 flex items-center">
                             <i class="fas fa-handshake text-blue-600 mr-2"></i>
-                            {{ __('Partner Price') }} (B2B)
+                            {{ __('Your Partner Price') }}
                         </h3>
                         <span class="px-3 py-1 bg-blue-600 text-white rounded-full text-sm font-bold">
                             {{ number_format((($product->pricing->retail_price - $product->pricing->wholesale_price) / $product->pricing->retail_price) * 100, 0) }}% OFF
                         </span>
                     </div>
-                    <div class="flex flex-wrap items-baseline gap-2 mb-2">
-                        <span class="text-2xl sm:text-3xl font-extrabold text-blue-600">PKR {{ number_format($product->pricing->wholesale_price, 0) }}</span>
+                    <div class="flex flex-wrap items-baseline gap-2">
+                        <span class="text-xl sm:text-2xl font-extrabold text-blue-600">PKR {{ number_format($product->pricing->wholesale_price, 0) }}</span>
                         <span class="text-sm text-gray-500 line-through">PKR {{ number_format($product->pricing->retail_price, 0) }}</span>
                     </div>
-                    <p class="text-sm text-gray-600 mb-3">
-                        <i class="fas fa-box-open mr-1"></i>{{ __('For orders of') }} {{ $product->moq ?? 1 }}+ {{ __('pcs') }}
-                    </p>
-                    @guest
-                    <a href="{{ route('wholesale.register') }}" class="block text-center bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-lg font-semibold transition">
-                        <i class="fas fa-user-tie mr-2"></i>{{ __('Register as Dealer for Partner Pricing') }}
-                    </a>
-                    @endguest
                 </div>
                 @endif
+                @endauth
 
                 <!-- Low Stock Alert -->
                 @if($product->isLowStock() && !$product->isOutOfStock())
@@ -192,9 +186,10 @@
                 <!-- Add to Cart -->
                 @livewire('add-to-cart', ['productId' => $product->id])
 
-                <!-- Wholesale Pricing -->
-                @if($product->wholesalePricing->count() > 0)
-                    <div class="mt-8 bg-blue-50 border border-blue-200 rounded-lg p-4 sm:p-6">
+                <!-- Partner Pricing Tiers - Only visible to logged-in dealers -->
+                @auth
+                @if(auth()->user()->isDealer() && $product->wholesalePricing->count() > 0)
+                    <div class="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-3 sm:p-5">
                         <h3 class="font-bold text-base sm:text-lg mb-3 text-primary-500">{{ __('Partner Pricing') }}</h3>
                         <div class="space-y-2">
                             @foreach($product->wholesalePricing->sortBy('min_quantity') as $pricing)
@@ -206,11 +201,9 @@
                                 </div>
                             @endforeach
                         </div>
-                        <a href="{{ route('wholesale.register') }}" class="block mt-4 text-center bg-secondary-500 text-white py-2 rounded-lg hover:bg-secondary-600">
-                            {{ __('Become a Dealer') }}
-                        </a>
                     </div>
                 @endif
+                @endauth
 
                 <!-- Share -->
                 <div class="mt-6 flex gap-3">
@@ -224,9 +217,9 @@
         </div>
 
         <!-- Product Description -->
-        <div class="mt-12">
-            <div class="bg-white rounded-lg shadow-md p-4 sm:p-8">
-                <h2 class="text-xl sm:text-2xl font-bold mb-4 sm:mb-6">{{ __('Product Description') }}</h2>
+        <div class="mt-8">
+            <div class="bg-white rounded-lg shadow-md p-4 sm:p-6">
+                <h2 class="text-lg sm:text-xl font-bold mb-3 sm:mb-4">{{ __('Product Description') }}</h2>
                 <div class="prose max-w-none text-gray-700">
                     {!! nl2br(e($product->translate(app()->getLocale())->long_description)) !!}
                 </div>
@@ -235,9 +228,9 @@
 
         <!-- Current Deals -->
         @if(isset($deals) && $deals->count() > 0)
-            <div class="mt-12">
-                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-3">
-                    <h2 class="text-2xl font-bold flex items-center">
+            <div class="mt-8">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-3">
+                    <h2 class="text-lg font-bold flex items-center">
                         <i class="fas fa-fire text-red-500 mr-2"></i>{{ __('Current Deals') }}
                     </h2>
                     <a href="{{ route('deals.index') }}" class="text-red-500 hover:text-red-600 font-semibold text-sm">
@@ -278,9 +271,9 @@
 
         <!-- Related Products -->
         @if($relatedProducts->count() > 0)
-            <div class="mt-12">
-                <h2 class="text-2xl font-bold mb-6">{{ __('Related Products') }}</h2>
-                <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+            <div class="mt-8">
+                <h2 class="text-lg font-bold mb-4">{{ __('Related Products') }}</h2>
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
                     @foreach($relatedProducts as $relatedProduct)
                         <div class="product-card">
                             <div class="relative">

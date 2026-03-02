@@ -18,7 +18,7 @@
 
     <!-- Size/Weight Selector -->
     @if(!empty($variants))
-        <div class="mb-6">
+        <div class="mb-4">
             <label class="block text-sm font-bold text-gray-700 mb-3">
                 <i class="fas fa-weight-hanging mr-2 text-primary-500"></i>{{ __('Select Size/Weight') }}
             </label>
@@ -43,9 +43,9 @@
     @endif
 
     <!-- Dynamic Price Display -->
-    <div class="mb-6 bg-gradient-to-r from-primary-50 to-blue-50 rounded-xl p-4 sm:p-6 border-2 border-primary-200">
-        <div class="text-sm text-gray-600 mb-1">{{ __('Price') }}:</div>
-        <div class="text-2xl sm:text-4xl font-extrabold text-primary-600">
+    <div class="mb-4 bg-gradient-to-r from-primary-50 to-blue-50 rounded-xl p-3 sm:p-4 border-2 border-primary-200">
+        <div class="text-xs text-gray-600 mb-1">{{ __('Price') }}:</div>
+        <div class="text-xl sm:text-2xl font-extrabold text-primary-600">
             PKR {{ number_format($currentPrice, 0) }}
         </div>
         @if($selectedVariant)
@@ -55,7 +55,7 @@
         @endif
     </div>
 
-    <div class="bg-gray-50 rounded-xl p-4 sm:p-6 mb-6">
+    <div class="bg-gray-50 rounded-xl p-3 sm:p-4 mb-4">
         <!-- MOQ Info -->
         @if($product->moq && $product->moq > 1)
         <div class="mb-4 flex items-center gap-2 text-sm text-gray-700">
@@ -72,8 +72,8 @@
                         class="px-4 sm:px-5 py-3 hover:bg-primary-500 hover:text-white transition font-bold text-lg sm:text-xl">
                     <i class="fas fa-minus"></i>
                 </button>
-                <div class="px-4 sm:px-6 py-3 border-x-2 border-gray-300 min-w-16 sm:min-w-20 text-center">
-                    <span class="text-xl sm:text-2xl font-bold text-gray-900">{{ $quantity }}</span>
+                <div class="px-4 sm:px-5 py-3 border-x-2 border-gray-300 min-w-14 sm:min-w-16 text-center">
+                    <span class="text-lg sm:text-xl font-bold text-gray-900">{{ $quantity }}</span>
                 </div>
                 <button wire:click="increment"
                         type="button"
@@ -85,7 +85,7 @@
             <!-- Add to Cart Button -->
             <button wire:click="addToCart"
                     @if($product->isOutOfStock()) disabled @endif
-                    class="flex-1 bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-600 hover:to-primary-700 disabled:from-gray-400 disabled:to-gray-400 text-white font-bold py-3 sm:py-4 px-6 sm:px-8 rounded-xl transition shadow-lg hover:shadow-xl text-sm sm:text-base">
+                    class="flex-1 bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-600 hover:to-primary-700 disabled:from-gray-400 disabled:to-gray-400 text-white font-bold py-3 px-5 sm:px-6 rounded-xl transition shadow-lg hover:shadow-xl text-sm">
                 @if($product->isOutOfStock())
                     <i class="fas fa-ban mr-2"></i>{{ __('Out of Stock') }}
                 @else
@@ -98,7 +98,7 @@
     <!-- Buy Now - Adds to cart and goes to checkout -->
     @if(!$product->isOutOfStock())
         <button wire:click="addToCart(true)"
-                class="w-full bg-gradient-to-r from-secondary-500 to-orange-600 hover:from-secondary-600 hover:to-orange-700 text-white font-bold py-4 px-8 rounded-xl transition shadow-lg hover:shadow-xl">
+                class="w-full bg-gradient-to-r from-secondary-500 to-orange-600 hover:from-secondary-600 hover:to-orange-700 text-white font-bold py-3 px-6 rounded-xl transition shadow-lg hover:shadow-xl text-sm">
             <i class="fas fa-bolt mr-2"></i>{{ __('Buy Now') }}
         </button>
     @endif
