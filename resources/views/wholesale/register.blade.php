@@ -5,8 +5,8 @@
 @section('content')
     <div class="bg-gradient-to-r from-primary-500 to-primary-700 text-white py-12">
         <div class="container mx-auto px-4 text-center">
-            <h1 class="text-4xl font-bold mb-4">{{ __('Become a Wholesale Dealer') }}</h1>
-            <p class="text-xl">{{ __('Join our network and get special wholesale pricing') }}</p>
+            <h1 class="text-4xl font-bold mb-4">{{ __('Become a Dealer Partner') }}</h1>
+            <p class="text-xl">{{ __('Join our network and get special partner pricing') }}</p>
         </div>
     </div>
 
@@ -16,7 +16,7 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
                 <div class="bg-white rounded-lg shadow-md p-6 text-center">
                     <div class="text-4xl mb-3">💰</div>
-                    <h3 class="font-bold mb-2">{{ __('Wholesale Pricing') }}</h3>
+                    <h3 class="font-bold mb-2">{{ __('Partner Pricing') }}</h3>
                     <p class="text-sm text-gray-600">{{ __('Up to 25% discount on bulk orders') }}</p>
                 </div>
                 <div class="bg-white rounded-lg shadow-md p-6 text-center">

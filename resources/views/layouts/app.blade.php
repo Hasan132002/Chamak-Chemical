@@ -215,7 +215,7 @@
                         @endif
                         @if($menuWholesale)
                         <a href="{{ route('wholesale.info') }}" class="text-gray-700 hover:text-primary-500 font-semibold transition relative group flex items-center gap-1.5">
-                            <i class="fas fa-handshake text-xs"></i>{{ __('Wholesale') }}
+                            <i class="fas fa-handshake text-xs"></i>{{ __('Partner') }}
                             <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-500 group-hover:w-full transition-all duration-300"></span>
                         </a>
                         @endif
@@ -337,7 +337,7 @@
                     @endif
                     @if($menuWholesale)
                     <a href="{{ route('wholesale.info') }}" class="block px-4 py-3 rounded-lg text-gray-700 hover:bg-primary-50 hover:text-primary-500 font-semibold transition">
-                        <i class="fas fa-handshake mr-3 w-5"></i>{{ __('Wholesale') }}
+                        <i class="fas fa-handshake mr-3 w-5"></i>{{ __('Partner') }}
                     </a>
                     @endif
                     @if($menuBlog)
@@ -512,7 +512,7 @@
                         <li><a href="{{ route('deals.index') }}" class="text-gray-400 hover:text-white hover:translate-x-2 inline-block transition"><i class="fas fa-chevron-right mr-2 text-xs"></i>{{ __('Deals') }}</a></li>
                         @endif
                         @if($footerWholesale)
-                        <li><a href="{{ route('wholesale.info') }}" class="text-gray-400 hover:text-white hover:translate-x-2 inline-block transition"><i class="fas fa-chevron-right mr-2 text-xs"></i>{{ __('Wholesale') }}</a></li>
+                        <li><a href="{{ route('wholesale.info') }}" class="text-gray-400 hover:text-white hover:translate-x-2 inline-block transition"><i class="fas fa-chevron-right mr-2 text-xs"></i>{{ __('Partner') }}</a></li>
                         @endif
                         @if($footerBlog)
                         <li><a href="{{ route('blog.index') }}" class="text-gray-400 hover:text-white hover:translate-x-2 inline-block transition"><i class="fas fa-chevron-right mr-2 text-xs"></i>{{ __('Blog') }}</a></li>

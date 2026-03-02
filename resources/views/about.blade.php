@@ -23,7 +23,7 @@
 
                 <div class="prose max-w-none">
                     <p class="text-lg text-gray-700 leading-relaxed mb-6">
-                        {{ __('Chamak Chemicals is your trusted partner for premium chemical products. We specialize in high-quality cleaning and industrial chemicals for both retail and wholesale customers across Pakistan.') }}
+                        {{ __('Chamak Chemicals is your trusted partner for premium chemical products. We specialize in high-quality cleaning and industrial chemicals for both retail and dealer customers across Pakistan.') }}
                     </p>
 
                     <h3 class="text-2xl font-bold mb-4 text-primary-500"><i class="fas fa-bullseye mr-2"></i>{{ __('Our Mission') }}</h3>

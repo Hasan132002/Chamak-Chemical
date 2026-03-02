@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
-@section('title', __('Wholesale Information'))
+@section('title', __('Partner Information'))
 
 @section('content')
     <div class="bg-gradient-to-r from-secondary-500 to-orange-600 text-white py-12 sm:py-20">
         <div class="container mx-auto px-4 text-center">
             <div class="text-5xl sm:text-7xl mb-4 sm:mb-6"><i class="fas fa-warehouse"></i></div>
-            <h1 class="text-3xl sm:text-5xl md:text-6xl font-extrabold mb-4 sm:mb-6">{{ __('Wholesale Program') }}</h1>
+            <h1 class="text-3xl sm:text-5xl md:text-6xl font-extrabold mb-4 sm:mb-6">{{ __('Partner Program') }}</h1>
             <p class="text-base sm:text-xl md:text-2xl text-orange-100 max-w-2xl mx-auto mb-6 sm:mb-8">{{ __('Special pricing for bulk orders. Join our dealer network today!') }}</p>
             <a href="{{ route('wholesale.register') }}" class="inline-block bg-white text-secondary-500 hover:bg-gray-100 font-bold py-3 sm:py-4 px-8 sm:px-10 rounded-full text-base sm:text-lg transition shadow-2xl">
                 <i class="fas fa-user-plus mr-2"></i>{{ __('Register as Dealer') }}
@@ -17,7 +17,7 @@
     <div class="container mx-auto px-4 py-8 sm:py-16">
         <!-- Benefits -->
         <h2 class="text-2xl sm:text-4xl font-extrabold text-center mb-8 sm:mb-12 bg-gradient-to-r from-primary-500 to-blue-600 bg-clip-text text-transparent">
-            {{ __('Wholesale Benefits') }}
+            {{ __('Partner Benefits') }}
         </h2>
 
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-8 mb-10 sm:mb-16">

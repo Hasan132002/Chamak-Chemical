@@ -143,7 +143,7 @@
                         <i class="fas fa-info-circle text-yellow-600"></i>
                         <div>
                             <p class="font-semibold text-gray-900">{{ __('Minimum Order Quantity') }}: {{ $product->moq }}</p>
-                            <p class="text-sm text-gray-600">{{ __('Wholesale orders require minimum') }} {{ $product->moq }} {{ __('pcs') }}</p>
+                            <p class="text-sm text-gray-600">{{ __('Dealer orders require minimum') }} {{ $product->moq }} {{ __('pcs') }}</p>
                         </div>
                     </div>
                 </div>
@@ -155,7 +155,7 @@
                     <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-3 gap-2">
                         <h3 class="font-bold text-base sm:text-lg text-gray-900 flex items-center">
                             <i class="fas fa-handshake text-blue-600 mr-2"></i>
-                            {{ __('Wholesale Price') }} (B2B)
+                            {{ __('Partner Price') }} (B2B)
                         </h3>
                         <span class="px-3 py-1 bg-blue-600 text-white rounded-full text-sm font-bold">
                             {{ number_format((($product->pricing->retail_price - $product->pricing->wholesale_price) / $product->pricing->retail_price) * 100, 0) }}% OFF
@@ -170,7 +170,7 @@
                     </p>
                     @guest
                     <a href="{{ route('wholesale.register') }}" class="block text-center bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-lg font-semibold transition">
-                        <i class="fas fa-user-tie mr-2"></i>{{ __('Register as Dealer for Wholesale Pricing') }}
+                        <i class="fas fa-user-tie mr-2"></i>{{ __('Register as Dealer for Partner Pricing') }}
                     </a>
                     @endguest
                 </div>
@@ -195,7 +195,7 @@
                 <!-- Wholesale Pricing -->
                 @if($product->wholesalePricing->count() > 0)
                     <div class="mt-8 bg-blue-50 border border-blue-200 rounded-lg p-4 sm:p-6">
-                        <h3 class="font-bold text-base sm:text-lg mb-3 text-primary-500">{{ __('Wholesale Pricing') }}</h3>
+                        <h3 class="font-bold text-base sm:text-lg mb-3 text-primary-500">{{ __('Partner Pricing') }}</h3>
                         <div class="space-y-2">
                             @foreach($product->wholesalePricing->sortBy('min_quantity') as $pricing)
                                 <div class="flex justify-between items-center">

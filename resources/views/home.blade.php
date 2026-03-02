@@ -99,7 +99,7 @@
                     {{ __('Premium Chemical Products for Every Need') }}
                 </h1>
                 <p class="text-base sm:text-xl md:text-2xl mb-6 sm:mb-10 text-blue-100">
-                    {{ __('High-quality cleaning and industrial chemicals. Retail and wholesale available.') }}
+                    {{ __('High-quality cleaning and industrial chemicals. Retail and dealer pricing available.') }}
                 </p>
                 <div class="flex flex-col sm:flex-row justify-center gap-4">
                     <a href="{{ route('products.index') }}" class="group px-8 py-4 bg-white text-primary-500 hover:bg-gray-100 font-bold rounded-xl transition shadow-2xl hover-lift text-lg">
@@ -107,7 +107,7 @@
                         <i class="fas fa-arrow-right ml-2"></i>
                     </a>
                     <a href="{{ route('wholesale.register') }}" class="px-8 py-4 gradient-secondary text-white font-bold rounded-xl transition shadow-2xl hover-lift text-lg">
-                        <i class="fas fa-handshake mr-2"></i>{{ __('Wholesale Inquiry') }}
+                        <i class="fas fa-handshake mr-2"></i>{{ __('Partner Inquiry') }}
                     </a>
                 </div>
             </div>
@@ -409,7 +409,7 @@
                         <i class="fas fa-tags text-xl sm:text-3xl text-white"></i>
                     </div>
                     <h3 class="font-bold text-sm sm:text-xl mb-1 sm:mb-3 text-gray-900">{{ __('Best Prices') }}</h3>
-                    <p class="text-gray-600 leading-relaxed text-xs sm:text-base hidden sm:block">{{ __('Competitive pricing for retail & wholesale with bulk discounts') }}</p>
+                    <p class="text-gray-600 leading-relaxed text-xs sm:text-base hidden sm:block">{{ __('Competitive pricing for retail & dealer with bulk discounts') }}</p>
                 </div>
                 <div class="bg-white rounded-2xl p-4 sm:p-8 text-center hover-lift shadow-lg group">
                     <div class="w-14 h-14 sm:w-20 sm:h-20 bg-gradient-to-br from-purple-400 to-purple-600 rounded-xl sm:rounded-2xl flex items-center justify-center mx-auto mb-3 sm:mb-6 group-hover:scale-110 group-hover:rotate-6 transition-all shadow-xl">
@@ -520,7 +520,7 @@
                     </div>
                     <div>
                         <h2 class="text-xl sm:text-2xl font-extrabold text-white">
-                            {{ __('Looking for Wholesale?') }}
+                            {{ __('Looking for Partnership?') }}
                         </h2>
                         <p class="text-xs sm:text-sm text-orange-100">
                             {{ __('Get special pricing on bulk orders. Register as a dealer today!') }}
@@ -582,7 +582,7 @@
                     </div>
                     <div class="flex items-center gap-2">
                         <i class="fas fa-check-circle text-green-500"></i>
-                        <span>{{ __('Wholesale & bulk order discounts') }}</span>
+                        <span>{{ __('Dealer & bulk order discounts') }}</span>
                     </div>
                 </div>
                 <a href="{{ route('products.index') }}"

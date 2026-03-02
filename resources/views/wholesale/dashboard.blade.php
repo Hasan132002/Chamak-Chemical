@@ -50,7 +50,7 @@
         @else
             <!-- Wholesale Pricing Info -->
             <div class="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-8">
-                <h3 class="font-bold text-lg mb-4">{{ __('Your Wholesale Discounts') }}</h3>
+                <h3 class="font-bold text-lg mb-4">{{ __('Your Partner Discounts') }}</h3>
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                     <div class="text-center">
                         <div class="text-sm text-gray-600">{{ __('Bronze Tier') }}</div>
@@ -75,7 +75,7 @@
                 </div>
                 <div class="mt-4 text-center">
                     <a href="{{ route('products.index') }}" class="inline-block bg-primary-500 hover:bg-primary-600 text-white px-6 py-2 rounded-lg">
-                        {{ __('Browse Products with Wholesale Pricing') }}
+                        {{ __('Browse Products with Partner Pricing') }}
                     </a>
                 </div>
             </div>
@@ -127,7 +127,7 @@
             @else
                 <div class="text-center py-12">
                     <div class="text-6xl mb-4">📦</div>
-                    <p class="text-gray-600">{{ __('No orders yet. Start ordering to get wholesale discounts!') }}</p>
+                    <p class="text-gray-600">{{ __('No orders yet. Start ordering to get partner discounts!') }}</p>
                 </div>
             @endif
         </div>
